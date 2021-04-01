@@ -1,0 +1,106 @@
+/*全局选择器，控制字体大小统一，方便排版*/
+* {
+    font-size: 14px;
+}
+#top {
+    /*background-color: cornsilk;*/
+    margin: auto;/*上下外边距为0，左右自动对齐（居中）*/
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+#top1{
+    flex-basis: 30px;
+    border-radius: 5px;
+    background-color: lightgray;
+    text-indent: 2em;/*文字缩进2字符*/
+    /*line-height: 30px;/*背景框高度是30px，所以这里也是写30，保证居中*/
+    display: flex;
+    align-items: center;
+}
+#top1_left {
+    flex: 1;
+}
+#top1_middle {
+    flex: 1;
+}
+#top1_right {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+#top1_right a{
+    color: black;/*字体颜色黑色，由于文字都用a标签包裹，这里只能通过a标签精准调节，注意优先级*/
+    text-decoration: none;/*下划线去掉*/
+    flex: 1;
+}
+#top1 a:hover{
+    text-decoration: underline;/*鼠标放上去显示下划线*/
+}
+
+#top2{
+    padding-top: 30px;
+    /*background-color: #d4af7a;*/
+    display: flex;
+    flex-direction: row;
+}
+#img {
+    flex-grow: 1;
+    display: flex;
+    padding-left: 30px;
+}
+#add_but {
+    flex-grow: 1;
+}
+#img img {
+    flex-basis: 150px;
+}
+#top2_right {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+#search {
+    display: flex;
+    flex-direction: row;
+}
+#searchbox {
+    flex-basis: 500px;
+    height: 25px;
+    border: 2px solid gray;
+    border-radius: 2px;
+    outline: none;
+}
+#main {
+    /* background-color: #DEB887; */
+    padding-top: 30px;
+    display: flex;
+}
+#product {
+    flex-grow: 3;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+#product > div {
+    display: flex;
+    justify-content: space-around;
+}
+#navbar_left {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ededed;
+}
+#navbar_left div {
+    flex-basis: 70px;
+    font-size: 20px;
+    /*flex-grow: 1;*/
+}
+#navbar_left div a {
+    font-size: 20px;
+    font-family: "Gill Sans", sans-serif;
+    color: black;
+}

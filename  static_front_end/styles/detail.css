@@ -1,0 +1,127 @@
+/*全局选择器，控制字体大小统一，方便排版*/
+* {
+    font-size: 14px;
+}
+#top {
+    /*background-color: cornsilk;*/
+    margin: auto;/*上下外边距为0，左右自动对齐（居中）*/
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+#top1{
+    flex-basis: 30px;
+    border-radius: 5px;
+    background-color: lightgray;
+    text-indent: 2em;/*文字缩进2字符*/
+    /*line-height: 30px;/*背景框高度是30px，所以这里也是写30，保证居中*/
+    display: flex;
+    align-items: center;
+}
+#top1_left {
+    flex: 2;
+}
+#top1_right {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+#top1_right a{
+    color: black;/*字体颜色黑色，由于文字都用a标签包裹，这里只能通过a标签精准调节，注意优先级*/
+    text-decoration: none;/*下划线去掉*/
+    flex: 1;
+}
+#top1 a:hover{
+    text-decoration: underline;/*鼠标放上去显示下划线*/
+}
+
+#top2{
+    padding-top: 30px;
+    /*background-color: #d4af7a;*/
+    display: flex;
+    flex-direction: row;
+}
+#img {
+    flex-grow: 1;
+    display: flex;
+    padding-left: 30px;
+
+}
+#img img {
+    flex-basis: 150px;
+}
+#top2_right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.flow {
+    width: 656px;
+    height: 32px;
+    background: url("../images/flow_bg.png") 0 0 no-repeat;
+    margin-top: 10px;
+}
+.flow ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.flow li {
+    color: #000;
+    width: 218px;
+    padding-left: 50px;
+    line-height: 32px;
+    font-size: 13px;
+}
+.flow li.cur {
+    color:#fff;
+    font-weight: bolder;
+}
+.logo h2 {
+    width: 260px;
+}
+.flow2 {
+    background-position: 0 -32px;
+}
+.flow3 {
+    background-position: 0 -64px;
+}
+
+.fillin_hd {
+    height: 36px;
+    line-height: 36px;
+    background: url("../images/sort_bg.png") 0 0 repeat-x;
+    border: 1px solid #E7E3E7;
+    border-top: 2px solid #CE0000;
+    border-bottom: 0;
+    margin: 0;
+    padding: 0;
+
+}
+
+.fillin_hd h2 {
+    padding-left: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "microsoft yahei";
+    color: #444;
+    margin: 0;
+    padding-left: 10px;
+}
+
+.fillin_bd {
+
+    border: 1px solid #E7E3E7;
+    border-width: 0 15px;
+    padding: 0 15px;
+    color: #666;
+}
+
+.fillin_ft{padding:0;height: 50px; background: #f5f5f5;  border:1px solid #E7E3E7; border-top: 0;  text-align: right;}
+.fillin_ft p{margin:0;font-size: 16px; font-weight:bold; color: #666; float: right; display: inline; line-height: 50px;}
+.fillin_ft p strong{color:#e4393c; font-family: Verdana,Arial;}
+.fillin_ft a{float: right; display: inline; width: 135px; height: 36px; background: url("../images/order_btn.jpg") 0 0 no-repeat; vertical-align: middle; margin: 7px 10px 0;}
+.fillin_ft a span{display: none;}
+.fillin_ft a:hover{background-position: 0 -36px;}

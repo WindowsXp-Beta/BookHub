@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>bookstore</title>
+        <link rel="stylesheet" href="styles/detail.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    </head>
+    <body>
+        <!--将淘宝页面分为头部和主体（商品展示）两部分，其中，顶部又拆分为四个子顶部部分-->
+        <!--顶部-->
+        <div id="top">
+            <!--顶部第一部分，高度、圆角、背景色，此外，内部分两个div，一个左浮动，一个右浮动-->
+            <div id="top1">
+                <div id="top1_left">
+                    <!--三个部分都要设置超链接，可以使用a标签，添加href-->
+                    Hi , username !
+                </div>
+                <div id="top1_right">
+                    <a href="#"><i class="fas fa-home"></i> 首页</a> <a href="#"><i class="fas fa-cart-plus"></i> 购物车</a> <a href="#"><i class="fas fa-file-invoice-dollar"></i> 订单</a>
+                </div>
+            </div>
+        </div>
+        <div id="top2">
+            <div id="img">
+                <img src="images/homepage_logo.jpg" style="height: 54px">
+            </div>
+            <!--搜索框div-->
+            <div id="top2_right">
+                <div class="flow fr flow2">
+                    <ul>
+                        <li>1.我的购物车</li>
+                        <li class="cur">2.填写核对订单信息</li>
+                        <li>3.成功提交订单</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <div class="main">
+        <div class="fillin_hd">
+            <h2>填写并核对订单信息</h2>
+        </div>
+
+        <div class="fillin_bd">
+            <!-- 收货人信息  start-->
+            <div class="address">
+                <h3>收货人信息 <a href="javascript:;" id="address_modify">[修改]</a></h3>
+                <div class="address_info">
+                    <p>魏xp  2333333333 </p>
+                    <p>上海 闵行区 东川路800号 软件学院</p>
+                </div>
+            </div>
+        </div>
+        <div class="fillin_ft">
+            <a href=""><span>提交订单</span></a>
+            <p>应付总额：<strong>￥5076.00元</strong></p>
+        </div>
+    </div>
+    </body>
+</html>

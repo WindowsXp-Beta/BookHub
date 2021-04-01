@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>bookstore</title>
+    <link rel="stylesheet" href="styles/details.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <script type="text/javascript" src="scripts/details.js"></script>
+</head>
+<body>
+<!--将淘宝页面分为头部和主体（商品展示）两部分，其中，顶部又拆分为四个子顶部部分-->
+<!--顶部-->
+<div id="top">
+    <!--顶部第一部分，高度、圆角、背景色，此外，内部分两个div，一个左浮动，一个右浮动-->
+    <div id="top1">
+        <div id="top1_left">
+            <!--三个部分都要设置超链接，可以使用a标签，添加href-->
+            Hi , username !
+        </div>
+        <div id="top1_right">
+            <a href="#"><i class="fas fa-home"></i> 首页</a> <a href="#"><i class="fas fa-cart-plus"></i> 购物车</a> <a href="#"><i class="fas fa-file-invoice-dollar"></i> 订单</a>
+        </div>
+    </div>
+
+    <!--顶部第二部分-->
+    <div id="top2">
+        <div id="img">
+            <img src="images/homepage_logo.jpg" style="height: 54px">
+        </div>
+        <!--搜索框div-->
+        <div id="top2_right">
+            <!--搜索框和搜索框下面的文字拆分为两个标签部分，由于统一居中，所以这里搜索框需要进行重新定位-->
+            <div id="search">
+                <input id="searchbox" type="text" name="search"/>
+                <input type="submit" value="搜索"/>
+            </div>
+            <!--底部文字部分-->
+            <div>
+                你可能想搜：深入理解计算机系统 计算机网络:自顶向下方法 算法导论
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--主体部分（商品展示，这里使用表格）-->
+<div id="main">
+    <!--表格，宽度与浏览器宽度一致，列控制每列的宽度，复制后自适应数量-->
+        <div id="navbar_left">
+            <div><a href="" style="text-decoration: none">书籍列表</a></div>
+            <div>> <a href="">计算机组成</a></div>
+            <div>> <a href="">计算机网络</a></div>
+            <div>> <a href="">算法与数据结构</a></div>
+            <div>> <a href="">前端开发</a></div>
+            <div>> <a href="">机器学习</a></div>
+            <div>> <a href="">软件工程</a></div>
+            <div>> <a href="">计算理论</a></div>
+        </div>
+    <div id="intro">
+        <div id="details">
+            <div id="img_product"><img src="images/operating.jpg" style="height: 550px"></div>
+            <ul id="summary">
+                <h2>
+                    <span>现代操作系统</span>
+                    <b>Modern Operating System</b>
+                </h2>
+                <li id="summary_price">
+                    <div class="title"> 价&nbsp;格：</div>
+                    <div class="content">
+                        <b>￥39.90</b>
+                        <a href="#">(降价通知)</a>
+                    </div>
+                </li>
+                <li id="summary_market">
+                    <div class="title">商品编号：</div>
+                    <div class="content">
+                        <span>960148</span>
+                    </div>
+                </li>
+                <li id="summary_grade">
+                    <div class="title">商品评分：</div>
+                    <div class="content">
+                        <span></span>
+                        <a href="#">(已有<b>47662</b>人评价)</a>
+                        <a href="#" class="words">留言咨询</a>
+                    </div>
+                </li>
+                <li id="summary_stock">
+                    <div class="title">配送至：</div>
+                    <div class="content">
+                        <p>上海市闵行区</p>
+                        <p><b>有货</b>，23:00前完成下单，预计<i>明日（12月06日）</i>送达</p>
+                    </div>
+                </li>
+                <li id="summary_service">
+                    <div class="title">服&nbsp;&nbsp;务：</div>
+                    <div class="content">
+                        由 <span>京东</span> 发货并提供售后服务。
+                        支持：
+                        <a class="sendpay_211" href="#"></a>
+                        <a class="jingdou_xiankuan" href="#"></a>
+                        <a class="special_ziti" href="#"></a>
+                    </div>
+                </li>
+                <li id="choose_color">
+                    <div class="title">选择版本：</div>
+                    <div class="content">
+                        <a href="#" class="selected">
+                            <img src="images/csapp_en_sm.jpg"/>
+                            <span>英文版</span>
+                            <b></b>
+                        </a>
+                        <a href="#">
+                            <img src="images/csapp_zh_sm.jpg"/>
+                            <span>中文版</span>
+                            <b></b>
+                        </a>
+                    </div>
+                </li>
+                <li id="choose_amount">
+                    <div class="title">购买数量：</div>
+                    <div class="content">
+                        <a href="#" class="btn_reduce" onclick=""></a>
+                        <input type="text" value="1"/>
+                        <a href="#" class="btn_add"></a>
+                    </div>
+                </li>
+                <li id="choose_result">
+                    已选择<b>“英文版”</b>，<b>“第三版”</b>
+                </li>
+                <li id="choose_btns" class="clear">
+                    <a href="#" class="choose_btn_append"></a>
+                    <a href="#" class="choose_baitiao_fq"></a>
+                    <a href="#" class="choose_mark"></a>
+                    <div class="m_buy">
+                        <span>客户端首次下单</span>
+                        <p>送 5 元优惠券 </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="img1"><img src="images/md_os_in_1.jpg" style="width: 790px"></div>
+        <div id="img2"><img src="images/md_os_in_2.jpg" style="width: 790px"></div>
+    </div>
+        <!--<div id="row1">
+            <div>
+                <img src="images/csapp.jpg" style="width: 244px;height: 350px"/><br/>
+                <p style="color: orange;">&yen 40 包邮</p>
+                <p>深入理解计算机系统</p>
+                <p style="color: gray;">bookstore</p>
+                <p style="color: gray;" align="right">如实描述4.8</p>
+            </div>
+            <div>
+                <img src="images/compiler.jpg" style="width: 244px;height: 350px"/><br/>
+                <p style="color: orange;">&yen 40 包邮</p>
+                <p>编译原理</p>
+                <p style="color: gray;">bookstore</p>
+                <p style="color: gray;" align="right">如实描述4.8</p>
+            </div>
+            <div>
+                <img src="images/algorithm.jpg" style="width: 244px;height: 350px"/><br/>
+                <p style="color: orange;">&yen 40 包邮</p>
+                <p>算法导论</p>
+                <p style="color: gray;">浪色服饰专营店</p>
+                <p style="color: gray;" align="right">如实描述4.8</p>
+            </div>
+        </div>
+        <div>
+            <div>
+                <img src="images/operating.jpg" style="width: 244px;height: 350px"/><br/>
+                <p style="color: orange;">&yen 40 包邮</p>
+                <p>现代操作系统</p>
+                <p style="color: gray;">bookstore</p>
+                <p style="color: gray;" align="right">如实描述4.8</p>
+            </div>
+            <div>
+                <img src="images/OSC.jpg" style="width: 244px;height: 350px"/><br/>
+                <p style="color: orange;">&yen 40 包邮</p>
+                <p>操作系统概念</p>
+                <p style="color: gray;">bookstore</p>
+                <p style="color: gray;" align="right">如实描述4.8</p>
+            </div>
+            <div>
+                <img src="images/CDM.jpg" style="width: 244px;height: 350px"/><br/>
+                <p style="color: orange;">&yen 40 包邮</p>
+                <p>离散数学及其应用</p>
+                <p style="color: gray;">bookstore</p>
+                <p style="color: gray;" align="right">如实描述4.8</p>
+            </div>
+        </div>-->
+</div>
+</body>
+</html>

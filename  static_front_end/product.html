@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>bookstore</title>
+		<link rel="stylesheet" href="styles/product.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+		<script type="text/javascript" src="scripts/product.js"></script>
+	</head>
+	<body>
+		<!--将淘宝页面分为头部和主体（商品展示）两部分，其中，顶部又拆分为四个子顶部部分-->
+		<!--顶部-->
+		<div id="top">
+			<!--顶部第一部分，高度、圆角、背景色，此外，内部分两个div，一个左浮动，一个右浮动-->
+			<div id="top1">
+				<div id="top1_left">
+					<!--三个部分都要设置超链接，可以使用a标签，添加href-->
+					Hi , username !
+				</div>
+				<div id="top1_middle">
+					<script>
+						document.write(Date());
+					</script>
+				</div>
+				<div id="top1_right">
+					<a href="#"><i class="fas fa-home"></i> 首页</a> <a href="#"><i class="fas fa-cart-plus"></i> 购物车</a> <a href="#"><i class="fas fa-file-invoice-dollar"></i> 订单</a>
+				</div>
+			</div>
+			
+			<!--顶部第二部分-->
+			<div id="top2">
+				<div id="img">
+					<img src="images/homepage_logo.jpg" style="height: 54px">
+				</div>
+				<div id="add_but">
+					<button onclick=create_new_book("new_row") >查看更多图书</button>
+				</div>
+				<!--搜索框div-->
+				<div id="top2_right">
+					<!--搜索框和搜索框下面的文字拆分为两个标签部分，由于统一居中，所以这里搜索框需要进行重新定位-->
+					<div id="search">
+						<input id="searchbox" type="text" name="search"/>
+						<input type="submit" value="搜索" onclick=create_new_book("new_row") />
+					</div>
+					<!--底部文字部分-->
+					<div>
+						你可能想搜：深入理解计算机系统 计算机网络:自顶向下方法 算法导论
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--主体部分（商品展示，这里使用表格）-->
+		<div id="main">
+			<!--表格，宽度与浏览器宽度一致，列控制每列的宽度，复制后自适应数量-->
+			<div id="navbar_left">
+				<div><a href="" style="text-decoration: none">书籍列表</a></div>
+				<div>> <a href="">计算机组成</a></div>
+				<div>> <a href="">计算机网络</a></div>
+				<div>> <a href="">算法与数据结构</a></div>
+				<div>> <a href="">前端开发</a></div>
+				<div>> <a href="">机器学习</a></div>
+				<div>> <a href="">软件工程</a></div>
+				<div>> <a href="">计算理论</a></div>
+			</div>
+			<div id="product">
+				<div id="row1">
+					<div>
+						<a href="details.html"><img src="images/csapp.jpg" style="width: 244px;height: 350px"/></a>
+						<!--&yen表示人民币-->
+						<p style="color: orange;">&yen 40 包邮</p>
+						<p>深入理解计算机系统</p>
+						<p style="color: gray;">bookstore</p>
+						<p style="color: gray;" align="right">如实描述4.8</p>
+					</div>
+					<div>
+						<a href="details.html"><img src="images/compiler.jpg" style="width: 244px;height: 350px"/></a>
+						<!--&yen表示人民币-->
+						<p style="color: orange;">&yen 40 包邮</p>
+						<p>编译原理</p>
+						<p style="color: gray;">bookstore</p>
+						<p style="color: gray;" align="right">如实描述4.8</p>
+					</div>
+					<div>
+						<a href="details.html"><img src="images/algorithm.jpg" style="width: 244px;height: 350px"/><br/></a>
+						<!--&yen表示人民币-->
+						<p style="color: orange;">&yen 40 包邮</p>
+						<p>算法导论</p>
+						<p style="color: gray;">bookstore</p>
+						<p style="color: gray;" align="right">如实描述4.8</p>
+					</div>
+				</div>
+				<div>
+					<div>
+						<a href="details.html"><img src="images/operating.jpg" style="width: 244px;height: 350px"/><br/></a>
+						<!--&yen表示人民币-->
+						<p style="color: orange;">&yen 40 包邮</p>
+						<p>现代操作系统</p>
+						<p style="color: gray;">bookstore</p>
+						<p style="color: gray;" align="right">如实描述4.8</p>
+					</div>
+					<div>
+						<a href="details.html"><img src="images/OSC.jpg" style="width: 244px;height: 350px"/><br/></a>
+						<!--&yen表示人民币-->
+						<p style="color: orange;">&yen 40 包邮</p>
+						<p>操作系统概念</p>
+						<p style="color: gray;">bookstore</p>
+						<p style="color: gray;" align="right">如实描述4.8</p>
+					</div>
+					<div>
+						<a href="details.html"><img src="images/CDM.jpg" style="width: 244px;height: 350px"/><br/></a>
+						<!--&yen表示人民币-->
+						<p style="color: orange;">&yen 40 包邮</p>
+						<p>离散数学及其应用</p>
+						<p style="color: gray;">bookstore</p>
+						<p style="color: gray;" align="right">如实描述4.8</p>
+					</div>
+				</div>
+				<div id="new_row">
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
