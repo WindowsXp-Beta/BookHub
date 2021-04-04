@@ -8,12 +8,8 @@
 
 }
 
-
-
-
-
 .ant-carousel .slick-slide img{
-    width: 750px;
+    width: 700px;
     height:315px;
     background: #364d79;
     margin: 0 auto;
@@ -43,6 +39,8 @@
 
 .global-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input:not(:last-child) {
     padding-right: 62px;
+    border: none;
+    background-color: #363636;
 }
 
 .global-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input-suffix button {
@@ -64,15 +62,3 @@
     flex: none;
 }
 
-
-.bookImg{
-    height: 160px;
-}
-
-.ant-card-meta-title{
-    font-size:14px !important;
-}
-
-.ant-card-meta-description{
-    color: red !important;
-}

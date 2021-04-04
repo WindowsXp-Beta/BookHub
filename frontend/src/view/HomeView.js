@@ -25,7 +25,6 @@ class HomeView extends React.Component{
     render(){
         return(
             <Layout className="layout">
-
                 <Header>
                     <HeaderInfo />
                 </Header>

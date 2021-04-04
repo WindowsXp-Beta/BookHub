@@ -40,8 +40,6 @@ export class BookDetail extends React.Component{
                     </Button>
                 </div>
             </div>
-
-
         )
 
     }

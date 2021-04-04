@@ -120,7 +120,6 @@ export class BookList extends React.Component{
                     },
                     pageSize: 16,
                 }}
-
                 renderItem={item => (
                     <List.Item>
                         <Book info={item} />

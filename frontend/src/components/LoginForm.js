@@ -28,8 +28,9 @@ class LoginForm extends React.Component {
                         rules: [{ required: true, message: 'Please input your username!' }],
                     })(
                         <Input
-                            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                            prefix={<Icon type="user" style={{ color: '#ccc' }} />}
                             placeholder="Username"
+                            autoComplete="off"
                         />,
                     )}
                 </Form.Item>
@@ -38,9 +39,10 @@ class LoginForm extends React.Component {
                         rules: [{ required: true, message: 'Please input your Password!' }],
                     })(
                         <Input
-                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                            prefix={<Icon type="lock" style={{ color: '#ccc' }} />}
                             type="password"
                             placeholder="Password"
+                            autoComplete="off"
                         />,
                     )}
                 </Form.Item>
@@ -48,14 +50,14 @@ class LoginForm extends React.Component {
                     {getFieldDecorator('remember', {
                         valuePropName: 'checked',
                         initialValue: true,
-                    })(<Checkbox>Remember me</Checkbox>)}
+                    })(<Checkbox style={{color: '#f90',}}>Remember me</Checkbox>)}
                     <a className="login-form-forgot" href="">
                         Forgot password
                     </a>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                        <Link to={"/homeview"}>Log in</Link>
+                        <Link to={"/homeview"} style={{color: '#000'}}>Log in</Link>
                     </Button>
-                    Or <a href="">register now!</a>
+                    <span style={{color: '#f90'}}>Or</span> <a href="">register now!</a>
                 </Form.Item>
             </Form>
         );

@@ -9,15 +9,17 @@ class LoginView extends React.Component{
     render(){
         return(
             <div className="login-page">
-                <div className="register-info">
-                    <div className="BookStoreLogo"></div>
-                    <h1>BookStore的内容可比你想的要多得多</h1>
-                </div>
                 <div className="login-container">
-                    <div className="login-box">
-                        <h1 className="page-title">Login</h1>
-                        <div className="login-content">
-                            <WrappedLoginForm />
+                    <div className="register-info">
+                        <div className="BookStoreLogo"></div>
+                        <h1>BookStore的内容可比你想的要多得多！</h1>
+                    </div>
+                    <div className="login-box-shell">
+                        <div className="login-box">
+                            <h1 className="page-title">Login</h1>
+                            <div className="login-content">
+                                <WrappedLoginForm />
+                            </div>
                         </div>
                     </div>
                 </div>
