@@ -13,8 +13,9 @@ export class Book extends React.Component{
         const {info} = this.props;
         console.log(info.img);
         return (
-            <Link to="/"
-                  //target="_blank"
+            <Link to={{
+                pathname:"/bookDetails",
+            }}
             >
                 <Card
                     hoverable

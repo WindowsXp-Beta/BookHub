@@ -22,14 +22,15 @@
     background-size:100% 100%;
     z-index: 99;
 }
-
-
-.login-container {
-    position:relative;
-    max-width: 420px;
-    margin: 40px auto 0;
+.register-info {
+    flex-grow: 1;
 }
 
+.login-container {
+    flex-grow: 1;
+    position:relative;
+    max-width: 420px;
+}
 .login-page .login-container .login-box {
     top: 0;
     left: 0;
