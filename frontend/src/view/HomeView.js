@@ -1,12 +1,12 @@
 import React from 'react';
 import {Layout, Carousel} from 'antd'
-import {HeaderInfo} from "../components/HeaderInfo";
-import {SideBar} from "../components/SideBar";
+import {HeaderInfo} from "../components/Layout/HeaderInfo";
+import {SideBar} from "../components/Layout/SideBar";
 import '../css/home.css';
 import {withRouter} from "react-router-dom";
-import {BookCarousel} from "../components/BookCarousel";
-import {SearchBar} from "../components/SearchBar";
-import {BookList} from "../components/BookList";
+import {BookCarousel} from "../components/Book/BookCarousel";
+import {SearchBar} from "../components/Layout/SearchBar";
+import {BookList} from "../components/Book/BookList";
 
 const { Header, Content, Footer } = Layout;
 
@@ -29,7 +29,7 @@ class HomeView extends React.Component{
                     <HeaderInfo />
                 </Header>
                 <Layout>
-                    <SideBar />
+                    <SideBar key='1'/>
                     <Content style={{ padding: '0 50px' }}>
                         <div className="home-content">
                             <SearchBar />

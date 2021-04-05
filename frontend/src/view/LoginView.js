@@ -1,5 +1,5 @@
 import React from 'react';
-import WrappedLoginForm from '../components/LoginForm';
+import WrappedLoginForm from '../components/Login/LoginForm';
 import {withRouter} from "react-router-dom";
 import '../css/login.css'
 

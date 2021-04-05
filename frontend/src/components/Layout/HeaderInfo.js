@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import '../css/index.css'
-import logo from '../assets/logo.png';
+import '../../css/index.css'
+import logo from '../../assets/logo.png';
 //import logoFont from '../assets/logo-name.svg';
 import {UserAvatar} from "./UserAvatar";
 

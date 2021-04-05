@@ -6,6 +6,7 @@
 html,body,#root{
     width: 100%;
     height: 100%;
+    background-color: black;
 }
 
 /* Header */
@@ -109,7 +110,7 @@ html,body,#root{
 }
 
 .ant-layout, .ant-menu-inline, .ant-menu-inline-collapsed{
-    /*height: 100%;*/
+    height: 100%;
     border-right: 0 !important;
 }
 
@@ -164,7 +165,7 @@ html,body,#root{
 .ant-card-meta-description {
     color: red !important;
 }
-/* 翻页按钮 */
+/* HomeView翻页按钮 */
 .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link {
     background-color: #1c1c1c;
 }
@@ -176,4 +177,35 @@ html,body,#root{
 }
 .ant-pagination-item a {
     color: #e8e8e8;
+}
+
+/* 购物车 */
+.ant-table-thead > tr > th {
+    color: #e8e8e8;
+    background-color: #1b1b1b;
+}
+.ant-table-wrapper {
+    background-color: #1c1c1c;
+}
+.ant-table-tbody > tr > td {
+    color: #e8e8e8;
+}
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+    background-color: #282c34;
+}
+/* 订单界面 */
+.ant-list-item-meta-title {
+    color: #e8e8e8;
+}
+.ant-list-item-meta-description {
+    color: #e8e8e8;
+}
+.ant-calendar-range-picker-separator {
+    color: #e8e8e8;
+}
+.ant-list-item .ant-table-wrapper {
+    flex-basis: 60%;
+}
+.ant-list-item .ant-table-wrapper .ant-table-pagination.ant-pagination {
+    display: none;
 }
