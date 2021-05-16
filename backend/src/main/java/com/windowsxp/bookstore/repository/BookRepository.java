@@ -35,7 +35,6 @@ public class BookRepository {
                             rs.getString("image"));
                 }
         );
-        Iterator<Book> it = result.iterator();
         return result;
     }
 

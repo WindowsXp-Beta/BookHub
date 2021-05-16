@@ -30,4 +30,9 @@ public class CartDaoImpl implements CartDao {
     public void deleteCart(Map<String, String> params) {
         cartRepository.deleteCart(params);
     }
+
+    @Override
+    public void editCartItemNum(Map<String, String> params) {
+        cartRepository.editCartItemNum(params);
+    }
 }

@@ -5,11 +5,9 @@ export class BookCarousel extends React.Component{
 
     createContent = (ctx) => {
         const images = ctx.keys().map(ctx);//require.context.keys()匹配成功模块名字组成的数组
-        console.log(images);
         let result = [];
         for (let i = 0; i < ctx.keys().length; i++) {
             let img = images[i];
-            console.log(img);
             result.push(<div><img alt={i} src={img.default}/></div>);
         }
         return result;

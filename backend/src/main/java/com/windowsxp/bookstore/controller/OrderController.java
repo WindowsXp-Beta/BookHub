@@ -1,5 +1,6 @@
 package com.windowsxp.bookstore.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.windowsxp.bookstore.constant.Constant;
 import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.service.BookService;
@@ -10,13 +11,12 @@ import com.windowsxp.bookstore.utils.msgutils.Msg;
 import com.windowsxp.bookstore.utils.msgutils.MsgCode;
 import com.windowsxp.bookstore.utils.msgutils.MsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
+@RestController
 public class OrderController {
 
     @Autowired
@@ -57,5 +57,13 @@ public class OrderController {
         System.out.println("deleteCart");
         cartService.deleteCart(params);
         return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.DELETE_SUCCESS_MSG);
+    }
+
+    @RequestMapping("/editCartItemNum")
+    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
+    public Msg editCartItemNum(@RequestBody Map<String, String> params) {
+        System.out.println("editCartNum");
+        cartService.editCartItemNum(params);
+        return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.EDITNUM_SUCCESS_MSG);
     }
 }

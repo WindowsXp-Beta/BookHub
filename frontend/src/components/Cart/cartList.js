@@ -1,42 +1,77 @@
 import React from 'react';
 import {Button, Input, InputNumber, List, message, Popconfirm, Table} from 'antd';
-
+import {addOrder, delCartItem, editCartItemNumber, getCart} from "../../services/userService";
+import {history} from '../../utils/history';
 
 const {Search} = Input;
 
-const data = [
-    {
-        key: '1',
-        title: 'Computer Systems',
-        bookNumber: '1',
-        bookPrice: '120',
-        sum: '120',
-    },
-    {
-        key: '2',
-        title: 'Operating Systems',
-        bookNumber: '2',
-        bookPrice: '100',
-        sum: '200',
-    },
-    {
-        key: '3',
-        title: 'Algorithm',
-        bookNumber: '3',
-        bookPrice: '80',
-        sum: '240',
-    },
-];
 export class CartList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cart: data,
-            showCart: data,
+            cart: [],
+            showCart: [],
             searchValue: '',
             selectedRowKeys: [],
         }
     }
+
+    componentDidMount() {
+        let user = JSON.parse(localStorage.getItem('user'));
+        if (user === null) {
+            message.error("请登录");
+        } else {
+            const callback = (data) => {
+                for (let i = 0; i < data.length; ++i) {
+                    data[i].key = data[i].itemId;
+                    data[i].title = data[i].book.name;
+                    data[i].bookNumber = data[i].bookNum;
+                    data[i].bookId = data[i].book.bookId;
+                    data[i].bookPrice = data[i].book.price / 100;
+                    data[i].sum = (data[i].book.price/100 * data[i].bookNum).toFixed(1);
+                }
+                this.setState({
+                    cart: data, showCart: data
+                });
+            };
+            let userId = user.userId;
+            getCart(userId, callback);
+        }
+    }
+
+    sendDeletion = (id) => {
+        const callback = (data) => {
+            if (!data.status) {
+                message.success(data.msg)
+
+                let user = JSON.parse(localStorage.getItem('user'));
+                let userId = user.userId;
+
+                const callback1 = (data) => {
+                    for (let i = 0; i < data.length; ++i) {
+                        data[i].key = data[i].itemId;
+                        data[i].title = data[i].book.name;
+                        data[i].bookNumber = data[i].bookNum;
+                        data[i].bookId = data[i].book.bookId;
+                        data[i].bookPrice = data[i].book.price / 100;
+                        data[i].sum = (data[i].book.price/100 * data[i].bookNum).toFixed(1);
+                    }
+                    this.setState({
+                        cart: data,
+                        showCart: data,
+                        searchValue: '',
+                        selectedRowKeys: [],
+                        selectedRows: [],
+                    });
+                };
+                getCart(userId, callback1);
+            } else {
+                message.error(data.msg);
+            }
+        };
+        let json = {itemId: id};
+        delCartItem(json, callback);
+    };
 
     deleteConfirm = (key) => {
         const data = this.state.cart;
@@ -49,7 +84,7 @@ export class CartList extends React.Component {
         }
         let tmp = [...data];
 
-        // this.sendDeletion(key);
+        this.sendDeletion(key);
         this.setState(() => ({data: tmp}));
     };
 
@@ -80,21 +115,20 @@ export class CartList extends React.Component {
         }
         let json = {
             itemId: itemId,
-            bookNumber: value
+            bookNum: value
         };
         let tmp = this.state.cart;
-        debugger;
         for (let i = 0; i < tmp.length; ++i) {
             if (tmp[i].key === itemId) {
                 tmp[i].bookNumber = value;
-                tmp[i].sum = (tmp[i].bookPrice * tmp[i].bookNumber).toFixed(1);
+                tmp[i].sum = (tmp[i].book.price/100 * tmp[i].bookNumber).toFixed(1);
             }
         }
         this.setState({cart: tmp, showCart: tmp});
         const callback = () => {
             message.success('修改成功');
         }
-        // editCartItemNumber(json, callback);
+        editCartItemNumber(json, callback);
     }
 
     render() {

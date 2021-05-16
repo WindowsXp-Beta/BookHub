@@ -9,4 +9,5 @@ public interface CartDao {
     List<CartItem> getCart(Integer usrtId);
     void addCart(Map<String, String> params);
     void deleteCart(Map<String, String> params);
+    void editCartItemNum(Map<String, String> params);
 }

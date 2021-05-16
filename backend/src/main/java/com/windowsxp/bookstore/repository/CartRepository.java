@@ -18,9 +18,10 @@ public class CartRepository {
 
     public List<CartItem> getCart(Integer userId) {
         List<CartItem> result = new ArrayList<CartItem>();
-        String sql = String.format("SELECT * FROM cart c, book b WHERE c.book_id = b.id and user_id = \"%d\"",userId);
+        String sql = String.format("SELECT * FROM cart_item c, book b WHERE c.book_id = b.id and user_id = \"%d\"",userId);
         result = jdbcTemplate.query(
                 sql,(rs, rowNum) -> new CartItem(
+                        rs.getInt("item_id"),
                         rs.getInt("user_id"),
                         new Book(rs.getInt("id"),
                                 rs.getString("isbn"),
@@ -32,23 +33,28 @@ public class CartRepository {
                                 rs.getInt("inventory"),
                                 rs.getString("image")
                         ),
-                        rs.getInt("book_num")
+                        rs.getInt("book_number")
                 )
         );
         return result;
     }
 
     public void addCart(Map<String, String> params) {
-        String sql = String.format("INSERT INTO cart (user_id,book_id,book_num) values (?,?,?) on duplicate key update book_num = %d",Integer.valueOf(params.get("bookNum")));
+        String sql = String.format("INSERT INTO cart_item (user_id,book_id,book_number) values (?,?,?) on duplicate key update book_number = %d",Integer.valueOf(params.get("bookNumber")));
         jdbcTemplate.update(
                 sql,Integer.valueOf(params.get("userId")),
-                Integer.valueOf("bookId"),
-                Integer.valueOf("bookNum")
+                Integer.valueOf(params.get("bookId")),
+                Integer.valueOf(params.get("bookNumber"))
         );
     }
 
     public void deleteCart(Map<String, String> params) {
-        String sql = String.format("DELETE FROM cart WHERE user_id = %d and book_id = %d",Integer.valueOf(params.get("userId")),Integer.valueOf(params.get("bookId")));
+        String sql = String.format("DELETE FROM cart_item WHERE item_id=%d",Integer.valueOf(params.get("itemId")));
+        jdbcTemplate.update(sql);
+    }
+
+    public void editCartItemNum(Map<String, String> params) {
+        String sql = String.format("UPDATE cart_item set book_number=%d where item_id=%d",Integer.valueOf(params.get("bookNum")),Integer.valueOf(params.get("itemId")));
         jdbcTemplate.update(sql);
     }
 }

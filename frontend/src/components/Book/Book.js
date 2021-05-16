@@ -11,15 +11,15 @@ export class Book extends React.Component{
         return (
             <Link to={{
                 pathname:"/bookDetails",
-                search: "?id=" + info.bookId,
+                search: "?id=" + info.id,
             }}
             >
                 <Card
                     hoverable
                     style={{width: 181}}
-                    cover={<img alt="image" src={info.img} className={"bookImg"} style={{height: 192,width: 150}}/>}
+                    cover={<img alt="image" src={info.image} className={"bookImg"} style={{height: 192,width: 150}}/>}
                 >
-                    <Meta title={info.title} description={"¥ "+ info.price}/>
+                    <Meta title={info.name} description={"¥ "+ info.price/100}/>
                 </Card>
             </Link>
         );

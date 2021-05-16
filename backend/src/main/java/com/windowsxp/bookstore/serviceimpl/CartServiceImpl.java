@@ -29,4 +29,9 @@ public class CartServiceImpl implements CartService{
     public void deleteCart(Map<String, String> params) {
         cartDao.deleteCart(params);
     }
+
+    @Override
+    public void editCartItemNum(Map<String, String> params) {
+        cartDao.editCartItemNum(params);
+    }
 }

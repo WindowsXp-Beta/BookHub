@@ -23,4 +23,60 @@ public class Book {
         this.inventory = inventory;
         this.image = image;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public void setInventory(Integer inventory) {
+        this.inventory = inventory;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+    public String getIsbn() {
+        return this.isbn;
+    }
+    public String getName() {
+        return this.name;
+    }
+    public String getType() {
+        return this.type;
+    }
+    public String getAuthor() {
+        return this.author;
+    }
+    public Integer getPrice() {
+        return this.price;
+    }
+    public String getDescription() {
+        return this.description;
+    }
+    public Integer setInventory() {
+        return this.inventory;
+    }
+    public String getImage() {
+        return this.image;
+    }
 }
