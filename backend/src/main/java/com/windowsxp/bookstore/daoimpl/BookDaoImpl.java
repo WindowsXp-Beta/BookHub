@@ -20,7 +20,7 @@ public class BookDaoImpl implements BookDao{
     }
 
     @Override
-    public String getBooks() {
+    public List<Book> getBooks() {
         return bookRepository.getBooks();
     }
 }

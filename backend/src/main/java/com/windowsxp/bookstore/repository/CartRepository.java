@@ -27,7 +27,7 @@ public class CartRepository {
                                 rs.getString("name"),
                                 rs.getString("type"),
                                 rs.getString("author"),
-                                rs.getDouble("price"),
+                                rs.getInt("price"),
                                 rs.getString("description"),
                                 rs.getInt("inventory"),
                                 rs.getString("image")

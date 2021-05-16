@@ -30,7 +30,7 @@ public class UserRepository {
                 }
             );
         Iterator<User> it = result.iterator();
-        return it.next();
+        return (User)it.next();
     }
 
     public User getUserById(Integer id) {

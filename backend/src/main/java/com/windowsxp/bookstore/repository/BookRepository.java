@@ -2,6 +2,7 @@ package com.windowsxp.bookstore.repository;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.windowsxp.bookstore.entity.Book;
 
@@ -18,7 +19,7 @@ public class BookRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public String getBooks() {
+    public List<Book> getBooks() {
         List<Book> result = new ArrayList<Book>();
         result = jdbcTemplate.query(
                 "SELECT	* FROM book",
@@ -28,25 +29,14 @@ public class BookRepository {
                             rs.getString("name"),
                             rs.getString("type"),
                             rs.getString("author"),
-                            rs.getDouble("price"),
+                            rs.getInt("price"),
                             rs.getString("description"),
                             rs.getInt("inventory"),
                             rs.getString("image"));
                 }
         );
         Iterator<Book> it = result.iterator();
-        ArrayList<JSONArray> booksJson = new ArrayList<JSONArray>();
-        while (it.hasNext()) {
-            Book book = (Book) it.next();
-            ArrayList<String> arrayList = new ArrayList<String>();
-            arrayList.add(book.getTitle());
-            arrayList.add(book.getAuthor());
-            arrayList.add(book.getLanguage());
-            arrayList.add(book.getPublished());
-            arrayList.add(book.getSales());
-            booksJson.add((JSONArray)	JSONArray.toJSON(arrayList));
-        }
-        String booksString = JSON.toJSONString(booksJson, SerializerFeature.BrowserCompatible)
+        return result;
     }
 
     public Book getOne(Integer id) {
@@ -59,7 +49,7 @@ public class BookRepository {
                             rs.getString("name"),
                             rs.getString("type"),
                             rs.getString("author"),
-                            rs.getDouble("price"),
+                            rs.getInt("price"),
                             rs.getString("description"),
                             rs.getInt("inventory"),
                             rs.getString("image"));

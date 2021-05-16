@@ -7,12 +7,12 @@ public class Book {
     private String name;
     private String type;
     private String author;
-    private Double price;
+    private Integer price;
     private String description;
     private Integer inventory;
     private String image;
 
-    public Book(Integer id, String isbn, String name, String type, String author, Double price, String description, Integer inventory, String image) {
+    public Book(Integer id, String isbn, String name, String type, String author, Integer price, String description, Integer inventory, String image) {
         this.id = id;
         this.isbn = isbn;
         this.name = name;
@@ -22,9 +22,5 @@ public class Book {
         this.description = description;
         this.inventory = inventory;
         this.image = image;
-    }
-
-    public getTitle() {
-
     }
 }
