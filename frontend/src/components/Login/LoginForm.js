@@ -1,23 +1,24 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 import {Row, Col, Form, Icon, Input, Button, Checkbox, Layout} from 'antd';
-//import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 
-//import * as userService from '../services/userService'
+import * as userService from '../../services/userService'
 
 
 class LoginForm extends React.Component {
 
 
-    // handleSubmit = e => {
-    //     e.preventDefault();
-    //     this.props.form.validateFields((err, values) => {
-    //         if (!err) {
-    //             console.log('Received values of form: ', values);
-    //             userService.login(values);
-    //         }
-    //     });
-    // };
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+                userService.login(values);
+            }
+        });
+    };
+
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
@@ -55,7 +56,7 @@ class LoginForm extends React.Component {
                         Forgot password
                     </a>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                        <Link to={"/homeview"} style={{color: '#000'}}>Log in</Link>
+                        Log in
                     </Button>
                     <span style={{color: '#f90'}}>Or</span> <a href="">register now!</a>
                 </Form.Item>

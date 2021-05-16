@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect} from 'react-router-dom';
 import PrivateRoute from './PrivateRoute'
-//import LoginRoute from  './LoginRoute'
+import LoginRoute from  './LoginRoute'
 import HomeView from "./view/HomeView";
 import LoginView from './view/LoginView'
 import BookView from "./view/BookView";
@@ -23,11 +23,11 @@ class BasicRoute extends React.Component{
         return(
             <Router history={history}>
                 <Switch>
-                    <Route exact path="/" component={LoginView} />
-                    <PrivateRoute exact path="/homeview" component={HomeView} />
-                    <Route exact path="/bookDetails" component={BookView} />
-                    <Route exact path="/CartView" component={CartView} />
-                    <Route exact path="/OrderView" component={OrderView} />
+                    <PrivateRoute exact path="/" component={HomeView} />
+                    <LoginRoute exact path="/login" component={LoginView} />
+                    <PrivateRoute exact path="/bookDetails" component={BookView} />
+                    <PrivateRoute exact path="/CartView" component={CartView} />
+                    <PrivateRoute exact path="/OrderView" component={OrderView} />
                     <Redirect from="/*" to="/" />
                 </Switch>
             </Router>

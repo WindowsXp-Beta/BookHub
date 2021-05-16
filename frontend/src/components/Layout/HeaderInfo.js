@@ -9,7 +9,7 @@ export class HeaderInfo extends React.Component {
 
     render(){
 
-        //const user = JSON.parse(localStorage.getItem("user"));
+        const user = JSON.parse(localStorage.getItem("user"));
 
         return(
             <div id="header">
@@ -23,8 +23,8 @@ export class HeaderInfo extends React.Component {
                             </a>
                         </Col>
                         <Col xs={0} sm={0} md={19} lg={19} xl={19} xxl={20}>
-                            {/*user != null ? <UserAvatar user={user}/> : null*/}
-                            <UserAvatar />
+                            user != null ? <UserAvatar user={user}/> : null
+                            {/*<UserAvatar />*/}
                         </Col>
                     </Row>
                 </div>

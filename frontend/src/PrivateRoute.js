@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom'
-//import * as userService from "./services/userService"
+import * as userService from "./services/userService"
 import {message} from "antd";
 
 export default class PrivateRoute extends React.Component{
@@ -24,22 +24,22 @@ export default class PrivateRoute extends React.Component{
     };
 
 
-    /*componentDidMount() {
+    componentDidMount() {
         userService.checkSession(this.checkAuth);
-    }*/
+    }
 
 
     render() {
 
         const {component: Component, path="/",exact=false,strict=false} = this.props;
 
-        //console.log(this.state.isAuthed);
+        console.log(this.state.isAuthed);
 
-        /*if (!this.state.hasAuthed) {
+        if (!this.state.hasAuthed) {
             return null;
-        }*/
+        }
 
-        /*return <Route path={path} exact={exact} strict={strict} render={props => (
+        return <Route path={path} exact={exact} strict={strict} render={props => (
             this.state.isAuthed ? (
                 <Component {...props}/>
             ) : (
@@ -48,8 +48,7 @@ export default class PrivateRoute extends React.Component{
                     state: {from: props.location}
                 }}/>
             )
-        )}/>*/
-        return <Route path={path} exact={exact} strict={strict} render={props => (<Component {...props}/>)}/>
+        )}/>
     }
 }
 

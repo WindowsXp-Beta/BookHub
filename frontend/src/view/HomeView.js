@@ -14,13 +14,13 @@ class HomeView extends React.Component{
 
     constructor(props) {
         super(props);
-
+        // console.log(props.location.state.name);
     }
 
-    /*componentDidMount(){
+    componentDidMount(){
         let user = localStorage.getItem("user");
         this.setState({user:user});
-    }*/
+    }
 
     render(){
         return(
@@ -47,4 +47,3 @@ class HomeView extends React.Component{
 }
 
 export default withRouter(HomeView);
-//export default HomeView;

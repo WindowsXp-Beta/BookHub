@@ -82,17 +82,17 @@ export class SideBar extends React.Component {
         this.setState({ collapsed });
     };
 
-    // bookOnClick = () => {
-    //     history.push("/HomeView");
-    // };
-    //
-    // cartOnClick = () => {
-    //     history.push("/CartView");
-    // };
-    //
-    // orderOnClick = () => {
-    //     history.push("/OrderView");
-    // };
+    bookOnClick = () => {
+        history.push("/HomeView");
+    };
+
+    cartOnClick = () => {
+        history.push("/CartView");
+    };
+
+    orderOnClick = () => {
+        history.push("/OrderView");
+    };
 
     render() {
         return (
@@ -104,7 +104,7 @@ export class SideBar extends React.Component {
                             // defaultSelectedKeys={['1']}
                               mode="inline">
                             <Menu.Item key="1">
-                                <Link to="/HomeView">
+                                <Link to="/">
                                 <Icon type="read" style={{ fontSize: '18px', color: '#fff'}}/>
                                 <span style={{ fontSize: '16px', color: '#a2a2a2'}}>Books</span>
                                 </Link>

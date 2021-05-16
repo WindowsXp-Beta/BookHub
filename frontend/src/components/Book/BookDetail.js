@@ -2,23 +2,16 @@ import React from 'react';
 import { Descriptions, Button } from 'antd';
 
 
-
-
-
 export class BookDetail extends React.Component{
-
-
     render() {
-
         const {info} = this.props;
         if(info == null){
             return null;
         }
-
         return (
             <div className={"content"}>
                 <div className={"book-detail"}>
-                    <div className={"book-image"}><img alt="image" src={require("../../assets/book_temp/csapp.jpg").default} style={{width:"250px", height:"350px"}}/></div>
+                    <div className={"book-image"}><img alt="image" src={info.img} style={{width:"250px", height:"350px"}}/></div>
                     <div className={"descriptions"}>
                         <Descriptions>
                             <Descriptions.Item className={"title"} span={3}>{info.name}</Descriptions.Item>
@@ -34,14 +27,11 @@ export class BookDetail extends React.Component{
                     <Button type="danger" icon="shopping-cart" size={"large"}>
                         加入购物车
                     </Button>
-
                     <Button type="danger" icon="pay-circle" size={"large"} style={{marginLeft:"15%"}}ghost>
                         立即购买
                     </Button>
                 </div>
             </div>
         )
-
     }
-
 }

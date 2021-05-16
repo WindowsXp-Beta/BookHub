@@ -15,12 +15,8 @@ export class BookCarousel extends React.Component{
         return result;
     };
 
-
     render(){
         const requireContext = require.context("../../assets/carousel", true, /^\.\/.*\.jpg$/);//an api of webpack
-
-
-
         return (
             <Carousel autoplay>
                 {this.createContent(requireContext)}

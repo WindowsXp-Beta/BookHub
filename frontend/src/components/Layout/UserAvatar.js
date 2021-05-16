@@ -2,8 +2,8 @@ import React from 'react';
 import { Avatar, Dropdown, Menu, Icon} from 'antd';
 //import { UserOutlined } from '@ant-design/icons';
 import '../../css/index.css'
-//import * as userService from '../services/userService'
-//import config from 'config'
+import * as userService from '../../services/userService'
+// import config from 'config'
 
 export class UserAvatar extends React.Component {
 
@@ -17,7 +17,7 @@ export class UserAvatar extends React.Component {
                     </a>
                 </Menu.Item>
                 <Menu.Item>
-                    <a href="#" >
+                    <a href="#" onClick={userService.logout}>
                         Log Out
                     </a>
                 </Menu.Item>
@@ -26,11 +26,11 @@ export class UserAvatar extends React.Component {
 
         const {user} = this.props;
 
-        //const imgUrl = config.imgUrl + "/" + user.username + ".jpg";
+        // const imgUrl = config.imgUrl + "/" + user.username + ".jpg";
 
         return(
             <div id="avatar">
-                <span className="name">Hi, WindowsXp</span>
+                <span className="name">Hi, {user.username}</span>
                 <Dropdown overlay={menu} placement="bottomRight">
                     {/*<Avatar src={imgUrl} style={{cursor:"pointer"}}/>*/}
                     <Avatar  icon={<Icon type="user" />} style={{cursor:"pointer"}}/>
