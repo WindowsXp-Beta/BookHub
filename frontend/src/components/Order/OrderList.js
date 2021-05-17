@@ -1,88 +1,71 @@
 import React from 'react';
 import {DatePicker,Input, List, message} from 'antd'
 import OrderDetail from "./OrderDetail";
+import * as userService from '../../services/userService'
 
 const {Search} = Input;
 
 const { RangePicker } = DatePicker;
 
-const order = [
-    {
-        listId: "1",
-        time: "2021-01-01",
-        items: [
-            {
-                book: {
-                    title: "Computer Systems",
-                },
-                bookNumber: "1",
-                bookPrice: "120",
-                sum: "120",
-            },
-        ],
-    },
-    {
-        listId: "2",
-        time: "2021-03-01",
-        items: [
-            {
-                book: {
-                    title: "Operating Systems",
-                },
-                bookNumber: "2",
-                bookPrice: "100",
-                sum: "200",
-            }
-        ],
-    },
-    {
-        listId: "3",
-        time: "2021-04-01",
-        items: [
-            {
-                book: {
-                    title: "Algorithm",
-                },
-                bookNumber: "3",
-                bookPrice: "80",
-                sum: "240",
-            }
-        ],
-    }
-];
+
+        // listId: "3",
+        // time: "2021-04-01",
+        // items: [
+        //     {
+        //         book: {
+        //             title: "Algorithm",
+        //         },
+        //         bookNumber: "3",
+        //         bookPrice: "80",
+        //         sum: "240",
+        //     }
+        // ],
 
 export class OrderList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            orders: order,
-            showOrders: order,
+            orders: [],
+            showOrders: [],
             searchValue: '',
         };
     }
 
-    // componentDidMount() {
-    //
-    //     const callback = (data) => {
-    //         let tmp =[];
-    //        for(let i = data.length-1;i>=0;i--)
-    //         {
-    //             tmp.push(data[i]);
-    //         }
-    //         this.setState({orders: tmp, showOrders: tmp});
-    //     };
-    //
-    //     let user = JSON.parse(localStorage.getItem('user'));
-    //
-    //     if (user === null) {
-    //         message.error("请登录");
-    //     } else {
-    //         let userId = user.userId;
-    //         getOrders(userId, callback);
-    //     }
-    //
-    // }
+    componentDidMount() {
+
+        const callback = (data) => {
+            let tmp =[];
+            for(let i = 0; i < data.length; i++) {
+                let flag = false;
+                for (let j = 0; j < tmp.length; j++) {
+                    if (tmp[j].orderId === data[i].orderId) {
+                        tmp[j].itemList.push(data[i].orderItem);
+                        flag = true;
+                        break;
+                    }
+                }
+                if(flag) continue;
+                tmp.push({
+                        orderId:data[i].orderId,
+                        itemList:[data[i].orderItem],
+                        time:data[i].time
+                    }
+                );
+            }
+            this.setState({orders: tmp, showOrders: tmp});
+        };
+
+        let user = JSON.parse(localStorage.getItem('user'));
+
+        if (user === null) {
+            message.error("请登录");
+        } else {
+            let userId = user.userId;
+            userService.getOrders(userId, callback);
+        }
+
+    }
 
     searchChange = ({target: {value}}) => {
         this.setState({searchValue: value})
@@ -92,13 +75,13 @@ export class OrderList extends React.Component {
 
         for (let i = 0; i < list.length; i++) {
             if (
-                list[i].listId.toString() === search.toString()
+                list[i].orderId.toString() === search.toString()
             ) {
                 arr.push(list[i]);
             }
-            for (let j = 0; j < list[i].items.length; j++) {
+            for (let j = 0; j < list[i].itemList.length; j++) {
                 if (
-                    list[i].items[j].book.title.toLowerCase().indexOf(search) >= 0
+                    list[i].itemList[j].book.name.toLowerCase().indexOf(search) >= 0
                 ) {
                     arr.push(list[i]);
                 }
@@ -152,11 +135,10 @@ export class OrderList extends React.Component {
                     renderItem={item => (
                         <List.Item >
                             <List.Item.Meta
-                                title={'order:' + item.listId}
+                                title={'order:' + item.orderId}
                                 description={'time:' + item.time}
                             />
-                            <div style={{flex:'1'}}><img src={require("../../assets/book_temp/csapp.jpg").default} style={{width:'80px'}}/></div>
-                            <OrderDetail info={item.items}/>
+                            <OrderDetail info={item.itemList}/>
                         </List.Item>
                     )}
                 />

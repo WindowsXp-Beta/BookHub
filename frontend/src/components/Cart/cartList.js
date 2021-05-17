@@ -26,7 +26,7 @@ export class CartList extends React.Component {
                     data[i].key = data[i].itemId;
                     data[i].title = data[i].book.name;
                     data[i].bookNumber = data[i].bookNum;
-                    data[i].bookId = data[i].book.bookId;
+                    data[i].bookId = data[i].book.id;
                     data[i].bookPrice = data[i].book.price / 100;
                     data[i].sum = (data[i].book.price/100 * data[i].bookNum).toFixed(1);
                 }
@@ -52,7 +52,7 @@ export class CartList extends React.Component {
                         data[i].key = data[i].itemId;
                         data[i].title = data[i].book.name;
                         data[i].bookNumber = data[i].bookNum;
-                        data[i].bookId = data[i].book.bookId;
+                        data[i].bookId = data[i].book.id;
                         data[i].bookPrice = data[i].book.price / 100;
                         data[i].sum = (data[i].book.price/100 * data[i].bookNum).toFixed(1);
                     }
@@ -130,6 +130,57 @@ export class CartList extends React.Component {
         }
         editCartItemNumber(json, callback);
     }
+    submitOrder = () => {
+
+        // if (this.state.selectedRowKeys.length === 0) {
+        //     message.error("please choose at least one item");
+        //     return;
+        // }
+
+        let user = JSON.parse(localStorage.getItem('user'));
+        let userId = user.userId;
+        let items = [];
+        const data = this.state.cart;
+        for (let i = 0; i < data.length; i++) {
+            items.push({
+                bookId: data[i].bookId,
+                bookNum: data[i].bookNumber,
+            });
+            let json = {itemId: data[i].key};
+            delCartItem(json);
+        }
+        console.log(items);
+        let json = {
+            userId: userId,
+            orderItems: items
+        };
+
+        const callback = (data) => {
+            if (data.status >= 0) {
+                const callback1 = (data) => {
+                    for (let i = 0; i < data.length; ++i) {
+                        data[i].key = data[i].itemId;
+                        data[i].title = data[i].book.name;
+                        data[i].bookNumber = data[i].bookNum;
+                        data[i].bookId = data[i].book.id;
+                        data[i].bookPrice = data[i].book.price / 100;
+                        data[i].sum = (data[i].book.price/100 * data[i].bookNum).toFixed(1);
+                    }
+                    this.setState({
+                        cart: data,
+                        showCart: data,
+                        searchValue: '',
+                    });
+                };
+                getCart(userId, callback1);
+                message.success(data.msg + "请至订单界面查询订单信息");
+                history.push('/order');
+            } else {
+                message.error(data.msg);
+            }
+        }
+        addOrder(json, callback);
+    };
 
     render() {
         const columns = [

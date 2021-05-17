@@ -62,3 +62,12 @@ export const editCartItemNumber = (data,callback) =>
     const url = `http://localhost:8080/editCartItemNum`;
     postRequest(url, data, callback);
 };
+export const getOrders = (userId, callback) => {
+    const data = {userId: userId};
+    const url = `http://localhost:8080/getAllOrders`;
+    postRequest(url, data, callback);
+};
+export const addOrder = (data,callback) => {
+    const url = `http://localhost:8080/addOrder`;
+    postRequest(url, data, callback);
+};
