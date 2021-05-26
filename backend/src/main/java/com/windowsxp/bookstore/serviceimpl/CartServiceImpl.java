@@ -1,6 +1,8 @@
 package com.windowsxp.bookstore.serviceimpl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.windowsxp.bookstore.dao.CartDao;
+import com.windowsxp.bookstore.entity.Book;
 import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.service.CartService;
 
@@ -16,22 +18,29 @@ public class CartServiceImpl implements CartService{
     private CartDao cartDao;
 
     @Override
-    public List<CartItem> getCart(Integer userId) {
-        return cartDao.getCart(userId);
+    public void addCart(JSONObject params) {
+        CartItem newCartItem = new CartItem();
+        Integer userId = params.getInteger("userId");
+        newCartItem.setUserId(userId);
+        Integer bookId = params.getInteger("bookId");
+        Book newBook = new Book();
+        newBook.setId(bookId);
+        newCartItem.setBook(newBook);
+        Integer bookNum = params.getInteger("bookNum");
+        newCartItem.setBookNum(bookNum);
+        cartDao.addCart(newCartItem);
     }
 
     @Override
-    public void addCart(Map<String, String> params) {
-        cartDao.addCart(params);
+    public void deleteCart(JSONObject params) {
+        Integer itemId = params.getInteger("itemId");
+        cartDao.deleteCart(itemId);
     }
 
     @Override
-    public void deleteCart(Map<String, String> params) {
-        cartDao.deleteCart(params);
-    }
-
-    @Override
-    public void editCartItemNum(Map<String, String> params) {
-        cartDao.editCartItemNum(params);
+    public void editCartItemNum(JSONObject params) {
+        Integer itemId = params.getInteger("itemId");
+        Integer newBookNum = params.getInteger("bookNum");
+        cartDao.editCartItemNum(itemId, newBookNum);
     }
 }

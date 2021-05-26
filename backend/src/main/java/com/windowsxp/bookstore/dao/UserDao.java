@@ -4,5 +4,5 @@ import com.windowsxp.bookstore.entity.User;
 
 public interface UserDao {
     User checkUser(String username, String password);
-    User getUserById(Integer id);
+    User getUser(Integer id);
 }

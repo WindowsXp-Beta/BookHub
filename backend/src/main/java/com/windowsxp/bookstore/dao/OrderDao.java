@@ -1,12 +1,12 @@
 package com.windowsxp.bookstore.dao;
 
-import com.alibaba.fastjson.JSONObject;
 import com.windowsxp.bookstore.entity.Order;
+import com.windowsxp.bookstore.entity.OrderItem;
 
 import java.util.List;
 
 public interface OrderDao {
-    void addOrder(JSONObject params);
 
-    List<Order> getAllOrders(Integer userId);
+    void addOrder(Order order);
+    void addOrderItem(OrderItem orderItem);
 }

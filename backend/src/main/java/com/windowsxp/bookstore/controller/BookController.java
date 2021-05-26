@@ -27,6 +27,6 @@ public class BookController {
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public Book getBook(@RequestParam("id") Integer id) {
         System.out.println("getBook: " + id);
-        return bookService.findBookById(id);
+        return bookService.findBook(id);
     }
 }

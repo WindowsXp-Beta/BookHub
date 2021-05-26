@@ -34,7 +34,7 @@ public class OrderController {
     public List<Order> getOrders(@RequestBody Map<String, String> params) {
         System.out.println("getAllOrders");
         Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
-        return orderService.getAllOrders(userId);
+        return userService.getOrders(userId);
     }
     @RequestMapping("/addOrder")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
@@ -50,14 +50,15 @@ public class OrderController {
     public List<CartItem> getCart(@RequestBody Map<String, String> params) {
         System.out.println("getCart");
         Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
-        return cartService.getCart(userId);
+        return userService.getCart(userId);
     }
 
     @RequestMapping("/addCart")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public Msg addCart(@RequestBody Map<String, String> params) {
         System.out.println("addCart");
-        cartService.addCart(params);
+        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(params);
+        cartService.addCart(jsonObject);
         return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.ADD_SUCCESS_CART_MSG);
     }
 
@@ -65,7 +66,8 @@ public class OrderController {
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public Msg deleteCart(@RequestBody Map<String, String> params) {
         System.out.println("deleteCart");
-        cartService.deleteCart(params);
+        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(params);
+        cartService.deleteCart(jsonObject);
         return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.DELETE_SUCCESS_CART_MSG);
     }
 
@@ -73,7 +75,8 @@ public class OrderController {
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public Msg editCartItemNum(@RequestBody Map<String, String> params) {
         System.out.println("editCartNum");
-        cartService.editCartItemNum(params);
+        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(params);
+        cartService.editCartItemNum(jsonObject);
         return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.EDITNUM_SUCCESS_MSG);
     }
 }

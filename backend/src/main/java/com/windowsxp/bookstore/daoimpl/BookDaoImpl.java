@@ -15,12 +15,12 @@ public class BookDaoImpl implements BookDao{
     BookRepository bookRepository;
 
     @Override
-    public Book findOne(Integer id){
-        return bookRepository.getOne(id);
+    public Book findBook(Integer id){
+        return bookRepository.getById(id);
     }
 
     @Override
     public List<Book> getBooks() {
-        return bookRepository.getBooks();
+        return bookRepository.findAll();
     }
 }

@@ -16,8 +16,8 @@ public class BookServiceImpl implements BookService {
     private BookDao bookDao;
 
     @Override
-    public Book findBookById(Integer id){
-        return bookDao.findOne(id);
+    public Book findBook(Integer id){
+        return bookDao.findBook(id);
     }
 
     @Override

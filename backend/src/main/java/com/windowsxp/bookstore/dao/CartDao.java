@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CartDao {
-    List<CartItem> getCart(Integer usrtId);
-    void addCart(Map<String, String> params);
-    void deleteCart(Map<String, String> params);
-    void editCartItemNum(Map<String, String> params);
+    void addCart(CartItem cartItem);
+    void deleteCart(Integer itemId);
+    void editCartItemNum(Integer itemId, Integer bookNum);
 }

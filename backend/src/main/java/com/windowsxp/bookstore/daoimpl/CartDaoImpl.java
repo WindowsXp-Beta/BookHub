@@ -7,8 +7,6 @@ import com.windowsxp.bookstore.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
 
 @Repository
 public class CartDaoImpl implements CartDao {
@@ -17,22 +15,19 @@ public class CartDaoImpl implements CartDao {
     CartRepository cartRepository;
 
     @Override
-    public List<CartItem> getCart(Integer userId) {
-        return cartRepository.getCart(userId);
+    public void addCart(CartItem cartItem) {
+        cartRepository.saveAndFlush(cartItem);
     }
 
     @Override
-    public void addCart(Map<String, String> params) {
-        cartRepository.addCart(params);
+    public void deleteCart(Integer itemId) {
+        cartRepository.deleteById(itemId);
     }
 
     @Override
-    public void deleteCart(Map<String, String> params) {
-        cartRepository.deleteCart(params);
-    }
-
-    @Override
-    public void editCartItemNum(Map<String, String> params) {
-        cartRepository.editCartItemNum(params);
+    public void editCartItemNum(Integer itemId, Integer bookNum) {
+        CartItem cartItem = cartRepository.getById(itemId);
+        cartItem.setBookNum(bookNum);
+        cartRepository.saveAndFlush(cartItem);
     }
 }

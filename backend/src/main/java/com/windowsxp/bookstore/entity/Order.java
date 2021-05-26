@@ -1,50 +1,31 @@
 package com.windowsxp.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+@Data
+@Entity
+@Table(name = "`order`", schema = "bookstore")
+@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 public class Order {
+
+    @Id
+    @Column(name = "order_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
+
+    @Column(name = "user_id")
     private Integer userId;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp time;
-    private OrderItem orderItem;
 
-    public Order(Integer orderId, Integer userId, Timestamp time, OrderItem orderItem) {
-        this.orderId = orderId;
-        this.userId = userId;
-        this.time = time;
-        this.orderItem = orderItem;
-    }
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public Timestamp getTime() {
-        return time;
-    }
-
-    public OrderItem getOrderItem() {
-        return orderItem;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setOrderItem(OrderItem orderItem) {
-        this.orderItem = orderItem;
-    }
-
-    public void setTime(Timestamp time) {
-        this.time = time;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+    @OneToMany
+    @JoinColumn(name = "order_id")
+    private List<OrderItem> orderItem;
 }

@@ -5,7 +5,6 @@ import com.windowsxp.bookstore.entity.Book;
 import java.util.List;
 
 public interface BookDao {
-    Book findOne(Integer id);
-
+    Book findBook(Integer id);
     List<Book> getBooks();
 }

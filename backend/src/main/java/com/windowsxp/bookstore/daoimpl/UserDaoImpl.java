@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User getUserById(Integer id){
-        return userRepository.getUserById(id);
+    public User getUser(Integer id){
+        return userRepository.getById(id);
     }
 }

@@ -3,6 +3,8 @@ package com.windowsxp.bookstore.daoimpl;
 import com.alibaba.fastjson.JSONObject;
 import com.windowsxp.bookstore.dao.OrderDao;
 import com.windowsxp.bookstore.entity.Order;
+import com.windowsxp.bookstore.entity.OrderItem;
+import com.windowsxp.bookstore.repository.OrderItemRepository;
 import com.windowsxp.bookstore.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,18 +17,16 @@ public class OrderDaoImpl implements OrderDao {
     @Autowired
     OrderRepository orderRepository;
 
+    @Autowired
+    OrderItemRepository orderItemRepository;
+
     @Override
-    public void addOrder(JSONObject params) {
-        orderRepository.addOrder(params);
+    public void addOrder(Order order) {
+        orderRepository.saveAndFlush(order);
     }
 
-//    @Override
-//    public void addOrderItem(Map<String, String> params) {
-//        orderRepository.addOrderItem(params);
-//    }
-
     @Override
-    public List<Order> getAllOrders(Integer userId) {
-        return orderRepository.getAllOrders(userId);
+    public void addOrderItem(OrderItem orderItem) {
+        orderItemRepository.saveAndFlush(orderItem);
     }
 }

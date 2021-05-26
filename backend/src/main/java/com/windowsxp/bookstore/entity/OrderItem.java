@@ -1,47 +1,29 @@
 package com.windowsxp.bookstore.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+
+import javax.persistence.*;
+
+@Data
+@Entity
+@Table(name = "order_item", schema = "bookstore")
+@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 public class OrderItem {
+
+    @Id
+    @Column(name = "item_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer itemId;
+
+    @Column(name = "order_id")
     private Integer orderId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
     private Book book;
+
+    @Column(name = "book_number")
     private Integer bookNum;
-
-    public OrderItem(Integer itemId, Integer orderId, Book book, Integer bookNum) {
-        this.itemId = itemId;
-        this.orderId = orderId;
-        this.book = book;
-        this.bookNum = bookNum;
-    }
-
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public void setBookNum(Integer bookNum) {
-        this.bookNum = bookNum;
-    }
-
-    public Integer getItemId() {
-        return itemId;
-    }
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public Integer getBookNum() {
-        return bookNum;
-    }
 }
