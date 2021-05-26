@@ -18,6 +18,11 @@ public class CartServiceImpl implements CartService{
     private CartDao cartDao;
 
     @Override
+    public List<CartItem> getCart(Integer userId) {
+          return cartDao.getCart(userId);
+    }
+
+    @Override
     public void addCart(JSONObject params) {
         CartItem newCartItem = new CartItem();
         Integer userId = params.getInteger("userId");
@@ -26,7 +31,7 @@ public class CartServiceImpl implements CartService{
         Book newBook = new Book();
         newBook.setId(bookId);
         newCartItem.setBook(newBook);
-        Integer bookNum = params.getInteger("bookNum");
+        Integer bookNum = params.getInteger("bookNumber");
         newCartItem.setBookNum(bookNum);
         cartDao.addCart(newCartItem);
     }

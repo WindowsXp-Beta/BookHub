@@ -7,20 +7,6 @@ const {Search} = Input;
 
 const { RangePicker } = DatePicker;
 
-
-        // listId: "3",
-        // time: "2021-04-01",
-        // items: [
-        //     {
-        //         book: {
-        //             title: "Algorithm",
-        //         },
-        //         bookNumber: "3",
-        //         bookPrice: "80",
-        //         sum: "240",
-        //     }
-        // ],
-
 export class OrderList extends React.Component {
 
     constructor(props) {
@@ -35,25 +21,7 @@ export class OrderList extends React.Component {
     componentDidMount() {
 
         const callback = (data) => {
-            let tmp =[];
-            for(let i = 0; i < data.length; i++) {
-                let flag = false;
-                for (let j = 0; j < tmp.length; j++) {
-                    if (tmp[j].orderId === data[i].orderId) {
-                        tmp[j].itemList.push(data[i].orderItem);
-                        flag = true;
-                        break;
-                    }
-                }
-                if(flag) continue;
-                tmp.push({
-                        orderId:data[i].orderId,
-                        itemList:[data[i].orderItem],
-                        time:data[i].time
-                    }
-                );
-            }
-            this.setState({orders: tmp, showOrders: tmp});
+            this.setState({orders: data, showOrders: data});
         };
 
         let user = JSON.parse(localStorage.getItem('user'));
@@ -138,7 +106,7 @@ export class OrderList extends React.Component {
                                 title={'order:' + item.orderId}
                                 description={'time:' + item.time}
                             />
-                            <OrderDetail info={item.itemList}/>
+                            <OrderDetail info={item.orderItem}/>
                         </List.Item>
                     )}
                 />

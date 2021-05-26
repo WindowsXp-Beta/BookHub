@@ -20,7 +20,7 @@ public class OrderItem {
     @Column(name = "order_id")
     private Integer orderId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "book_id")
     private Book book;
 

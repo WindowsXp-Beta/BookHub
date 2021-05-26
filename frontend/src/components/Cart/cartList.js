@@ -73,6 +73,30 @@ export class CartList extends React.Component {
         delCartItem(json, callback);
     };
 
+    totalSum = (selectedRowKeys) => {
+
+        let total = 0 ;
+        for (let i = 0; i < selectedRowKeys.length; ++i) {
+            for (let j = 0; j < this.state.cart.length; ++j) {
+                if (selectedRowKeys[i] === this.state.cart[j].key) {
+                    total += Number(this.state.cart[j].sum);
+                    break;
+                }
+            }
+        }
+        return total;
+    };
+
+    calItems = (selectedRowKeys, selectedRow) => {
+        let sum = 0;
+        for (let i = 0; i < selectedRowKeys.length; ++i) {
+            if (selectedRow[i] !== undefined) {
+                sum += 1
+            }
+        }
+        return sum;
+    }
+
     deleteConfirm = (key) => {
         const data = this.state.cart;
 
@@ -132,15 +156,15 @@ export class CartList extends React.Component {
     }
     submitOrder = () => {
 
-        // if (this.state.selectedRowKeys.length === 0) {
-        //     message.error("please choose at least one item");
-        //     return;
-        // }
+        if (this.state.selectedRowKeys.length === 0) {
+            message.error("please choose at least one item");
+            return;
+        }
 
         let user = JSON.parse(localStorage.getItem('user'));
         let userId = user.userId;
         let items = [];
-        const data = this.state.cart;
+        const data = this.state.selectedRows;
         for (let i = 0; i < data.length; i++) {
             items.push({
                 bookId: data[i].bookId,
@@ -183,6 +207,14 @@ export class CartList extends React.Component {
     };
 
     render() {
+        const {loading, selectedRowKeys, selectedRows} = this.state;
+        const rowSelection = {
+            onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                this.setState({selectedRowKeys: selectedRowKeys, selectedRows: selectedRows})
+            },
+        };
+
         const columns = [
             {
                 title: 'Title',
@@ -227,6 +259,8 @@ export class CartList extends React.Component {
             }
         ];
 
+        const hasSelected = this.calItems(selectedRowKeys, selectedRows) > 0;
+
         return (
             <div className="container">
                 <br/>
@@ -235,22 +269,20 @@ export class CartList extends React.Component {
                 <br/>
                 <br/>
                 <Table
-                    // rowSelection={rowSelection}
+                    rowSelection={rowSelection}
                        columns={columns}
                        dataSource={this.state.showCart}
                 />
                 <div style={{marginBottom: 16}}>
-                    <Button type="primary" onClick={this.submitOrder}
-                            // loading={loading}
-                    >
+                    <Button type="primary" onClick={this.submitOrder} loading={loading}>
                         Submit
                     </Button>
-                    {/*<span style={{marginLeft: 8}}>*/}
-                    {/*    {hasSelected ? `${this.calItems(selectedRowKeys, selectedRows)} items` : ''}*/}
-                    {/*</span>*/}
-                    {/*<span style={{marginLeft: 10}}>*/}
-                    {/*    {hasSelected ? `Total: ￥${this.totalSum(selectedRowKeys).toFixed(1)} ` : ''}*/}
-                    {/*</span>*/}
+                    <span style={{marginLeft: 8, color: "#e8e8e8"}}>
+                        {hasSelected ? `${this.calItems(selectedRowKeys, selectedRows)} items` : ''}
+                    </span>
+                    <span style={{marginLeft: 10, color: "#e8e8e8"}}>
+                        {hasSelected ? `Total: ￥${this.totalSum(selectedRowKeys).toFixed(1)} ` : ''}
+                    </span>
                 </div>
             </div>
         )

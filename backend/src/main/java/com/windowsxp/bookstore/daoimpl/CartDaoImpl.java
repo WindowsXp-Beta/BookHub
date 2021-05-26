@@ -7,12 +7,19 @@ import com.windowsxp.bookstore.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public class CartDaoImpl implements CartDao {
 
     @Autowired
     CartRepository cartRepository;
+
+    @Override
+    public List<CartItem> getCart(Integer userId) {
+        return cartRepository.getCart(userId);
+    }
 
     @Override
     public void addCart(CartItem cartItem) {

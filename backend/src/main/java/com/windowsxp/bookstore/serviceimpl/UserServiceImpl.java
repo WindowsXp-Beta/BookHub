@@ -27,13 +27,4 @@ public class UserServiceImpl implements UserService {
         return userDao.getUser(id);
     }
 
-    @Override
-    public List<Order> getOrders(Integer id) {
-        return userDao.getUser(id).getOrderList();
-    }
-
-    @Override
-    public List<CartItem> getCart(Integer id) {
-        return userDao.getUser(id).getCartList();
-    }
 }

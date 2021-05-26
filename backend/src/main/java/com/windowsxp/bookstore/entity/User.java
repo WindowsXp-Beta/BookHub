@@ -27,12 +27,4 @@ public class User {
     private String nickName;
     private String tel;
     private String address;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    List<Order> orderList;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    List<CartItem> cartList;
 }

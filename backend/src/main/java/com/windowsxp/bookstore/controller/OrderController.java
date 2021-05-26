@@ -26,16 +26,15 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private CartService cartService;
-    @Autowired
-    private UserService userService;
 
     @RequestMapping("/getAllOrders")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public List<Order> getOrders(@RequestBody Map<String, String> params) {
         System.out.println("getAllOrders");
         Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
-        return userService.getOrders(userId);
+        return orderService.getOrders(userId);
     }
+
     @RequestMapping("/addOrder")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public Msg addOrder(@RequestBody Map<String, Object> params) {
@@ -50,7 +49,7 @@ public class OrderController {
     public List<CartItem> getCart(@RequestBody Map<String, String> params) {
         System.out.println("getCart");
         Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
-        return userService.getCart(userId);
+        return cartService.getCart(userId);
     }
 
     @RequestMapping("/addCart")

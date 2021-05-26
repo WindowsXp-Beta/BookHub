@@ -20,7 +20,6 @@ export class BookList extends React.Component{
     }
 
     render() {
-        console.log(this.state.books);
         return (
             <List
                 grid={{gutter: 10, column: 4}}

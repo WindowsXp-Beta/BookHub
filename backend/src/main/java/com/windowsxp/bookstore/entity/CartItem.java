@@ -11,9 +11,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cart_item", schema = "bookstore")
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "itemId")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "itemId")
 public class CartItem {
 
     @Id

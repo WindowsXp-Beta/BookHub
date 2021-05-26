@@ -12,11 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDao orderDao;
+
+    @Override
+    public List<Order> getOrders(Integer userId) {
+        return orderDao.getOrders(userId);
+    }
 
     @Override
     public void addOrder(JSONObject params) {
