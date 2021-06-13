@@ -93,6 +93,9 @@ a:hover {
     background: rgba(0,0,0,.9);
     color: #ccc;
 }
+.ant-input-affix-wrapper {
+    background: rgba(0, 0, 0, .9);
+}
 
 .has-error .ant-input-affix-wrapper .ant-input, .has-error .ant-input-affix-wrapper .ant-input:hover {
     background: rgba(0, 0, 0, .9);

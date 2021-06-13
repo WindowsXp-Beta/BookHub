@@ -6,6 +6,7 @@ import com.windowsxp.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -21,6 +22,25 @@ public class BookDaoImpl implements BookDao{
 
     @Override
     public List<Book> getBooks() {
-        return bookRepository.findAll();
+        List<Book> bookList = bookRepository.findAll();
+        List<Book> ret = new ArrayList<>();
+        for(Book book: bookList) {
+            if(book.getInventory() >= 0) {
+                ret.add(book);
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public void addBook(Book book) {
+        bookRepository.saveAndFlush(book);
+    }
+
+    @Override
+    public void deleteBook(Integer id) {
+        Book book = bookRepository.getById(id);
+        book.setInventory(-1);
+        bookRepository.saveAndFlush(book);
     }
 }

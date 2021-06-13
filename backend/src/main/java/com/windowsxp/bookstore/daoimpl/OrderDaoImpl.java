@@ -26,6 +26,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    @Override
     public void addOrder(Order order) {
         orderRepository.saveAndFlush(order);
     }

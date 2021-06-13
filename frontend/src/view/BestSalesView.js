@@ -1,27 +1,27 @@
 import React from 'react';
-import {Layout} from "antd";
+// import '../css/Data.css';
+import {BestSalesTable} from "../components/Book/BestSalesTable";
+import {BackTop, Layout} from "antd";
 import {HeaderInfo} from "../components/Layout/HeaderInfo";
 import {SideBar} from "../components/Layout/SideBar";
-import {CartList} from "../components/Cart/cartList";
-import '../css/cart.css'
 
 const { Header, Content} = Layout;
-
-class CartView extends React.Component {
-    render()    {
-        return(
+class BestSalesView extends React.Component {
+    render() {
+        return (
             <Layout className="layout">
                 <Header>
                     <HeaderInfo/>
                 </Header>
                 <Layout>
-                    <SideBar key='2'/>
+                    <SideBar />
                     <Content style={{ padding: '0 50px' }}>
                         <div className="home-content">
-                            <CartList />
+                            <BestSalesTable/>
                             <div className={"foot-wrapper"}>
                             </div>
                         </div>
+                        <BackTop />
                     </Content>
                 </Layout>
             </Layout>
@@ -29,4 +29,4 @@ class CartView extends React.Component {
     }
 }
 
-export default CartView;
+export default BestSalesView;

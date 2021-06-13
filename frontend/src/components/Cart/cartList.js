@@ -270,8 +270,8 @@ export class CartList extends React.Component {
                 <br/>
                 <Table
                     rowSelection={rowSelection}
-                       columns={columns}
-                       dataSource={this.state.showCart}
+                    columns={columns}
+                    dataSource={this.state.showCart}
                 />
                 <div style={{marginBottom: 16}}>
                     <Button type="primary" onClick={this.submitOrder} loading={loading}>

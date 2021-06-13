@@ -1,13 +1,13 @@
 import React from 'react';
-import {DatePicker,Input, List, message} from 'antd'
+import {DatePicker, Input, List, message} from 'antd'
 import OrderDetail from "./OrderDetail";
-import * as userService from '../../services/userService'
+import * as orderService from '../../services/orderService'
 
 const {Search} = Input;
 
 const { RangePicker } = DatePicker;
 
-export class OrderList extends React.Component {
+export class OrderTable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -21,18 +21,18 @@ export class OrderList extends React.Component {
     componentDidMount() {
 
         const callback = (data) => {
+            console.log(data)
             this.setState({orders: data, showOrders: data});
         };
 
         let user = JSON.parse(localStorage.getItem('user'));
-
         if (user === null) {
             message.error("请登录");
+        } else if (user.userType !== 0) {
+            message.error("你没有权限");
         } else {
-            let userId = user.userId;
-            userService.getOrders(userId, callback);
+            orderService.getAllOrders({"search": null}, callback);
         }
-
     }
 
     searchChange = ({target: {value}}) => {
@@ -43,7 +43,8 @@ export class OrderList extends React.Component {
 
         for (let i = 0; i < list.length; i++) {
             if (
-                list[i].orderId.toString() === search.toString()
+                list[i].orderId.toString() === search.toString()||
+                list[i].userId.toString() === search.toString()
             ) {
                 arr.push(list[i]);
             }
@@ -55,6 +56,7 @@ export class OrderList extends React.Component {
                 }
             }
         }
+        ;
         this.setState(
             {showOrders: arr}
         );
@@ -75,9 +77,7 @@ export class OrderList extends React.Component {
         let list = this.state.showOrders;
         for (let i = 0; i < list.length; i++) {
             let time = new Date(Date.parse(list[i].time));
-            if (
-                time > startTime && time < endTime
-            ) {
+            if (time > startTime && time < endTime) {
                 arr.push(list[i]);
             }
         }
@@ -90,21 +90,18 @@ export class OrderList extends React.Component {
         return (
             <div>
                 <br/>
-                <br/>
                 <Search value={this.state.searchValue} placeholder="search for orders" onChange={this.searchChange}
                         enterButton/>
                 <br/>
                 <br/>
                 <RangePicker onChange ={this.timeChange}/>
-                <br/>
-                <br/>
                 <List
                     dataSource={this.state.showOrders}
                     renderItem={item => (
-                        <List.Item >
+                        <List.Item>
                             <List.Item.Meta
                                 title={'order:' + item.orderId}
-                                description={'time:' + item.time}
+                                description={'user:'+item.userId+'    time:' + item.time}
                             />
                             <OrderDetail info={item.orderItem}/>
                         </List.Item>
@@ -114,3 +111,5 @@ export class OrderList extends React.Component {
         );
     }
 }
+
+export default OrderTable;

@@ -25,6 +25,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> getAllOrders() {
+        return orderDao.getAllOrders();
+    }
+
+    @Override
     public void addOrder(JSONObject params) {
         Order newOrder = new Order();
         Timestamp orderTime = new Timestamp(System.currentTimeMillis());

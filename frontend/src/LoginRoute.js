@@ -1,7 +1,6 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom'
 import * as userService from "./services/userService"
-import {message} from "antd";
 
 export class LoginRoute extends React.Component{
     constructor(props) {

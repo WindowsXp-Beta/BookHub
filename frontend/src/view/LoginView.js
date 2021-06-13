@@ -1,5 +1,5 @@
 import React from 'react';
-import WrappedLoginForm from '../components/User/LoginForm';
+import LoginForm from '../components/User/LoginForm';
 import {withRouter} from "react-router-dom";
 import '../css/login.css'
 
@@ -18,7 +18,7 @@ class LoginView extends React.Component{
                         <div className="login-box">
                             <h1 className="page-title">Login</h1>
                             <div className="login-content">
-                                <WrappedLoginForm />
+                                <LoginForm />
                             </div>
                         </div>
                     </div>

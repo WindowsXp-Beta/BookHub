@@ -1,6 +1,4 @@
-import {message} from 'antd';
-
-let postRequest_v2 = (url, data, callback) => {
+let postRequestForm = (url, data, callback) => {
     let formData = new FormData();
 
     for (let p in data){
@@ -49,4 +47,4 @@ let postRequest = (url, json, callback) => {
         });
 };
 
-export {postRequest,postRequest_v2};
+export {postRequest,postRequestForm};

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Descriptions, Button, message } from 'antd';
+import {ShoppingCartOutlined, PayCircleOutlined} from '@ant-design/icons';
 import { addCart } from "../../services/userService";
 
 
@@ -49,10 +50,10 @@ export class BookDetail extends React.Component{
                     </div>
                 </div>
                 <div className={"button-groups"}>
-                    <Button type="danger" icon="shopping-cart" size={"large"} onClick={this.addToCart}>
+                    <Button type="danger" icon={<ShoppingCartOutlined />} size={"large"} onClick={this.addToCart}>
                         加入购物车
                     </Button>
-                    <Button type="danger" icon="pay-circle" size={"large"} style={{marginLeft:"15%"}}ghost>
+                    <Button type="danger" icon={<PayCircleOutlined />} size={"large"} style={{marginLeft:"15%"}}ghost>
                         立即购买
                     </Button>
                 </div>

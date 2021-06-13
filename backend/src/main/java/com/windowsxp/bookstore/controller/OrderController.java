@@ -1,10 +1,12 @@
 package com.windowsxp.bookstore.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.windowsxp.bookstore.constant.Constant;
 import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.entity.Order;
+import com.windowsxp.bookstore.entity.User;
 import com.windowsxp.bookstore.service.BookService;
 import com.windowsxp.bookstore.service.CartService;
 import com.windowsxp.bookstore.service.OrderService;
@@ -16,6 +18,8 @@ import com.windowsxp.bookstore.utils.msgutils.MsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,13 +30,22 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private CartService cartService;
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping("/getOrders")
+    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
+    public List<Order> getOrders(@RequestBody Map<String, String> params) {
+        System.out.println("getOrders");
+        Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
+        return orderService.getOrders(userId);
+    }
 
     @RequestMapping("/getAllOrders")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public List<Order> getOrders(@RequestBody Map<String, String> params) {
+    public List<Order> getAllOrders() {
         System.out.println("getAllOrders");
-        Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
-        return orderService.getOrders(userId);
+        return orderService.getAllOrders();
     }
 
     @RequestMapping("/addOrder")

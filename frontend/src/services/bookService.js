@@ -1,5 +1,4 @@
-// import config from 'config';
-import {postRequest, postRequest_v2} from "../utils/ajax";
+import {postRequest, postRequestForm} from "../utils/ajax";
 
 export const getBooks = (data, callback) => {
     const url = `http://localhost:8080/getBooks`;
@@ -9,5 +8,22 @@ export const getBooks = (data, callback) => {
 export const getBook = (id, callback) => {
     const data = {id: id};
     const url = `http://localhost:8080/getBook`;
-    postRequest_v2(url, data, callback);
+    postRequestForm(url, data, callback);
+};
+
+export const deleteBook = (id, callback) => {
+    const data = {id: id};
+    const url = `http://localhost:8080/deleteBook`;
+    postRequestForm(url, data, callback);
+};
+
+export const addBook = (data,callback) => {
+    const url = `http://localhost:8080/addBook`;
+    postRequest(url, data, callback);
+};
+
+export const editBook = (data,callback) =>
+{
+    const url = `http://localhost:8080/editBook`;
+    postRequest(url, data, callback);
 };

@@ -1,4 +1,3 @@
-/*
 import React from 'react';
 import { Button, Input, AutoComplete } from 'antd';
 import { SearchOutlined } from '@ant-design/icons'
@@ -85,8 +84,8 @@ export class SearchBar extends React.Component {
         );
     }
 }
- */
-//*
+
+/*
 import React from 'react';
 import { Icon, Button, Input, AutoComplete } from 'antd';
 
@@ -173,4 +172,4 @@ export class SearchBar extends React.Component {
         );
     }
 }
- //*/
+ */

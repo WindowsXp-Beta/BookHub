@@ -24,4 +24,14 @@ public class BookServiceImpl implements BookService {
     public List<Book> getBooks() {
         return bookDao.getBooks();
     }
+
+    @Override
+    public void addBook(Book book) {
+        bookDao.addBook(book);
+    }
+
+    @Override
+    public void deleteBook(Integer id) {
+        bookDao.deleteBook(id);
+    }
 }

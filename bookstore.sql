@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `isbn` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
@@ -70,7 +70,7 @@ INSERT INTO `book` VALUES ('29', '29', '哈利·波特与死亡圣器', '魔幻�
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `user_type` int(10) NOT NULL,
@@ -95,8 +95,7 @@ CREATE TABLE `cart_item`
   `book_id` int NOT NULL,
   `book_number` int NOT NULL,
   PRIMARY KEY (`item_id`),
-  CONSTRAINT `book_id2` FOREIGN KEY (`book_id`) REFERENCES `book` (id),
-  CONSTRAINT `user_id2` FOREIGN KEY (`user_id`) REFERENCES `user` (user_id)
+  CONSTRAINT `book_id2` FOREIGN KEY (`book_id`) REFERENCES `book` (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `cart_item`(user_id, book_id, book_number)
@@ -116,8 +115,7 @@ CREATE TABLE `order`
     `order_id` int      NOT NULL AUTO_INCREMENT,
     `user_id` int      NOT NULL,
     `time`    datetime NOT NULL,
-    PRIMARY KEY (`order_id`),
-    CONSTRAINT `user_id1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+    PRIMARY KEY (`order_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
@@ -159,3 +157,5 @@ INSERT INTO `order_item`(order_id, book_id, book_number)
 VALUES ('1', '3', '3');
 INSERT INTO `order_item`(order_id, book_id, book_number)
 VALUES ('2', '3', '1');
+INSERT INTO `order_item`(order_id, book_id, book_number)
+VALUES ('3', '5', '1');

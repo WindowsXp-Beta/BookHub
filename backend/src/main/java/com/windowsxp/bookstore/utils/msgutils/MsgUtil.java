@@ -8,6 +8,7 @@ public class MsgUtil {
     public static final int ERROR = -1;
     public static final int LOGIN_USER_ERROR = -100;
     public static final int NOT_LOGGED_IN_ERROR = -101;
+    public static final int BAN_USER_ERROR = -250;
 
     public static final String SUCCESS_MSG = "成功！";
     public static final String LOGIN_SUCCESS_MSG = "登录成功！";
@@ -20,6 +21,11 @@ public class MsgUtil {
     public static final String DELETE_SUCCESS_CART_MSG = "删除购物车成功";
     public static final String EDITNUM_SUCCESS_MSG = "改变数量成功";
     public static final String BUY_SUCCESS_MSG = "购买成功";
+    public static final String DELETE_SUCCESS_USER_MSG = "删除用户成功";
+    public static final String REGISTER_SUCCESS_MSG = "注册用户成功";
+    public static final String ADD_SUCCESS_BOOK_MSG = "更改图书成功";
+    public static final String DELETE_SUCCESS_BOOK_MSG = "删除图书成功";
+    public static final String BAN_USER_MSG = "该用户被禁用";
 
     public static Msg makeMsg(MsgCode code, JSONObject data){
         return new Msg(code, data);

@@ -1,5 +1,6 @@
 package com.windowsxp.bookstore.serviceimpl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.windowsxp.bookstore.dao.UserDao;
 import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.entity.Order;
@@ -27,4 +28,18 @@ public class UserServiceImpl implements UserService {
         return userDao.getUser(id);
     }
 
+    @Override
+    public List<User> findAllUsers() {
+        return userDao.findAllUsers();
+    }
+
+    @Override
+    public void deleteUser(Integer userId) {
+        userDao.deleteUser(userId);
+    }
+
+    @Override
+    public void addUser(User user) {
+        userDao.addUser(user);
+    }
 }

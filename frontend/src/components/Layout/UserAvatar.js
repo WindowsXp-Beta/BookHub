@@ -1,9 +1,8 @@
 import React from 'react';
-import { Avatar, Dropdown, Menu, Icon} from 'antd';
-//import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Dropdown, Menu} from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import '../../css/index.css'
 import * as userService from '../../services/userService'
-// import config from 'config'
 
 export class UserAvatar extends React.Component {
 
@@ -32,7 +31,7 @@ export class UserAvatar extends React.Component {
                 <span className="name">Hi, {user.userName}</span>
                 <Dropdown overlay={menu} placement="bottomRight">
                     {/*<Avatar src={imgUrl} style={{cursor:"pointer"}}/>*/}
-                    <Avatar  icon={<Icon type="user" />} style={{cursor:"pointer"}}/>
+                    <Avatar  icon={<UserOutlined type="user" />} style={{cursor:"pointer"}}/>
                 </Dropdown>
             </div>
         );

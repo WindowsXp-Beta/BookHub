@@ -1,8 +1,7 @@
 // import config from 'config';
-import {postRequest} from "../utils/ajax";
+import {postRequest, postRequestForm} from "../utils/ajax";
 import {history} from '../utils/history';
 import {message} from 'antd';
-
 
 
 export const login = (data) => {
@@ -42,6 +41,23 @@ export const checkSession = (callback) => {
     postRequest(url, {}, callback);
 };
 
+export const getUsers = (data, callback) => {
+    const url = `http://localhost:8080/getUsers`;
+    postRequest(url, data, callback);
+};
+
+export const editUser = (data,callback) =>
+{
+    const url = `http://localhost:8080/editUser`;
+    postRequest(url, data, callback);
+};
+
+export const deleteUser = (id, callback) => {
+    const data = {id: id};
+    const url = `http://localhost:8080/deleteUser`;
+    postRequestForm(url, data, callback);
+};
+
 export const getCart = (userId, callback) => {
     const data = {userId: userId};
     const url = `http://localhost:8080/getCart`;
@@ -57,17 +73,34 @@ export const addCart = (data,callback) => {
     const url = `http://localhost:8080/addCart`;
     postRequest(url, data, callback);
 };
+
 export const editCartItemNumber = (data,callback) =>
 {
     const url = `http://localhost:8080/editCartItemNum`;
     postRequest(url, data, callback);
 };
+
 export const getOrders = (userId, callback) => {
     const data = {userId: userId};
-    const url = `http://localhost:8080/getAllOrders`;
+    const url = `http://localhost:8080/getOrders`;
     postRequest(url, data, callback);
 };
+
 export const addOrder = (data,callback) => {
     const url = `http://localhost:8080/addOrder`;
+    postRequest(url, data, callback);
+};
+
+export const register = (data) => {
+    const url = `http://localhost:8080/register`;
+    const callback = (data) => {
+        if (data.status >= 0) {
+            localStorage.setItem('user', JSON.stringify(data.data));
+            history.push("/");
+            message.success(data.msg);
+        } else {
+            message.error(data.msg);
+        }
+    };
     postRequest(url, data, callback);
 };

@@ -18,7 +18,9 @@ public class CartDaoImpl implements CartDao {
 
     @Override
     public List<CartItem> getCart(Integer userId) {
-        return cartRepository.getCart(userId);
+        List<CartItem> cartItemListst = cartRepository.getCart(userId);
+        cartItemListst.removeIf(cartItem -> cartItem.getBook().getInventory() <= 0);
+        return cartItemListst;
     }
 
     @Override

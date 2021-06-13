@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface OrderService {
     List<Order> getOrders(Integer userId);
+    List<Order> getAllOrders();
     void addOrder(JSONObject params);
 }

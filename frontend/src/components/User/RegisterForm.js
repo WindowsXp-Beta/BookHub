@@ -1,8 +1,5 @@
 import React from 'react';
-import {Form,
-    Input,
-    Checkbox,
-    Button} from 'antd';
+import {Form, Input, Checkbox, Button} from 'antd';
 import {UserOutlined, LockOutlined, MailOutlined, HomeOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import '../../css/register.css'
@@ -77,12 +74,8 @@ class RegisterForm extends React.Component {
                 </Form.Item>
                 <Form.Item
                     className="register-form-button"
-                    name="email"
+                    name="nickname"
                     rules={[
-                        {
-                            type: 'email',
-                            message: 'The input is not valid E-mail!',
-                        },
                         {
                             required: true,
                             message: 'Please input your E-mail!',
@@ -91,8 +84,8 @@ class RegisterForm extends React.Component {
                 >
                     <Input
                         prefix={<MailOutlined className="site-form-item-icon"/>}
-                        type="email"
-                        placeholder="email"
+                        type="nickname"
+                        placeholder="nickname"
                     />
                 </Form.Item>
                 <Form.Item

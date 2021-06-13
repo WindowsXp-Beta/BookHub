@@ -8,6 +8,8 @@ import com.windowsxp.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserDaoImpl implements UserDao{
 
@@ -22,5 +24,20 @@ public class UserDaoImpl implements UserDao{
     @Override
     public User getUser(Integer id){
         return userRepository.getById(id);
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteUser(Integer userId) {
+        userRepository.deleteById(userId);
+    }
+
+    @Override
+    public void addUser(User user) {
+        userRepository.saveAndFlush(user);
     }
 }
