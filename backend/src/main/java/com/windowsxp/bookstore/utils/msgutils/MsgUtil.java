@@ -25,7 +25,7 @@ public class MsgUtil {
     public static final String REGISTER_SUCCESS_MSG = "注册用户成功";
     public static final String ADD_SUCCESS_BOOK_MSG = "更改图书成功";
     public static final String DELETE_SUCCESS_BOOK_MSG = "删除图书成功";
-    public static final String BAN_USER_MSG = "该用户被禁用";
+    public static final String BAN_USER_MSG = "您的账号已经被禁用";
 
     public static Msg makeMsg(MsgCode code, JSONObject data){
         return new Msg(code, data);

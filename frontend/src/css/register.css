@@ -1,5 +1,5 @@
 .register-form {
-    max-width: 300px;
+    width: 300px;
 }
 .register-form-forgot {
     float: right;
@@ -25,9 +25,16 @@
 
 
 .register-container {
+    flex-basis: 40%;
     position:relative;
     max-width: 540px;
     margin: 40px auto 0;
+}
+
+.register-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .register-page .register-container .register-box {
@@ -37,7 +44,7 @@
     height: 100%;
     padding: 40px 40px 15px 40px;
     backface-visibility: hidden;
-    background: linear-gradient(30deg, rgba(53, 57, 74, 0) 0%, rgb(255, 255, 255) 100%);
+    background: rgba(0,0,0,.9);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(53, 57, 74, 0)', endColorstr='rgb(0, 0, 0)',GradientType=1 );
     box-shadow: -15px 15px 15px rgba(0,0,0,.4);
 }
@@ -52,9 +59,10 @@
     border-color:#828282;
 }
 
-a {
-    color:#363636;
+.ant-form-item-has-success .ant-input-affix-wrapper input:-internal-autofill-selected {
+    background-color: #363636 !important;
 }
+
 a:hover {
     color:#828282;
 }

@@ -1,28 +1,50 @@
 import React from 'react';
-import {Layout, BackTop} from 'antd'
+import {Layout, BackTop, Menu} from 'antd'
 import {HeaderInfo} from "../components/Layout/HeaderInfo";
 import {SideBar} from "../components/Layout/SideBar";
 import '../css/home.css';
 import {withRouter} from "react-router-dom";
 import {BookCarousel} from "../components/Book/BookCarousel";
-import {SearchBar} from "../components/Layout/SearchBar";
 import {BookList} from "../components/Book/BookList";
+import { history } from '../utils/history';
 
-const { Header, Content} = Layout;
+const { Header, Content, Footer} = Layout;
 
 class HomeView extends React.Component{
 
     constructor(props) {
         super(props);
-        // console.log(props.location.state.name);
+        this.state = {
+            current: 1,
+            user: {},
+            key: ''
+        };
     }
 
-    componentDidMount(){
+    componentWillMount(){
         let user = localStorage.getItem("user");
-        this.setState({user:user});
+        console.log(this.props.location.state);
+        let key = '1';
+        if(this.props.location.state) {
+            key = this.props.location.state.key;
+        }
+        this.setState({
+            user: user,
+            key: key,
+            current: parseInt(key)
+        });
     }
 
-    render(){
+    onPageChange = (e) => {
+        this.setState({
+            current: e.key,
+        });
+        history.push('/', {key: e.key});
+        history.go();
+    };
+
+    render() {
+        const { current } = this.state;
         return(
             <Layout className="layout">
                 <Header>
@@ -30,17 +52,33 @@ class HomeView extends React.Component{
                 </Header>
                 <Layout>
                     <SideBar key='1'/>
-                    <Content style={{ padding: '0 50px' }}>
-                        <div className="home-content">
-                            {/*<SearchBar />*/}
-
-                            <BookCarousel />
-                            <BookList />
-                            <div className={"foot-wrapper"}>
+                    <Layout>
+                        <Content style={{ padding: '0 50px' }}>
+                            <div className="home-content">                                
+                                <BookCarousel />
+                                <BookList 
+                                    range={this.state.key}
+                                />
                             </div>
-                        </div>
-                        <BackTop />
-                    </Content>
+                            <BackTop />
+                        </Content>
+                        <Footer>
+                            <Menu className={"pageTag"} onClick = {this.onPageChange} selectedKeys={[current]} mode="horizontal">
+                                <Menu.Item key={1}>
+                                    Page 1
+                                </Menu.Item>
+                                <Menu.Item key={2}>
+                                    Page 2
+                                </Menu.Item>
+                                <Menu.Item key={3}>
+                                    Page 3
+                                </Menu.Item>
+                                <Menu.Item key={4}>
+                                    Page 4
+                                </Menu.Item>
+                            </Menu>
+                        </Footer>
+                    </Layout>
                 </Layout>
             </Layout>
         );

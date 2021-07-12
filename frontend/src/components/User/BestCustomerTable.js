@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, DatePicker, Input, message, Table} from 'antd'
 import {SearchOutlined} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import {getAllOrders} from "../../services/orderService";
+import {getBestCustomers} from "../../services/orderService";
 
 const { RangePicker } = DatePicker;
 
@@ -11,8 +11,6 @@ export class BestCustomerTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            orders: [],
-            data: [],
             showData:[],
             searchText: '',
             searchedColumn: '',
@@ -21,48 +19,48 @@ export class BestCustomerTable extends React.Component {
 
     componentDidMount() {
         const callback = (data) => {
-            console.log(data);
-            let number = new Array(40);
-            let sum = new Array(40);
-            let arr =[];
-            for(let index = 0;index < 40;index++){
-                number[index] = 0;
-                sum[index] = 0;
-            }
-            debugger;
-            for(let i = 0;i <= data.length - 1; i++)
-            {
-                let userId = data[i].userId;
-                for(let j = 0;j <= data[i].orderItem.length - 1; j++)
-                {
-                    let item = data[i].orderItem[j];
-                    number[userId] += item.bookNum;
-                    sum[userId] += Number(item.bookNum * item.book.price / 100);
-                }
-            }
-            for(let index = 0;index < 40;index++){
-                if(number[index] !== 0)
-                {
-                    let json = {
-                        userId: index,
-                        bookNumber: number[index],
-                        sum: sum[index].toFixed(1)};
-                    arr.push(json)
-                }
+            for(let i = 0; i < data.length; i++) {
+                data[i].sum = data[i].sum / 100;
             }
             this.setState({
-                data: arr,
-                showData: arr,
-                orders:data});
-        };
-
-        let user = JSON.parse(localStorage.getItem('user'));
-        if (user === null) {
-            message.error("请登录");
-        } else {
-            getAllOrders({"search": null}, callback);
+                showData: data,
+            });
         }
-    }
+            let user = JSON.parse(localStorage.getItem('user'));
+            if (user === null) {
+                message.error("请登录");
+            } else {
+                getBestCustomers({"timeStart": null}, callback);
+            }
+        };
+            // console.log(data);
+            // let number = new Array(40);
+            // let sum = new Array(40);
+            // let arr =[];
+            // for(let index = 0; index < 40; index++){
+            //     number[index] = 0;
+            //     sum[index] = 0;
+            // }
+            // for(let i = 0;i <= data.length - 1; i++)
+            // {
+            //     let userId = data[i].userId;
+            //     for(let j = 0; j <= data[i].orderItem.length - 1; j++)
+            //     {
+            //         let item = data[i].orderItem[j];
+            //         number[userId] += item.bookNum;
+            //         sum[userId] += Number(item.bookNum * item.book.price / 100);
+            //     }
+            // }
+            // for(let index = 0; index < 40; index++){
+            //     if(number[index] !== 0)
+            //     {
+            //         let json = {
+            //             userId: index,
+            //             bookNumber: number[index],
+            //             sum: sum[index].toFixed(1)};
+            //         arr.push(json)
+            //     }
+            // }
 
     getColumnSearchProps = dataIndex => ({
         filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
@@ -128,50 +126,65 @@ export class BestCustomerTable extends React.Component {
     };
 
     timeChange = (value, dateString) => {
-        if(dateString[0]===''||dateString[1]==='')
+        if( dateString[0] === '' || dateString[1] === '')
         {
             this.setState({showData:this.state.data})
             return;
         }
         console.log('Formatted Selected Time: ', dateString);
-        const startTime= new Date(Date.parse(dateString[0]));
-        const endTime=new Date(Date.parse(dateString[1]));
-        let data = this.state.orders;
-        let number = new Array(40);
-        let sum = new Array(40);
-        let arr =[];
-        for(let index = 0;index < 40;index++){
-            number[index] = 0;
-            sum[index] = 0;
-        }
-        debugger;
-        for(let i = 0; i <= data.length - 1; i++)
-        {
-            let userId = data[i].userId;
-            let time = new Date(Date.parse(data[i].time));
-            if (time > startTime && time < endTime) {
-                for (let j = 0; j <= data[i].orderItem.length - 1; j++) {
-                    let item = data[i].orderItem[j];
-                    number[userId] += item.bookNum;
-                    sum[userId] += Number(item.bookNum * item.book.price / 100);
-                }
+        let timeRange = {
+            timeStart: dateString[0],
+            timeEnd: dateString[1]
+        };
+        const callback = (data) => {
+            console.log(data);
+            for(let i = 0; i < data.length; i++){
+                data[i].sum = data[i].sum / 100;
             }
+            this.setState({
+                showData:data
+            })
+        };
+        let user = JSON.parse(localStorage.getItem('user'));
+        if (user === null) {
+            message.error("请登录");
+        } else {
+            getBestCustomers(timeRange, callback);
         }
-        debugger;
-        for(let index = 0;index < 40;index++){
-            if(number[index] !== 0)
-            {
-                let json = {
-                    userId: index,
-                    bookNumber: number[index],
-                    sum: sum[index].toFixed(1)};
-                arr.push(json)
-            }
-        }
-        this.setState({
-            showData:arr
-        })
+
     }
+        // const startTime= new Date(Date.parse(dateString[0]));
+        // const endTime=new Date(Date.parse(dateString[1]));
+        // let data = this.state.orders;
+        // let number = new Array(40);
+        // let sum = new Array(40);
+        // let arr =[];
+        // for(let index = 0;index < 40;index++){
+        //     number[index] = 0;
+        //     sum[index] = 0;
+        // }
+        // for(let i = 0; i <= data.length - 1; i++)
+        // {
+        //     let userId = data[i].userId;
+        //     let time = new Date(Date.parse(data[i].time));
+        //     if (time > startTime && time < endTime) {
+        //         for (let j = 0; j <= data[i].orderItem.length - 1; j++) {
+        //             let item = data[i].orderItem[j];
+        //             number[userId] += item.bookNum;
+        //             sum[userId] += Number(item.bookNum * item.book.price / 100);
+        //         }
+        //     }
+        // }
+        // for(let index = 0;index < 40;index++){
+        //     if(number[index] !== 0)
+        //     {
+        //         let json = {
+        //             userId: index,
+        //             bookNumber: number[index],
+        //             sum: sum[index].toFixed(1)};
+        //         arr.push(json)
+        //     }
+        // }
 
     render() {
         const columns = [
@@ -180,12 +193,6 @@ export class BestCustomerTable extends React.Component {
                 dataIndex: 'userId',
                 key: 'userId',
                 ...this.getColumnSearchProps('userId'),
-            },
-            {
-                title: 'Number',
-                dataIndex: 'bookNumber',
-                key: 'bookNumber',
-                sorter: (a, b) => a.bookNumber - b.bookNumber,
             },
             {
                 title: 'Sum',

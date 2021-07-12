@@ -26,6 +26,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> getOnePageBooks(Integer range) {
+        return bookDao.getOnePageBooks(range);
+    }
+
+    @Override
     public void addBook(Book book) {
         bookDao.addBook(book);
     }

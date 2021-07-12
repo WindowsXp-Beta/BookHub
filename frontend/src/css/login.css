@@ -82,9 +82,7 @@
 a {
     color:#ff9900;
 }
-a:hover {
 
-}
 
 .ant-input {
     box-sizing: border-box;
@@ -112,8 +110,12 @@ input:autofill-selected {
 .ant-checkbox-checked::after {
     border: 1px solid #363636;
 }
-
-
+.ant-form-item-has-error .ant-input, 
+.ant-form-item-has-error .ant-input-affix-wrapper, 
+.ant-form-item-has-error .ant-input:hover, 
+.ant-form-item-has-error .ant-input-affix-wrapper:hover {
+    background-color: #363636;
+}
 .ant-checkbox-checked .ant-checkbox-inner,
 .ant-checkbox-indeterminate .ant-checkbox-inner {
     background-color: #363636;

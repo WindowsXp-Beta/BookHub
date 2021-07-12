@@ -3,6 +3,7 @@ import { Avatar, Dropdown, Menu} from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import '../../css/index.css'
 import * as userService from '../../services/userService'
+import { Link } from 'react-router-dom';
 
 export class UserAvatar extends React.Component {
 
@@ -11,14 +12,9 @@ export class UserAvatar extends React.Component {
         const menu = (
             <Menu>
                 <Menu.Item>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-                        Show Profile
-                    </a>
-                </Menu.Item>
-                <Menu.Item>
-                    <a href="#" onClick={userService.logout}>
+                    <Link to="/login" onClick={userService.logout}>
                         Log Out
-                    </a>
+                    </Link>
                 </Menu.Item>
             </Menu>
         );

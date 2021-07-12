@@ -99,12 +99,12 @@ export class OrderList extends React.Component {
                 <br/>
                 <br/>
                 <List
-                    dataSource={this.state.showOrders}
-                    renderItem={item => (
+                    dataSource = {this.state.showOrders}
+                    renderItem = {item => (
                         <List.Item >
                             <List.Item.Meta
-                                title={'order:' + item.orderId}
-                                description={'time:' + item.time}
+                                title={'order ID is: ' + item.orderId}
+                                description={'order Time is: ' + item.time}
                             />
                             <OrderDetail info={item.orderItem}/>
                         </List.Item>

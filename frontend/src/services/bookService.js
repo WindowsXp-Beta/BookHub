@@ -5,6 +5,11 @@ export const getBooks = (data, callback) => {
     postRequest(url, data, callback);
 };
 
+export const getOnePageBooks = (data, callback) => {
+    const url = `http://localhost:8080/getOnePageBooks`;
+    postRequest(url, data, callback);
+};
+
 export const getBook = (id, callback) => {
     const data = {id: id};
     const url = `http://localhost:8080/getBook`;

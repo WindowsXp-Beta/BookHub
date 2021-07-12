@@ -55,7 +55,7 @@ INSERT INTO `book` VALUES ('17', '17', '高考英语 五年高考三年模拟', 
 INSERT INTO `book` VALUES ('18', '18', '红楼梦', '世界名著', '曹雪芹', '1880', '中国古典小说佳作，影响整个华人世界的经典！轻松易学、国家教育部推荐读物！', '2441', 'http://img3m6.ddimg.cn/31/22/23828836-1_w_8.jpg');
 INSERT INTO `book` VALUES ('19', '19', '草房子', '儿童文学', '曹文轩', '2250', '人民文学出版社天天出版社出品，经典作品，教师推荐，已有超过150000读者给予好评！', '1235', 'http://img3m2.ddimg.cn/32/4/23662022-1_w_9.jpg');
 INSERT INTO `book` VALUES ('20', '20', '追风筝的人', '世界名著', '卡勒德·胡赛尼', '3530', '“许多年过去了，人们说陈年旧事可以被埋葬，然而我终于明白这是错的，因为往事会自行爬上来。回首前尘，我意识到在过去二十六年里，自己始终在窥视着那荒芜的小径。”', '14141', 'http://img3m5.ddimg.cn/26/14/25238195-1_w_3.jpg');
-INSERT INTO `book` VALUES ('21', '21', '软件工程原理', '编程', '沈备军、陈昊鹏、陈雨亭', '35.90', '从软件工程的本质出发、结合实际案例，系统全面地介绍软件过程、软件建模技术与方法及软件工程管理同时介绍一些热点新技术和新方法。', '1024', 'http://img3m6.ddimg.cn/32/30/1204489076-1_w_1.jpg');
+INSERT INTO `book` VALUES ('21', '21', '软件工程原理', '编程', '沈备军、陈昊鹏、陈雨亭', '3590', '从软件工程的本质出发、结合实际案例，系统全面地介绍软件过程、软件建模技术与方法及软件工程管理同时介绍一些热点新技术和新方法。', '1024', 'http://img3m6.ddimg.cn/32/30/1204489076-1_w_1.jpg');
 INSERT INTO `book` VALUES ('22', '22', '数据库系统概念', '编程', '西尔伯沙茨', '7420', '本书内容丰富，不仅讨论了关系数据模型和关系语言、数据库设计过程、关系数据库理论、数据库应用设计和开发、数据存储结构、数据存取技术、查询优化方法、事务处理系统和并发控制、故障恢复技术、数据仓库和数据挖掘，而且对性能调整、性能评测标准、数据库应用测试和标准化等高级应用主题进行了广泛讨论。', '244', 'http://img3m2.ddimg.cn/83/5/22632572-1_w_1.jpg');
 INSERT INTO `book` VALUES ('23', '23', '算法导论', '编程', '科尔曼', '7763', '全书选材经典、内容丰富、结构合理、逻辑清晰，对本科生的数据结构课程和研究生的算法课程都是非常实用的教材，在IT专业人员的职业生涯中，本书也是一本案头必备的参考书或工程实践手册。', '144', 'http://img3m8.ddimg.cn/89/15/1517005898-1_w_1.jpg');
 INSERT INTO `book` VALUES ('24', '24', '史记（文白对照本）', '古籍', '司马迁', '23710', '荣获商务印书馆2019人文社科十大好书，张大可先生《史记》研究的集成之作，精细考证，廓清原书真伪；题解语译，展现著者史观，是一部人人都能读懂、人人都会爱读的文白对照本《史记》。', '4141', 'http://img3m7.ddimg.cn/14/14/27915737-1_w_3.jpg');
@@ -74,8 +74,7 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `user_type` int(10) NOT NULL,
-  `nickname` varchar(255) NOT NULL,
-  `tel` varchar(255) DEFAULT NULL,
+  `Email` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -83,8 +82,8 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'wxp', 'wxpd1', 0, 'WindowsXp', '13735107965', 'SJTU D8');
-INSERT INTO `user` VALUES ('2', 'zbb', 'zmzd2', 1, 'ZMZ', '110', 'SJTU D1');
+INSERT INTO `user` VALUES ('1', 'wxp', 'wxpd1', 0, 'WindowsXp@sjtu.edu.cn', 'SJTU D8');
+INSERT INTO `user` VALUES ('2', 'zbb', 'zmzd2', 1, 'ZMZ@qq.com', 'SJTU D1');
 
 
 DROP TABLE IF EXISTS `cart_item`;

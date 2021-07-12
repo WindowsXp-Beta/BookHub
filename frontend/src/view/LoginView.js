@@ -5,9 +5,8 @@ import '../css/login.css'
 
 class LoginView extends React.Component{
 
-
     render(){
-        return(
+        return (
             <div className="login-page">
                 <div className="login-container">
                     <div className="register-info">
@@ -25,7 +24,6 @@ class LoginView extends React.Component{
                 </div>
             </div>
         );
-
     }
 }
 

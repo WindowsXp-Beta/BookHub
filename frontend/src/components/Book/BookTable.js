@@ -39,11 +39,17 @@ class BookTable extends React.Component {
             message.error("你没有权限");
         } else {
             const callback = (data) => {
-                this.setState({dataSource: data});
+                this.setDataSource(data);
             };
             getBooks({"search": null}, callback);
         }
     }
+    setDataSource = (data) => {
+        for(let i = 0; i < data.length; i++) {
+            data[i].price = data[i].price / 100;
+        }
+        this.setState({dataSource: data});
+    };
 
     showAddDrawer = () => {
         this.setState({
@@ -176,7 +182,7 @@ class BookTable extends React.Component {
                 });
 
                 const callback = (data) => {
-                    this.setState({dataSource: data});
+                    this.setDataSource(data);
                 };
                 getBooks({"search": null}, callback);
 
@@ -203,10 +209,10 @@ class BookTable extends React.Component {
             this.closeAddDrawer();
             message.success("添加成功！");
 
-            const callback1 = (data) => {
-                this.setState({dataSource: data});
+            const callback = (data) => {
+                this.setDataSource(data);
             };
-            getBooks({"search": null}, callback1);
+            getBooks({"search": null}, callback);
         };
 
         let json = {
@@ -215,7 +221,7 @@ class BookTable extends React.Component {
             author: this.state.author,
             image: this.state.image,
             isbn: this.state.isbn,
-            price: this.state.price,
+            price: this.state.price * 100,
             inventory: this.state.inventory,
             description: this.state.description
         };
@@ -237,10 +243,10 @@ class BookTable extends React.Component {
             )
             message.success("修改成功！");
             this.closeEditDrawer();
-            const callback1 = (data) => {
-                this.setState({dataSource: data});
+            const callback = (data) => {
+                this.setDataSource(data);
             };
-            getBooks({"search": null}, callback1);
+            getBooks({"search": null}, callback);
         };
         let json = {
             bookId: this.state.bookId,
@@ -249,7 +255,7 @@ class BookTable extends React.Component {
             image: this.state.image,
             isbn: this.state.isbn,
             inventory: this.state.inventory,
-            price: this.state.price,
+            price: this.state.price * 100,
             description: this.state.description
         };
         editBook(json, callback)
@@ -518,7 +524,6 @@ class BookTable extends React.Component {
                                 >
                                     <Input placeholder="Please enter name"
                                            onChange={(e) => this.setState({name: e.target.value})}
-                                           // defaultValue={this.state.name}
                                     />
                                 </Form.Item>
                             </Col>
@@ -527,12 +532,10 @@ class BookTable extends React.Component {
                                     name="author"
                                     label="author"
                                     rules={[{required: true, message: 'Please enter author'}]}
-                                    initialValue={this.state.author}
                                 >
                                     <Input
                                         placeholder="Please enter author"
                                         onChange={(e) => this.setState({author: e.target.value})}
-                                           // defaultValue={this.state.author}
                                     />
                                 </Form.Item>
                             </Col>
@@ -546,7 +549,6 @@ class BookTable extends React.Component {
                                 >
                                     <Input placeholder="Please enter isbn"
                                            onChange={(e) => this.setState({isbn: e.target.value})}
-                                           // defaultValue={this.state.isbn}
                                     />
                                 </Form.Item>
                             </Col>
@@ -558,7 +560,6 @@ class BookTable extends React.Component {
                                 >
                                     <Input placeholder="Please enter inventory"
                                            onChange={(e) => this.setState({inventory: e.target.value})}
-                                           // defaultValue={this.state.inventory}
                                     />
                                 </Form.Item>
                             </Col>
@@ -572,7 +573,6 @@ class BookTable extends React.Component {
                                 >
                                     <Input placeholder="Please enter price"
                                            onChange={(e) => this.setState({price: e.target.value})}
-                                           // defaultValue={this.state.price}
                                     />
                                 </Form.Item>
                             </Col>
@@ -586,7 +586,6 @@ class BookTable extends React.Component {
                                 >
                                     <Input rows={4} placeholder="Please enter description"
                                            onChange={(e) => this.setState({description: e.target.value})}
-                                           // defaultValue={this.state.description}
                                     />
                                 </Form.Item>
                             </Col>

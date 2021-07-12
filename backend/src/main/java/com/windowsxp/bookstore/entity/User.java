@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -23,8 +22,8 @@ public class User {
     @Column(name = "user_type")
     private Integer userType;
 
-    @Column(name = "nickname")
-    private String nickName;
-    private String tel;
+    @Column(name = "Email")
+    private String email;
+
     private String address;
 }

@@ -9,6 +9,7 @@ import com.windowsxp.bookstore.utils.msgutils.MsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,23 @@ public class BookController {
     public List<Book> getBooks() {
         System.out.println("getBooks");
         return bookService.getBooks();
+    }
+
+    @RequestMapping("/getOnePageBooks")
+    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
+    public List<Book> getOnePageBooks(@RequestBody Map<String, String> params) {
+        System.out.println("get One page books");
+        Integer range = Integer.valueOf(params.get("key"));
+        range = 16 * (range - 1) + 1;
+        List<Book> result = bookService.getOnePageBooks(range);
+        Iterator<Book> it = result.iterator();
+        while(it.hasNext()) {
+            Book book = it.next();
+            if(book.getInventory() == -1) {
+                it.remove();
+            }
+        }
+        return result;
     }
 
     @RequestMapping("/getBook")

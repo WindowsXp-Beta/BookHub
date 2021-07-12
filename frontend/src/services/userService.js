@@ -26,7 +26,6 @@ export const logout = () => {
     const callback = (data) => {
         if(data.status >= 0) {
             localStorage.removeItem("user");
-            history.push("/login");
             message.success(data.msg);
         }
         else{
@@ -86,7 +85,7 @@ export const getOrders = (userId, callback) => {
     postRequest(url, data, callback);
 };
 
-export const addOrder = (data,callback) => {
+export const addOrder = (data, callback) => {
     const url = `http://localhost:8080/addOrder`;
     postRequest(url, data, callback);
 };
@@ -104,3 +103,8 @@ export const register = (data) => {
     };
     postRequest(url, data, callback);
 };
+
+export const checkUsername = (data, callback) => {
+    const url = `http://localhost:8080/checkUsername`;
+    postRequest(url, data, callback);
+}

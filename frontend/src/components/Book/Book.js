@@ -19,7 +19,7 @@ export class Book extends React.Component{
                     style={{width: 181}}
                     cover={<img alt="image" src={info.image} className={"bookImg"} style={{height: 192,width: 150}}/>}
                 >
-                    <Meta title={info.name} description={"¥ "+ info.price/100}/>
+                    <Meta title={info.name} description={ "¥ "+ info.price / 100 }/>
                 </Card>
             </Link>
         );

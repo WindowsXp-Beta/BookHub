@@ -1,3 +1,47 @@
 .ant-table {
     background: #1b1b1b;
 }
+.ant-table-tbody > tr.ant-table-row-selected > td {
+    background: #1b1b1b;
+}
+/* 购物车 */
+.ant-table-thead > tr > th {
+    color: #ff9900;
+    background-color: #1b1b1b;
+}
+.ant-table-tbody > tr > td {
+    color: #ff9900;
+}
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+    background-color: #282c34;
+}
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
+    background-color: #282c34;
+}
+.ant-input-number {
+    background-color: #1b1b1b;
+    color: #ff9900;
+}
+.ant-input-number-handler .ant-input-number-handler-up {
+    background-color: #1b1b1b;
+    color: #1b1b1b;
+}
+.ant-input-number-handler-wrap {
+    border-color: #40a9ff;
+    color: #ff9900;
+}
+.ant-popover-inner {
+    background-color: #1b1b1b;
+}
+.ant-popover-message-title {
+    color: #ff9900;
+}
+.ant-table-row {
+    border-color: #ffffff;
+}
+.ant-table-tbody > tr.ant-table-row-selected > td {
+    border-bottom: 1px solid #f0f0f0;
+}
+.ant-input-number-handler-wrap {
+    background-color: #1b1b1b;
+}

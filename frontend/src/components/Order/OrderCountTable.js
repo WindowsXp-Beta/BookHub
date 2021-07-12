@@ -2,11 +2,11 @@ import React from 'react';
 import {Button, DatePicker, Input, message, Table} from 'antd'
 import {SearchOutlined} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import {getAllOrders, getBestSales, getRangeSales} from "../../services/orderService";
+import {getOneBestSales} from "../../services/orderService";
 
 const { RangePicker } = DatePicker;
 
-export class BestSalesTable extends React.Component {
+export class OrderCountTable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -29,11 +29,11 @@ export class BestSalesTable extends React.Component {
                 showData: data
             })
         };
-        let user = JSON.parse(localStorage.getItem('user'));
+		let user = JSON.parse(localStorage.getItem('user'));
         if (user === null) {
             message.error("请登录");
         } else {
-            getBestSales({"startTime": null}, callback);
+            getOneBestSales({userId: user.userId}, callback);
         }
     }
         // const callback = (data) => {
@@ -146,7 +146,9 @@ export class BestSalesTable extends React.Component {
             return;
         }
         console.log('Formatted Selected Time: ', dateString);
+		let user = JSON.parse(localStorage.getItem('user'));
         let timeRange = {
+			userId: user.userId,
             timeStart: dateString[0],
             timeEnd: dateString[1]
         };
@@ -160,7 +162,7 @@ export class BestSalesTable extends React.Component {
                 showData:data
             });
         };
-        getBestSales(timeRange, callback);
+        getOneBestSales(timeRange, callback);
     }
         // Count on front end
         // const startTime= new Date(Date.parse(dateString[0]));

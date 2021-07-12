@@ -101,6 +101,18 @@ public class UserController {
         return MsgUtil.makeMsg(MsgCode.SUCCESS);
     }
 
+    @RequestMapping("/checkUsername")
+    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
+    public Msg checkUsername(@RequestBody Map<String, String> params) {
+        System.out.println("check if username repeated");
+        String newUsername = params.get("username");
+        List<User> userList = userService.findAllUsers();
+        for(User user: userList) {
+            if(user.getUserName().equals(newUsername)) return MsgUtil.makeMsg(MsgCode.ERROR);
+        }
+        return MsgUtil.makeMsg(MsgCode.SUCCESS);
+    }
+
     @RequestMapping("/register")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public Msg addUser(@RequestBody Map<String, String> params) {
@@ -109,7 +121,7 @@ public class UserController {
         newUser.setUserName(params.get("username"));
         newUser.setUserType(1);
         newUser.setAddress(params.get("address"));
-        newUser.setNickName(params.get("nickname"));
+        newUser.setEmail(params.get("Email"));
         newUser.setPassword(params.get("password"));
         userService.addUser(newUser);
         Integer userId = newUser.getUserId();

@@ -47,7 +47,7 @@ export class CartList extends React.Component {
                 let user = JSON.parse(localStorage.getItem('user'));
                 let userId = user.userId;
 
-                const callback1 = (data) => {
+                const callback = (data) => {
                     for (let i = 0; i < data.length; ++i) {
                         data[i].key = data[i].itemId;
                         data[i].title = data[i].book.name;
@@ -64,7 +64,7 @@ export class CartList extends React.Component {
                         selectedRows: [],
                     });
                 };
-                getCart(userId, callback1);
+                getCart(userId, callback);
             } else {
                 message.error(data.msg);
             }

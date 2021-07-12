@@ -18,8 +18,6 @@ class BestSalesView extends React.Component {
                     <Content style={{ padding: '0 50px' }}>
                         <div className="home-content">
                             <BestSalesTable/>
-                            <div className={"foot-wrapper"}>
-                            </div>
                         </div>
                         <BackTop />
                     </Content>

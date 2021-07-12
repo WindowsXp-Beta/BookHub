@@ -2,21 +2,32 @@ import React from 'react';
 import {Form, Input, Checkbox, Button} from 'antd';
 import {UserOutlined, LockOutlined, MailOutlined, HomeOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css';
-import '../../css/register.css'
 import * as userService from "../../services/userService";
 import {Link} from "react-router-dom";
 
 class RegisterForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+			isNameRepeated: false,
+        }
+    }
 
     onFinish = values => {
         console.log('Received values of form: ', values);
         userService.register(values);
     };
 
+
+    validatorUsername 
+
     render() {
         return (
             <Form
-                onFinish={this.onFinish} className="register-form" layout="inline" scrollToFirstError>
+                onFinish={this.onFinish}
+                className="register-form"
+                scrollToFirstError>
                 <Form.Item
                     className="register-form-button"
                     name="username"
@@ -25,13 +36,27 @@ class RegisterForm extends React.Component {
                             required: true,
                             message: 'Please input your username!',
                         },
+						{
+							validator: (_, value, callback) => {
+								console.log("check Username");
+								const checkUsernamecallback = (data) => {
+        							if (data.status >= 0) {
+										callback();
+        							}
+        							else {
+										callback("The username has been used!");
+        							};
+    							};
+        						userService.checkUsername({username: value}, checkUsernamecallback);
+    						},
+						},
                     ]}
                 >
                     <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="Username"/>
                 </Form.Item>
                 <Form.Item
                     className="register-form-button"
-                    name="password"
+                    name = "password"
                     rules={[
                         {
                             required: true,
@@ -74,8 +99,12 @@ class RegisterForm extends React.Component {
                 </Form.Item>
                 <Form.Item
                     className="register-form-button"
-                    name="nickname"
+                    name="Email"
                     rules={[
+                        {
+                            type: 'email',
+                            message: 'The input is not valid E-mail!',
+                        },
                         {
                             required: true,
                             message: 'Please input your E-mail!',
@@ -84,8 +113,8 @@ class RegisterForm extends React.Component {
                 >
                     <Input
                         prefix={<MailOutlined className="site-form-item-icon"/>}
-                        type="nickname"
-                        placeholder="nickname"
+                        type="Email"
+                        placeholder="Email"
                     />
                 </Form.Item>
                 <Form.Item
@@ -107,7 +136,7 @@ class RegisterForm extends React.Component {
                         { validator:(_, value) => value ? Promise.resolve() : Promise.reject('Should accept agreement') },
                     ]}
                 >
-                    <Checkbox>
+                    <Checkbox style={{color: '#f90'}}>
                         I have read the <a href="https://www.baidu.com/"> agreement</a>
                     </Checkbox>
                 </Form.Item>
@@ -115,7 +144,7 @@ class RegisterForm extends React.Component {
                     <Button type="primary" htmlType="submit" className="register-form-button">
                         Register
                     </Button>
-                    Or <Link to = "/login">log in</Link>
+                    <span style={{color: '#f90'}}>Or</span><Link to = "/login">log in!</Link>
                 </Form.Item>
             </Form>
         );

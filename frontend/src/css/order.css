@@ -1,0 +1,40 @@
+.ant-list-item-meta-title {
+    color: #ff9900;
+}
+.ant-list-item-meta-description {
+	color: #ff9900;
+}
+.ant-picker {
+    background-color: #1f1f1f;
+    margin-bottom: 18px;
+}
+.ant-calendar-range-picker-separator {
+    color: #e8e8e8;
+}
+.ant-list-item .ant-table-wrapper {
+    flex-basis: 60%;
+}
+.ant-list-item .ant-table-wrapper .ant-table-pagination.ant-pagination {
+    display: none;
+}
+.ant-picker-panel-container {
+    background-color: #1f1f1f;
+}
+.ant-picker-header button {
+    color: #ff9900;
+}
+.ant-picker-body > table > thead > tr > th {
+    color: #ff9900;
+}
+.ant-picker-cell-inner {
+    color: #ff9900;
+}
+.ant-list-split .ant-list-item {
+    border: 1px solid #f0f0f0;
+}
+.home-content .ant-list-split .ant-list-item:last-child {
+    border: 1px solid #f0f0f0;
+}
+.ant-picker-input > input {
+    color: #ff9900;
+}

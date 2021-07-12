@@ -1,0 +1,6 @@
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+	background-color: #1b1b1b;
+}
+.ant-select-selection-item{
+	color: #ccc;
+}

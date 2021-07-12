@@ -1,0 +1,45 @@
+/* Sider */
+.sider_back {
+    background-color: #1c1c1c;
+}
+.mySider{
+    /*border-left: 1px solid #e8e8e8 !important;*/
+    /*border-right: 1px solid #e8e8e8 !important;*/
+    position:fixed;
+
+}
+
+.sider {
+    background: #1c1c1c;
+    overflow: hidden !important;
+    padding-left: 0 !important;
+    padding-right:0 !important;
+}
+
+.ant-layout-has-sider{
+    /*width:80%;*/
+    width: 1000px;
+    margin:0 auto;
+}
+
+/* sidebar背景颜色 */
+.ant-layout-sider-has-trigger .ant-layout-sider-children{
+    position:fixed !important;
+    /* width:180px; */
+    background-color: #1c1c1c;
+}
+
+.ant-menu {
+    background-color: #1c1c1c;
+}
+/* sidebar 按下后的颜色 */
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #282c34;
+}
+.ant-layout-sider-children .ant-menu.ant-menu-inline-collapsed {
+    width: 80px;
+}
+.ant-layout, .ant-menu-inline, .ant-menu-inline-collapsed {
+    /* height: 100%; */
+    border-right: 0 !important;
+}

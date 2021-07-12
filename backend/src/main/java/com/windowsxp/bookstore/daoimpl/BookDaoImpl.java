@@ -38,6 +38,11 @@ public class BookDaoImpl implements BookDao{
     }
 
     @Override
+    public List<Book> getOnePageBooks(Integer range) {
+        return bookRepository.getOnePageBooks(range);
+    }
+
+    @Override
     public void deleteBook(Integer id) {
         Book book = bookRepository.getById(id);
         book.setInventory(-1);

@@ -1,27 +1,20 @@
 package com.windowsxp.bookstore.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.windowsxp.bookstore.constant.Constant;
-import com.windowsxp.bookstore.entity.CartItem;
-import com.windowsxp.bookstore.entity.Order;
-import com.windowsxp.bookstore.entity.User;
-import com.windowsxp.bookstore.service.BookService;
+import com.windowsxp.bookstore.entity.*;
 import com.windowsxp.bookstore.service.CartService;
 import com.windowsxp.bookstore.service.OrderService;
-import com.windowsxp.bookstore.service.UserService;
 
 import com.windowsxp.bookstore.utils.msgutils.Msg;
 import com.windowsxp.bookstore.utils.msgutils.MsgCode;
 import com.windowsxp.bookstore.utils.msgutils.MsgUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 @RestController
 public class OrderController {
@@ -30,8 +23,6 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private CartService cartService;
-    @Autowired
-    private UserService userService;
 
     @RequestMapping("/getOrders")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
@@ -46,6 +37,143 @@ public class OrderController {
     public List<Order> getAllOrders() {
         System.out.println("getAllOrders");
         return orderService.getAllOrders();
+    }
+
+    @RequestMapping("/getOneBestSales")
+    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
+    public List<SaleStatistic> getOneBestSales(@RequestBody Map<String, String> params) {
+        System.out.println("getOneBestSales");
+        Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
+        List<Order> orderList = orderService.getOrders(userId);
+        String timeStart = params.get("timeStart");
+        if(timeStart != null) {
+            timeStart = timeStart + " 00:00:00";
+            String timeEnd = params.get("timeEnd");
+            timeEnd = timeEnd + " 00:00:00";
+            Timestamp timestampStart = Timestamp.valueOf(timeStart);
+            Timestamp timestampEnd = Timestamp.valueOf(timeEnd);
+            Iterator<Order> it = orderList.iterator();
+            while(it.hasNext()) {
+                Order order = it.next();
+                if(order.getTime().after(timestampEnd) || order.getTime().before(timestampStart)) {
+                    it.remove();
+                }
+            }
+        }
+        Map<Book, Integer> map = new HashMap<>();
+        for(Order order: orderList) {
+            for(OrderItem orderItem: order.getOrderItem()){
+                Book book = orderItem.getBook();
+                if(map.containsKey(book)){
+                    Integer bookNumber = map.get(book);
+                    bookNumber++;
+                    map.put(book, bookNumber);
+                }
+                else {
+                    map.put(book, 1);
+                }
+            }
+        }
+        List<SaleStatistic> SalesList = new ArrayList<>();
+        for (Map.Entry<Book, Integer> entry : map.entrySet()) {
+            SaleStatistic newEntry = new SaleStatistic();
+            newEntry.setBook(entry.getKey());
+            newEntry.setBookNumber(entry.getValue());
+            newEntry.setSum(entry.getValue() * entry.getKey().getPrice());
+            SalesList.add(newEntry);
+        }
+        return SalesList;
+    }
+
+    @RequestMapping("/getBestCustomer")
+    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
+    public List<CustomerStatistic> getBestCustomer(@RequestBody Map<String, String> params) {
+        System.out.println("getBestCustomer");
+        List<Order> orderList = orderService.getAllOrders();
+        String timeStart = params.get("timeStart");
+        if(timeStart != null) {
+            timeStart = timeStart + " 00:00:00";
+            String timeEnd = params.get("timeEnd");
+            timeEnd = timeEnd + " 00:00:00";
+            Timestamp timestampStart = Timestamp.valueOf(timeStart);
+            Timestamp timestampEnd = Timestamp.valueOf(timeEnd);
+            Iterator<Order> it = orderList.iterator();
+            while(it.hasNext()) {
+                Order order = it.next();
+                if(order.getTime().after(timestampEnd) || order.getTime().before(timestampStart)) {
+                    it.remove();
+                }
+            }
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        for(Order order: orderList) {
+            Integer userId = order.getUserId();
+            for(OrderItem orderItem: order.getOrderItem()){
+                Integer addNum = orderItem.getBookNum();
+                Integer addSum = addNum * orderItem.getBook().getPrice();
+                Integer preSum = map.get(userId);
+                if(preSum != null){
+                    preSum += addSum;
+                }
+                else {
+                    preSum = addSum;
+                }
+                map.put(userId, preSum);
+            }
+        }
+        List<CustomerStatistic> CustomerList = new ArrayList<>();
+        for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            CustomerStatistic newEntry = new CustomerStatistic();
+            newEntry.setUserId(entry.getKey());
+            newEntry.setSum(entry.getValue());
+            CustomerList.add(newEntry);
+        }
+        return CustomerList;
+    }
+
+    @RequestMapping("/getBestSales")
+    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
+    public List<SaleStatistic> getBestSales(@RequestBody Map<String, String> params) {
+        System.out.println("getBestSales");
+        List<Order> orderList = orderService.getAllOrders();
+        String timeStart = params.get("timeStart");
+        if(timeStart != null) {
+            timeStart = timeStart + " 00:00:00";
+            String timeEnd = params.get("timeEnd");
+            timeEnd = timeEnd + " 00:00:00";
+            Timestamp timestampStart = Timestamp.valueOf(timeStart);
+            Timestamp timestampEnd = Timestamp.valueOf(timeEnd);
+            Iterator<Order> it = orderList.iterator();
+            while(it.hasNext()) {
+                Order order = it.next();
+                if(order.getTime().after(timestampEnd) || order.getTime().before(timestampStart)) {
+                    it.remove();
+                }
+            }
+        }
+        Map<Book, Integer> map = new HashMap<>();
+        for(Order order: orderList) {
+            for(OrderItem orderItem: order.getOrderItem()){
+                Book book = orderItem.getBook();
+                if(map.containsKey(book)){
+                    Integer bookNumber = map.get(book);
+                    bookNumber++;
+                    map.put(book, bookNumber);
+                }
+                else {
+                    map.put(book, 1);
+                }
+            }
+        }
+        List<SaleStatistic> SalesList = new ArrayList<>();
+        for (Map.Entry<Book, Integer> entry : map.entrySet()) {
+            SaleStatistic newEntry = new SaleStatistic();
+            newEntry.setBook(entry.getKey());
+            newEntry.setBookNumber(entry.getValue());
+            newEntry.setSum(entry.getValue() * entry.getKey().getPrice());
+            SalesList.add(newEntry);
+        }
+        return SalesList;
     }
 
     @RequestMapping("/addOrder")
@@ -69,8 +197,7 @@ public class OrderController {
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public Msg addCart(@RequestBody Map<String, String> params) {
         System.out.println("addCart");
-        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(params);
-        cartService.addCart(jsonObject);
+        cartService.addCart(params);
         return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.ADD_SUCCESS_CART_MSG);
     }
 
@@ -78,8 +205,7 @@ public class OrderController {
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public Msg deleteCart(@RequestBody Map<String, String> params) {
         System.out.println("deleteCart");
-        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(params);
-        cartService.deleteCart(jsonObject);
+        cartService.deleteCart(params);
         return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.DELETE_SUCCESS_CART_MSG);
     }
 
@@ -87,8 +213,7 @@ public class OrderController {
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
     public Msg editCartItemNum(@RequestBody Map<String, String> params) {
         System.out.println("editCartNum");
-        JSONObject jsonObject = (JSONObject)JSONObject.toJSON(params);
-        cartService.editCartItemNum(jsonObject);
+        cartService.editCartItemNum(params);
         return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.EDITNUM_SUCCESS_MSG);
     }
 }

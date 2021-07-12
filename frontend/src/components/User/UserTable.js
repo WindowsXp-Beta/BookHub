@@ -1,10 +1,10 @@
 import React from 'react';
-import {Table, Drawer, Input, Col, Row, Button, Popover, Form, message, Select} from 'antd';
+import {Table, Drawer, Input, Col, Row, Button, Form, message, Select} from 'antd';
 import {Link} from "react-router-dom";
 import Highlighter from 'react-highlight-words';
 import {SearchOutlined} from '@ant-design/icons';
 import {getUsers} from "../../services/userService";
-// import '../../css/userTable.css'
+import '../../css/userTable.css'
 import {deleteUser} from "../../services/userService";
 import * as userService from "../../services/userService";
 
@@ -22,8 +22,9 @@ class UserTable extends React.Component {
             addVisible: false,
             editVisible: false,
             loading: false,
+
             userId: '',
-            nickName: '',
+            email: '',
             username: '',
             password: '',
             address: '',
@@ -143,18 +144,30 @@ class UserTable extends React.Component {
         });
     };
 
-    handleEdit = (userId, nickName, username, password, address, userType) => {
-        this.showEditDrawer();
+    formRef = React.createRef();
+
+    handleEdit = (userId, email, username, password, address, userType) => {
         this.setState(
             {
                 userId: userId,
-                nickName: nickName,
+                email: email,
                 username: username,
                 password: password,
                 address: address,
                 userType: userType,
             }
-        )
+        );
+        this.showEditDrawer();
+        setTimeout(() => {
+            this.formRef.current.setFieldsValue({
+                userId: userId,
+                Email: email,
+                username: username,
+                password: password,
+                address: address,
+                userType: userType,
+            })
+        }, 100);
     };
 
     handleDelete = () => {
@@ -163,7 +176,7 @@ class UserTable extends React.Component {
                 message.success(data.msg);
                 this.setState({
                         userId: '',
-                        nickName:'',
+                        email:'',
                         username: '',
                         password: '',
                         address: '',
@@ -204,8 +217,10 @@ class UserTable extends React.Component {
             userId: this.state.userId,
             userType: this.state.userType
         };
+        console.log(json);
         userService.editUser(json, callback);
     }
+
 
     render() {
         const columns = [
@@ -217,11 +232,11 @@ class UserTable extends React.Component {
                 sorter: (a, b) => a.userId - b.userId,
             },
             {
-                title: 'nickname',
-                dataIndex: 'nickName',
-                ...this.getColumnSearchProps('nickName'),
+                title: 'Email',
+                dataIndex: 'email',
+                ...this.getColumnSearchProps('email'),
                 editable: true,
-                sorter: (a, b) => a.nickName.length - b.nickName.length,
+                sorter: (a, b) => a.email.length - b.email.length,
             },
             {
                 title: 'username',
@@ -249,16 +264,16 @@ class UserTable extends React.Component {
                 ...this.getColumnSearchProps('userType'),
                 editable: true,
                 sorter: (a, b) => a.userType - b.userType,
-                render: (text, record) =>
-                    <Popover content={
-                        <div>
-                            <p>-1: ban</p>
-                            <p> 0: admin</p>
-                            <p> 1: customer</p>
-                        </div>
-                    } title="Attention">
-                        <text>{text}</text>
-                    </Popover>
+                // render: (text, record) =>
+                //     <Popover content={
+                //         <div>
+                //             <p>-1: ban</p>
+                //             <p> 0: admin</p>
+                //             <p> 1: customer</p>
+                //         </div>
+                //     } title="Attention">
+                //         <text>{text}</text>
+                //     </Popover>
             },
             {
                 title: 'operation',
@@ -267,13 +282,14 @@ class UserTable extends React.Component {
                     this.state.dataSource.length >= 1 ? (
                         <Button
                             onClick={() => {
-                                this.handleEdit(record.userId, record.nickName, record.userName, record.password, record.address, record.userType)
+                                this.handleEdit(record.userId, record.email, record.userName, record.password, record.address, record.userType)
                             }}>Edit
                         </Button>
                     ) : null
             },
         ];
         const {dataSource} = this.state;
+
         return (
             <div>
                 <Link to='/'>
@@ -331,11 +347,11 @@ class UserTable extends React.Component {
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="nickName"
-                                    label="nickName"
-                                    rules={[{required: true, message: 'Please enter password'}]}
+                                    name="Email"
+                                    label="Email"
+                                    rules={[{required: true, message: 'Please enter Email'}]}
                                 >
-                                    <Input placeholder="Please enter nickName"/>
+                                    <Input placeholder="Please enter Email"/>
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
@@ -356,9 +372,9 @@ class UserTable extends React.Component {
                                     rules={[{required: true, message: 'Please choose a userType'}]}
                                 >
                                     <Select placeholder="Please choose a userType">
-                                        <Option value="-1">Banned</Option>
-                                        <Option value="0">Administrator</Option>
-                                        <Option value="1">Customer</Option>
+                                        <Option value={-1}>banned</Option>
+                                        <Option value={0}>admin</Option>
+                                        <Option value={1}>customer</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
@@ -388,7 +404,7 @@ class UserTable extends React.Component {
                         </div>
                     }
                 >
-                    <Form layout="vertical" hideRequiredMark>
+                    <Form layout="vertical" ref={this.formRef} hideRequiredMark>
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
@@ -412,11 +428,11 @@ class UserTable extends React.Component {
                         <Row gutter={16}>
                             <Col span={12}>
                                 <Form.Item
-                                    name="nickname"
-                                    label="nickname"
-                                    rules={[{required: true, message: 'Please enter email'}]}
+                                    name="Email"
+                                    label="Email"
+                                    rules={[{required: true, message: 'Please enter Email'}]}
                                 >
-                                    <Input placeholder="Please enter email" defaultValue={this.state.nickName}/>
+                                    <Input placeholder="Please enter Email"/>
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
@@ -425,7 +441,7 @@ class UserTable extends React.Component {
                                     label="address"
                                     rules={[{required: true, message: 'Please enter address'}]}
                                 >
-                                    <Input placeholder="Please enter address" defaultValue={this.state.address}/>
+                                    <Input placeholder="Please enter address"/>
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -436,24 +452,22 @@ class UserTable extends React.Component {
                                     label="userType"
                                     rules={[{required: true, message: 'Please choose a userType'}]}
                                 >
-                                    <Popover content={
-                                        <div>
-                                            <p>-1: ban</p>
-                                            <p> 0: admin</p>
-                                            <p> 1: customer</p>
-                                        </div>
-                                    } title="Attention">
-                                        <Input placeholder="Please choose a userType"
-                                               onChange={e => this.setState({userType: e.target.value})}
-                                               defaultValue={this.state.userType}/>
-                                    </Popover>
+                                    <Select 
+                                        placeholder="select userType"
+                                        onChange = {(value) => {
+                                            this.setState({userType: value})}
+                                        }
+                                    >
+                                        <Option value={-1}>banned</Option>
+                                        <Option value={0}>admin</Option>
+                                        <Option value={1}>customer</Option>
+                                    </Select>
                                 </Form.Item>
                             </Col>
                         </Row>
                     </Form>
                 </Drawer>
             </div>
-
         );
     }
 }

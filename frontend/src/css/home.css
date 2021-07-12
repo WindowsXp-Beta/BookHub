@@ -1,4 +1,10 @@
-
+.home-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    /*width:90%;*/
+}
 
 .ant-carousel {
     margin-top: 0 !important;
@@ -62,3 +68,35 @@
     flex: none;
 }
 
+.ant-card {
+    border: none;
+    background-color: #000000;
+}
+.ant-card-cover {
+    display: flex;
+    justify-content: center;
+}
+.ant-card-meta-title{
+    font-weight: bolder;
+    color: #ff9900;
+    font-size:14px !important;
+}
+.pageTag .ant-menu-item{
+    background-color: #363636;
+}
+.ant-menu-title-content{
+    color: #ff9900;
+}
+/* HomeView翻页按钮 */
+.ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link {
+    background-color: #1c1c1c;
+}
+.anticon {
+    color: #e8e8e8;
+}
+.ant-pagination-item {
+    background-color: #1c1c1c;
+}
+.ant-pagination-item a {
+    color: #e8e8e8;
+}
