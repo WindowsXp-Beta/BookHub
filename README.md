@@ -15,12 +15,3 @@ Back end: SpringBoot
 Database: MySQL
 
 <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=245030810,3421413217&fm=26&gp=0.jpg" style="zoom:70%;" />
-
-### ScoreBoard
-
-> 迭代一：14/15
->
-> 迭代二：19/20
->
-> 迭代三：23/25
-
