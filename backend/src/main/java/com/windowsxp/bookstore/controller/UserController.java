@@ -103,9 +103,13 @@ public class UserController {
 
     @RequestMapping("/checkUsername")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public Msg checkUsername(@RequestBody Map<String, String> params) {
-        System.out.println("check if username repeated");
-        String newUsername = params.get("username");
+    public Msg checkUsername(
+            @RequestBody Map<String, String> UsernameMap
+//            @Request Map<String, String> UsernameMap
+    ) {
+        String newUsername = UsernameMap.get("newUsername");
+        System.out.println("check if username repeated"+newUsername);
+//        String newUsername = params.get("username");
         List<User> userList = userService.findAllUsers();
         for(User user: userList) {
             if(user.getUserName().equals(newUsername)) return MsgUtil.makeMsg(MsgCode.ERROR);

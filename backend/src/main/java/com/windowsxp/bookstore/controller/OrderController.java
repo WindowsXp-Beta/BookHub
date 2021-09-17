@@ -24,11 +24,14 @@ public class OrderController {
     @Autowired
     private CartService cartService;
 
-    @RequestMapping("/getOrders")
+    @PostMapping("/getOrders")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public List<Order> getOrders(@RequestBody Map<String, String> params) {
+    public List<Order> getOrders(
+//            @RequestParam(name = "userId") Integer userId,
+            @RequestBody Integer userId
+    ) {
         System.out.println("getOrders");
-        Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
+//        Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
         return orderService.getOrders(userId);
     }
 

@@ -52,22 +52,27 @@ public class BookController {
 
     @RequestMapping("/editBook")
     @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public Msg editBook(@RequestBody Map<String, String> params) {
+    public Book editBook(
+//            @RequestBody Map<String, String> params
+            @RequestBody Book book,
+            @RequestParam String extraNumber
+    ) {
         System.out.println("editBook");
-        Integer bookId = Integer.valueOf(params.get("bookId"));
-        Book book  = bookService.findBook(bookId);
+        System.out.println(extraNumber);
+//        Integer bookId = Integer.valueOf(params.get("bookId"));
+//        Book book  = bookService.findBook(bookId);
 
         //更新book
-        book.setName(params.get("name"));
-        book.setAuthor(params.get("author"));
-        book.setImage(params.get("image"));
-        book.setIsbn(params.get("isbn"));
-        book.setInventory(Integer.valueOf(params.get("inventory")));
-        book.setPrice(Integer.valueOf(params.get("price")));
-        book.setDescription(params.get("description"));
+//        book.setName(params.get("name"));
+//        book.setAuthor(params.get("author"));
+//        book.setImage(params.get("image"));
+//        book.setIsbn(params.get("isbn"));
+//        book.setInventory(Integer.valueOf(params.get("inventory")));
+//        book.setPrice(Integer.valueOf(params.get("price")));
+//        book.setDescription(params.get("description"));
 
         bookService.addBook(book);
-        return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.ADD_SUCCESS_BOOK_MSG);
+        return bookService.findBook(book.getId());
     }
 
     @RequestMapping("/addBook")
