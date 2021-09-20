@@ -1,14 +1,15 @@
 package com.windowsxp.bookstore.service;
 
 
+import com.windowsxp.bookstore.dto.request.NewBookDTO;
 import com.windowsxp.bookstore.entity.Book;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface BookService {
-    Book findBook(Integer id);
-    List<Book> getBooks();
-    List<Book> getOnePageBooks(Integer range);
-    void addBook(Book book);
+    Book getBookDetail(Integer id);
+    Page<Book> getBooks(Pageable pageable);
+    void addBook(NewBookDTO newBookDTO);
+    void updateBook(Book book);
     void deleteBook(Integer id);
 }

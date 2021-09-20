@@ -2,41 +2,38 @@ package com.windowsxp.bookstore.daoimpl;
 
 import com.windowsxp.bookstore.dao.CartDao;
 import com.windowsxp.bookstore.entity.CartItem;
-
-import com.windowsxp.bookstore.repository.CartRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.windowsxp.bookstore.repository.CartItemRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 
 @Repository
+@AllArgsConstructor
 public class CartDaoImpl implements CartDao {
 
-    @Autowired
-    CartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
 
     @Override
-    public List<CartItem> getCart(Integer userId) {
-        List<CartItem> cartItemListst = cartRepository.getCart(userId);
-        cartItemListst.removeIf(cartItem -> cartItem.getBook().getInventory() <= 0);
-        return cartItemListst;
+    public CartItem getCartItemById(Integer itemId) {
+        return cartItemRepository.getById(itemId);
     }
 
     @Override
-    public void addCart(CartItem cartItem) {
-        cartRepository.saveAndFlush(cartItem);
+    public Page<CartItem> getCartByUserId(Integer userId, Pageable pageable) {
+        Page<CartItem> cart = cartItemRepository.getCartItemByUserId(userId, pageable);
+        cart.getContent().removeIf(cartItem -> cartItem.getBook().getInventory() <= 0);
+        return cart;
+    }
+
+    @Override
+    public void saveCart(CartItem cartItem) {
+        cartItemRepository.save(cartItem);
     }
 
     @Override
     public void deleteCart(Integer itemId) {
-        cartRepository.deleteById(itemId);
-    }
-
-    @Override
-    public void editCartItemNum(Integer itemId, Integer bookNum) {
-        CartItem cartItem = cartRepository.getById(itemId);
-        cartItem.setBookNum(bookNum);
-        cartRepository.saveAndFlush(cartItem);
+        cartItemRepository.deleteById(itemId);
     }
 }

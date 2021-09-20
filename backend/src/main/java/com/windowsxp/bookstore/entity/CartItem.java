@@ -1,32 +1,26 @@
 package com.windowsxp.bookstore.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-@Table(name = "cart_item", schema = "bookstore")
-@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "itemId")
+@Setter
+@Getter
+@NoArgsConstructor
 public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer itemId;
+    private Integer id;
 
-    @Column(name = "user_id")
     private Integer userId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    @JoinColumn(name = "book_id")
     private Book book;
 
-    @Column(name = "book_number")
-    private Integer bookNum;
+    private Integer bookNumber;
 }

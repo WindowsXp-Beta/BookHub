@@ -1,14 +1,16 @@
 package com.windowsxp.bookstore.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.windowsxp.bookstore.entity.User;
-
-import java.util.List;
+import com.windowsxp.bookstore.enumerate.UserType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
-    User checkUser(String username, String password);
+    User login(String username, String password);
     User getUser(Integer id);
-    List<User> findAllUsers();
+    Page<User> findAllUsers(Pageable pageable);
+    Boolean checkDuplicateUsername(String newUsername);
     void deleteUser(Integer userId);
-    void addUser(User user);
+    void editUser(Integer userId, UserType userType);
+    User register(String username, String rawPassword, String email, String address);
 }

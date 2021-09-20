@@ -1,50 +1,47 @@
 package com.windowsxp.bookstore.serviceimpl;
 
 import com.windowsxp.bookstore.dao.CartDao;
+import com.windowsxp.bookstore.dto.request.NewCartItemDTO;
 import com.windowsxp.bookstore.entity.Book;
 import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.service.CartService;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import javax.persistence.EntityManager;
 
 @Service
+@AllArgsConstructor
 public class CartServiceImpl implements CartService{
-    @Autowired
-    private CartDao cartDao;
+
+    private final CartDao cartDao;
+    private final EntityManager entityManager;
 
     @Override
-    public List<CartItem> getCart(Integer userId) {
-          return cartDao.getCart(userId);
+    public Page<CartItem> getCartByUserId(Integer userId, Pageable pageable) {
+          return cartDao.getCartByUserId(userId, pageable);
     }
 
     @Override
-    public void addCart(Map<String, String> params) {
+    public void addCart(Integer userId, NewCartItemDTO newCartItemDTO) {
         CartItem newCartItem = new CartItem();
-        Integer userId = Integer.valueOf(params.get("userId"));
         newCartItem.setUserId(userId);
-        Integer bookId = Integer.valueOf(params.get("bookId"));
-        Book newBook = new Book();
-        newBook.setId(bookId);
-        newCartItem.setBook(newBook);
-        Integer bookNum = Integer.valueOf(params.get("bookNumber"));
-        newCartItem.setBookNum(bookNum);
-        cartDao.addCart(newCartItem);
+        newCartItem.setBook(entityManager.getReference(Book.class, newCartItemDTO.getBookId()));
+        newCartItem.setBookNumber(newCartItemDTO.getBookNumber());
+        cartDao.saveCart(newCartItem);
     }
 
     @Override
-    public void deleteCart(Map<String, String> params) {
-        Integer itemId = Integer.valueOf(params.get("itemId"));
+    public void deleteCart(Integer itemId) {
         cartDao.deleteCart(itemId);
     }
 
     @Override
-    public void editCartItemNum(Map<String, String> params) {
-        Integer itemId = Integer.valueOf(params.get("itemId"));
-        Integer newBookNum = Integer.valueOf(params.get("bookNum"));
-        cartDao.editCartItemNum(itemId, newBookNum);
+    public void editCartItemNumber(Integer itemId, Integer bookNumber) {
+        CartItem cartItem = cartDao.getCartItemById(itemId);
+        cartItem.setBookNumber(bookNumber);
+        cartDao.saveCart(cartItem);
     }
 }

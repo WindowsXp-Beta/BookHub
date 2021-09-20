@@ -1,15 +1,29 @@
 package com.windowsxp.bookstore.utils.sessionutils;
 
-import com.windowsxp.bookstore.constant.Constant;
-
 import com.alibaba.fastjson.JSONObject;
+import com.windowsxp.bookstore.constant.Constant;
+import com.windowsxp.bookstore.enumerate.UserType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 public class SessionUtil {
+
+    public enum AuthType {
+        PASS, USER, ADMIN
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface Auth {
+        AuthType authType() default AuthType.PASS;
+    }
 
     public static boolean checkAuth(){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -19,11 +33,19 @@ public class SessionUtil {
             HttpSession session = request.getSession(false);
 
             if(session != null) {
-                Integer userType = (Integer) session.getAttribute(Constant.USER_TYPE);
-                return userType != null && userType >= 0;
+                UserType userType = (UserType) session.getAttribute(Constant.USER_TYPE);
+                return userType != UserType.BANNED;
             }
         }
         return false;
+    }
+
+    public static boolean checkAdmin(){
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = requestAttributes.getRequest();
+        HttpSession session = request.getSession(false);
+        UserType userType = (UserType) session.getAttribute(Constant.USER_TYPE);
+        return userType == UserType.ADMIN;
     }
 
     public static JSONObject getAuth(){
@@ -35,9 +57,9 @@ public class SessionUtil {
 
             if(session != null) {
                 JSONObject ret = new JSONObject();
-                ret.put(Constant.USER_ID, (Integer)session.getAttribute(Constant.USER_ID));
-                ret.put(Constant.USERNAME, (String)session.getAttribute(Constant.USERNAME));
-                ret.put(Constant.USER_TYPE, (Integer)session.getAttribute(Constant.USER_TYPE));
+                ret.put(Constant.USER_ID, session.getAttribute(Constant.USER_ID));
+                ret.put(Constant.USERNAME, session.getAttribute(Constant.USERNAME));
+                ret.put(Constant.USER_TYPE, session.getAttribute(Constant.USER_TYPE));
                 return ret;
             }
         }

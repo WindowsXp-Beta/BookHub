@@ -1,11 +1,11 @@
 package com.windowsxp.bookstore.repository;
 
-import com.windowsxp.bookstore.entity.Book;
+import com.windowsxp.bookstore.entity.CartItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BookRepository extends JpaRepository<Book, Integer> {
+public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
 
-    Page<Book> getAllByInventoryGreaterThan(Integer inventory, Pageable pageable);
+    Page<CartItem> getCartItemByUserId(Integer userId, Pageable pageable);
 }

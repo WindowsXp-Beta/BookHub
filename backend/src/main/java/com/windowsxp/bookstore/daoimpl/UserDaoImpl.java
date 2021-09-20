@@ -1,24 +1,25 @@
 package com.windowsxp.bookstore.daoimpl;
 
 import com.windowsxp.bookstore.dao.UserDao;
-
 import com.windowsxp.bookstore.entity.User;
 import com.windowsxp.bookstore.repository.UserRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class UserDaoImpl implements UserDao{
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public User checkUser(String username, String password){
-        return userRepository.checkUser(username,password);
+    public Optional<User> checkUser(String username, String password){
+        return userRepository.findByUsernameAndPassword(username,password);
     }
 
     @Override
@@ -27,8 +28,13 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<User.Username> getAllUsername() {
+        return userRepository.findAllProjectionsBy(User.Username.class);
     }
 
     @Override
@@ -37,7 +43,12 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public void addUser(User user) {
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public void saveAndFlushUser(User user) {
         userRepository.saveAndFlush(user);
     }
 }

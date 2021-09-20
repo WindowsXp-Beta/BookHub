@@ -1,144 +1,125 @@
 package com.windowsxp.bookstore.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.windowsxp.bookstore.constant.Constant;
+import com.windowsxp.bookstore.dto.request.LoginDTO;
+import com.windowsxp.bookstore.dto.request.RegisterDTO;
+import com.windowsxp.bookstore.dto.request.UserTypeEditDTO;
+import com.windowsxp.bookstore.dto.response.UserInfoDTO;
 import com.windowsxp.bookstore.entity.User;
 import com.windowsxp.bookstore.service.UserService;
-import com.windowsxp.bookstore.utils.msgutils.Msg;
-import com.windowsxp.bookstore.utils.msgutils.MsgCode;
-import com.windowsxp.bookstore.utils.msgutils.MsgUtil;
 import com.windowsxp.bookstore.utils.sessionutils.SessionUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSON;
-
 @RestController
+@AllArgsConstructor
 public class UserController {
-    @Autowired
-    private UserService userService;
 
-    @RequestMapping("/login")
-    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public Msg login(@RequestBody Map<String, String> params) {
-        System.out.println("login");
-        String username = params.get(Constant.USERNAME);
-        String password = params.get(Constant.PASSWORD);
-        User auth = userService.checkUser(username, password);
-        if (auth != null && auth.getUserType() != -1) {
-            JSONObject obj = new JSONObject();
-            obj.put(Constant.USER_ID, auth.getUserId());
-            obj.put(Constant.USERNAME, auth.getUserName());
-            obj.put(Constant.USER_TYPE, auth.getUserType());
-            SessionUtil.setSession(obj);
+    private final ModelMapper modelMapper;
 
-            JSONObject data = (JSONObject) JSON.toJSON(auth);
-            data.remove(Constant.PASSWORD);
+    private final UserService userService;
 
-            return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, data);
-        } else if(auth != null && auth.getUserType() == -1) {
-            return MsgUtil.makeMsg(MsgCode.BAN_USER_ERROR);
-        }
-        else {
-            return MsgUtil.makeMsg(MsgCode.LOGIN_USER_ERROR);
+
+    @GetMapping("/login")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
+        try {
+            User user = userService.login(loginDTO.getUsername(), loginDTO.getPassword());
+            setSession(user);
+            return ResponseEntity.ok().body(modelMapper.map(user, UserInfoDTO.class));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
     }
 
-    @RequestMapping("/logout")
-    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public Msg logout() {
-        System.out.println("logout");
+    @DeleteMapping("/logout")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
+    public ResponseEntity<String> logout() {
         Boolean status = SessionUtil.removeSession();
 
         if (status) {
-            return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGOUT_SUCCESS_MSG);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("登出成功");
         }
-        return MsgUtil.makeMsg(MsgCode.ERROR, MsgUtil.LOGOUT_ERR_MSG);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("登出失败，请勿重复操作");
     }
 
-    @RequestMapping("/checkSession")
-    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public Msg checkSession() {
-        System.out.println("checkSession");
+    @GetMapping("/session")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
+    public ResponseEntity<String> checkSession() {
         JSONObject auth = SessionUtil.getAuth();
 
         if (auth == null) {
-            return MsgUtil.makeMsg(MsgCode.NOT_LOGGED_IN_ERROR);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("登录失效");
         } else {
-            return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.LOGIN_SUCCESS_MSG, auth);
+            return ResponseEntity.ok().build();
         }
     }
 
-    @RequestMapping("/getUsers")
-    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public List<User> getUsers() {
-        System.out.println("getUsers");
-        return userService.findAllUsers();
-    }
-
-    @RequestMapping("/deleteUser")
-    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public Msg deleteUser(@RequestParam("id") Integer id) {
-        System.out.println("deleteUser: " + id);
-        userService.deleteUser(id);
-        return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.DELETE_SUCCESS_USER_MSG);
-    }
-
-    @RequestMapping("/editUser")
-    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public Msg editUser(@RequestBody Map<String, String> params) {
-        System.out.println("editUser");
-        Integer userId = Integer.valueOf(params.get(Constant.USER_ID));
-        User user = userService.getUser(userId);
-        System.out.println(user);
-        Integer userType = Integer.valueOf(params.get(Constant.USER_TYPE));
-        user.setUserType(userType);
-        System.out.println(userType);
-        userService.addUser(user);
-        return MsgUtil.makeMsg(MsgCode.SUCCESS);
-    }
-
-    @RequestMapping("/checkUsername")
-    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public Msg checkUsername(
-            @RequestBody Map<String, String> UsernameMap
-//            @Request Map<String, String> UsernameMap
-    ) {
-        String newUsername = UsernameMap.get("newUsername");
-        System.out.println("check if username repeated"+newUsername);
-//        String newUsername = params.get("username");
-        List<User> userList = userService.findAllUsers();
-        for(User user: userList) {
-            if(user.getUserName().equals(newUsername)) return MsgUtil.makeMsg(MsgCode.ERROR);
+    @GetMapping("/admin/user")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
+    public ResponseEntity<Page<User>> getUsers(@RequestParam int page,
+                                               @RequestParam int pageSize) {
+        try {
+            return ResponseEntity.ok(userService.findAllUsers(PageRequest.of(page, pageSize)));
+        } catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return MsgUtil.makeMsg(MsgCode.SUCCESS);
     }
 
-    @RequestMapping("/register")
-    @CrossOrigin(value = "http://localhost:3000",maxAge = 1800,allowedHeaders = "*",allowCredentials="true")
-    public Msg addUser(@RequestBody Map<String, String> params) {
-        System.out.println("add User");
-        User newUser = new User();
-        newUser.setUserName(params.get("username"));
-        newUser.setUserType(1);
-        newUser.setAddress(params.get("address"));
-        newUser.setEmail(params.get("Email"));
-        newUser.setPassword(params.get("password"));
-        userService.addUser(newUser);
-        Integer userId = newUser.getUserId();
+    @DeleteMapping("/admin/user/{id}")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("删除用户成功");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("删除用户失败");
+        }
+    }
 
+    @PostMapping("/admin/user")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
+    public ResponseEntity<String> editUser(@RequestBody UserTypeEditDTO userTypeEditDTO) {
+        try {
+            userService.editUser(userTypeEditDTO.getUserId(), userTypeEditDTO.getUserType());
+            return ResponseEntity.status(HttpStatus.CREATED).body("用户信息修改成功");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("用户信息修改失败");
+        }
+    }
+
+    @GetMapping("/user/name")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
+    public ResponseEntity<Boolean> checkDuplicateUsername(@RequestParam String username) {
+        try {
+            return ResponseEntity.ok().body(userService.checkDuplicateUsername(username));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PostMapping("/user")
+    public ResponseEntity<UserInfoDTO> register(@RequestBody RegisterDTO registerDTO) {
+        try {
+            User user = userService.register(registerDTO.getUsername(), registerDTO.getPassword(), registerDTO.getEmail(), registerDTO.getAddress());
+            setSession(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(user, UserInfoDTO.class));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    private void setSession(User user) {
         JSONObject obj = new JSONObject();
-        obj.put(Constant.USER_ID, userId);
-        obj.put(Constant.USERNAME, newUser.getUserName());
-        obj.put(Constant.USER_TYPE, newUser.getUserType());
+        obj.put(Constant.USER_ID, user.getUserId());
+        obj.put(Constant.USERNAME, user.getUsername());
+        obj.put(Constant.USER_TYPE, user.getUserType());
         SessionUtil.setSession(obj);
-
-        JSONObject data = (JSONObject) JSON.toJSON(newUser);
-        data.remove(Constant.PASSWORD);
-
-        return MsgUtil.makeMsg(MsgCode.SUCCESS, MsgUtil.REGISTER_SUCCESS_MSG, data);
     }
 }

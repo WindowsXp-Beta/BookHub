@@ -3,49 +3,38 @@ package com.windowsxp.bookstore.daoimpl;
 import com.windowsxp.bookstore.dao.BookDao;
 import com.windowsxp.bookstore.entity.Book;
 import com.windowsxp.bookstore.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class BookDaoImpl implements BookDao{
 
-    @Autowired
-    BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     @Override
-    public Book findBook(Integer id){
-        return bookRepository.getById(id);
+    public Optional<Book> findBookById(Integer id){
+        return bookRepository.findById(id);
     }
 
     @Override
-    public List<Book> getBooks() {
-        List<Book> bookList = bookRepository.findAll();
-        List<Book> ret = new ArrayList<>();
-        for(Book book: bookList) {
-            if(book.getInventory() >= 0) {
-                ret.add(book);
-            }
-        }
-        return ret;
+    public Page<Book> getBooks(Pageable pageable) {
+        return bookRepository.getAllByInventoryGreaterThan(0, pageable);
     }
 
     @Override
-    public void addBook(Book book) {
-        bookRepository.saveAndFlush(book);
-    }
-
-    @Override
-    public List<Book> getOnePageBooks(Integer range) {
-        return bookRepository.getOnePageBooks(range);
+    public void saveBook(Book book) {
+        bookRepository.save(book);
     }
 
     @Override
     public void deleteBook(Integer id) {
         Book book = bookRepository.getById(id);
         book.setInventory(-1);
-        bookRepository.saveAndFlush(book);
+        bookRepository.save(book);
     }
 }

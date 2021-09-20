@@ -1,13 +1,13 @@
 package com.windowsxp.bookstore.service;
 
-import com.alibaba.fastjson.JSONObject;
+import com.windowsxp.bookstore.dto.request.NewOrderDTO;
 import com.windowsxp.bookstore.entity.Order;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface OrderService {
-    List<Order> getOrders(Integer userId);
-    List<Order> getAllOrders();
-    void addOrder(JSONObject params);
+    Page<Order> getOrders(Integer userId, Pageable pageable);
+    Page<Order> getAllOrders(Pageable pageable);
+    void addOrder(NewOrderDTO newOrderDTO);
 }
