@@ -1,12 +1,16 @@
 package com.windowsxp.bookstore.daoimpl;
 
 import com.windowsxp.bookstore.dao.CartDao;
+import com.windowsxp.bookstore.dto.response.PageDTO;
 import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.repository.CartItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 @Repository
@@ -21,10 +25,9 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    public Page<CartItem> getCartByUserId(Integer userId, Pageable pageable) {
+    public PageDTO<CartItem> getCartByUserId(Integer userId, Pageable pageable) {
         Page<CartItem> cart = cartItemRepository.getCartItemByUserId(userId, pageable);
-        cart.getContent().removeIf(cartItem -> cartItem.getBook().getInventory() <= 0);
-        return cart;
+        return new PageDTO<>(cart.getContent(), cartItemRepository.count());
     }
 
     @Override

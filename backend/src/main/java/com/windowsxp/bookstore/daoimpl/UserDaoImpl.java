@@ -18,8 +18,8 @@ public class UserDaoImpl implements UserDao{
     private final UserRepository userRepository;
 
     @Override
-    public Optional<User> checkUser(String username, String password){
-        return userRepository.findByUsernameAndPassword(username,password);
+    public Optional<User> checkUser(String username){
+        return userRepository.findByUsername(username);
     }
 
     @Override

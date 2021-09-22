@@ -4,19 +4,23 @@ import com.windowsxp.bookstore.constant.Constant;
 import com.windowsxp.bookstore.dto.request.NewOrderDTO;
 import com.windowsxp.bookstore.entity.Order;
 import com.windowsxp.bookstore.service.OrderService;
+import com.windowsxp.bookstore.utils.LogUtil;
 import com.windowsxp.bookstore.utils.sessionutils.SessionUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 
 @RestController
 @AllArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
+    private final WebApplicationContext applicationContext;
 
     @GetMapping("/order")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
@@ -41,10 +45,12 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
     public ResponseEntity<?> addOrder(@RequestBody NewOrderDTO newOrderDTO) {
         try {
-            orderService.addOrder(newOrderDTO);
+            LogUtil.debug(newOrderDTO.toString());
+            JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
+            jmsTemplate.convertAndSend("OrderMessageBox", newOrderDTO);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
-    Optional<User> checkUser(String username, String password);
+    Optional<User> checkUser(String username);
     User getUser(Integer id);
     List<Username> getAllUsername();
     Page<User> getAllUsers(Pageable pageable);

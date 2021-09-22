@@ -8,6 +8,7 @@ import com.windowsxp.bookstore.dto.request.UserTypeEditDTO;
 import com.windowsxp.bookstore.dto.response.UserInfoDTO;
 import com.windowsxp.bookstore.entity.User;
 import com.windowsxp.bookstore.service.UserService;
+import com.windowsxp.bookstore.utils.LogUtil;
 import com.windowsxp.bookstore.utils.sessionutils.SessionUtil;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,10 +27,11 @@ public class UserController {
     private final UserService userService;
 
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         try {
+            LogUtil.debug(loginDTO.getUsername()+'\t'+loginDTO.getPassword());
             User user = userService.login(loginDTO.getUsername(), loginDTO.getPassword());
             setSession(user);
             return ResponseEntity.ok().body(modelMapper.map(user, UserInfoDTO.class));
@@ -53,7 +55,7 @@ public class UserController {
     @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
     public ResponseEntity<String> checkSession() {
         JSONObject auth = SessionUtil.getAuth();
-
+        LogUtil.debug("check session");
         if (auth == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("登录失效");
         } else {
@@ -105,13 +107,19 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<UserInfoDTO> register(@RequestBody RegisterDTO registerDTO) {
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
         try {
+            LogUtil.debug("register with "+registerDTO.toString());
             User user = userService.register(registerDTO.getUsername(), registerDTO.getPassword(), registerDTO.getEmail(), registerDTO.getAddress());
             setSession(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(user, UserInfoDTO.class));
+            LogUtil.debug(user.toString());
+            UserInfoDTO userInfoDTO =  modelMapper.map(user, UserInfoDTO.class);
+            LogUtil.debug(userInfoDTO.toString());
+            return ResponseEntity.status(HttpStatus.CREATED).body(userInfoDTO);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            LogUtil.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("server error");
         }
     }
 

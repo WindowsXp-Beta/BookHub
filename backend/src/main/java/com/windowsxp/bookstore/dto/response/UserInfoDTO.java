@@ -1,15 +1,14 @@
 package com.windowsxp.bookstore.dto.response;
 
 import com.windowsxp.bookstore.enumerate.UserType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class UserInfoDTO {
     private String username;
-    private String password;
     private UserType userType;
 }

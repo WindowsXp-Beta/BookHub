@@ -24,10 +24,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(String username, String rawPassword){
-        Optional<User> optionalUser = userDao.checkUser(username,encoder.encode(rawPassword));
+        Optional<User> optionalUser = userDao.checkUser(username);
         if(optionalUser.isEmpty()) throw new UserException(UserException.UserExceptionType.UNAUTHORIZED_USER);
-        else if(optionalUser.get().getUserType() == UserType.BANNED) throw new UserException(UserException.UserExceptionType.BANNED_USER);
-        else return optionalUser.get();
+        else {
+            User user = optionalUser.get();
+            if (!encoder.matches(rawPassword, user.getPassword())) throw new UserException(UserException.UserExceptionType.WRONG_PASSWORD);
+            else if (user.getUserType() == UserType.BANNED) throw new UserException(UserException.UserExceptionType.BANNED_USER);
+            else return optionalUser.get();
+        }
     }
 
     @Override
@@ -54,6 +58,7 @@ public class UserServiceImpl implements UserService {
         newUser.setEmail(email);
         newUser.setUsername(username);
         newUser.setPassword(encoder.encode(rawPassword));
+        newUser.setAddress(address);
         userDao.saveUser(newUser);
         return newUser;
     }

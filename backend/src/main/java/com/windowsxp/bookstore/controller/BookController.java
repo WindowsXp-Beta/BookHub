@@ -1,6 +1,7 @@
 package com.windowsxp.bookstore.controller;
 
 import com.windowsxp.bookstore.dto.request.NewBookDTO;
+import com.windowsxp.bookstore.dto.response.PageDTO;
 import com.windowsxp.bookstore.entity.Book;
 import com.windowsxp.bookstore.service.BookService;
 import com.windowsxp.bookstore.utils.sessionutils.SessionUtil;
@@ -19,8 +20,8 @@ public class BookController {
 
     @GetMapping("/book")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
-    public ResponseEntity<Page<Book>> getBooks(@RequestParam int page,
-                                               @RequestParam int pageSize) {
+    public ResponseEntity<PageDTO<Book>> getBooks(@RequestParam int page,
+                                                  @RequestParam int pageSize) {
         try {
             return ResponseEntity.ok(bookService.getBooks(PageRequest.of(page, pageSize)));
         } catch (RuntimeException e) {

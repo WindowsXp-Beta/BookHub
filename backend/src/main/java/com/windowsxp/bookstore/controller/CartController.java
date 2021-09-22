@@ -4,6 +4,7 @@ import com.windowsxp.bookstore.constant.Constant;
 import com.windowsxp.bookstore.dto.request.NewCartItemDTO;
 import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.service.CartService;
+import com.windowsxp.bookstore.utils.LogUtil;
 import com.windowsxp.bookstore.utils.sessionutils.SessionUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,11 +20,12 @@ public class CartController {
 
     @GetMapping("/cart")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
-    public ResponseEntity<Page<CartItem>> getCartByUserId(@RequestParam int page,
-                                                          @RequestParam int pageSize) {
+    public ResponseEntity<?> getCartByUserId(@RequestParam int page,
+                                             @RequestParam int pageSize) {
         try {
             return ResponseEntity.ok(cartService.getCartByUserId(SessionUtil.getAuth().getInteger(Constant.USER_ID), PageRequest.of(page, pageSize)));
         } catch (RuntimeException e) {
+            LogUtil.error(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -33,7 +35,7 @@ public class CartController {
     public ResponseEntity<?> addCart(@RequestBody NewCartItemDTO newCartItemDTO) {
         try {
             cartService.addCart(SessionUtil.getAuth().getInteger(Constant.USER_ID), newCartItemDTO);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

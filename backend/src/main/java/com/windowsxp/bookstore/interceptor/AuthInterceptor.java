@@ -1,5 +1,6 @@
 package com.windowsxp.bookstore.interceptor;
 
+import com.windowsxp.bookstore.utils.LogUtil;
 import com.windowsxp.bookstore.utils.sessionutils.SessionUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -16,7 +17,8 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception{
         if(!(object instanceof HandlerMethod)) {
-            return false;
+            // return true for OPTIONS requests
+            return true;
         }
         SessionUtil.Auth auth = ((HandlerMethod) object).getMethod().getAnnotation(SessionUtil.Auth.class);
 

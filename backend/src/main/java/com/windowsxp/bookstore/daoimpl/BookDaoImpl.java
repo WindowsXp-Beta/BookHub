@@ -1,10 +1,10 @@
 package com.windowsxp.bookstore.daoimpl;
 
 import com.windowsxp.bookstore.dao.BookDao;
+import com.windowsxp.bookstore.dto.response.PageDTO;
 import com.windowsxp.bookstore.entity.Book;
 import com.windowsxp.bookstore.repository.BookRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -22,8 +22,8 @@ public class BookDaoImpl implements BookDao{
     }
 
     @Override
-    public Page<Book> getBooks(Pageable pageable) {
-        return bookRepository.getAllByInventoryGreaterThan(0, pageable);
+    public PageDTO<Book> getBooks(Pageable pageable) {
+        return new PageDTO<>(bookRepository.getAllByInventoryGreaterThan(0, pageable).getContent(), bookRepository.count());
     }
 
     @Override

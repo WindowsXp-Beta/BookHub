@@ -2,11 +2,11 @@ package com.windowsxp.bookstore.serviceimpl;
 
 import com.windowsxp.bookstore.dao.BookDao;
 import com.windowsxp.bookstore.dto.request.NewBookDTO;
+import com.windowsxp.bookstore.dto.response.PageDTO;
 import com.windowsxp.bookstore.entity.Book;
 import com.windowsxp.bookstore.exception.BookException;
 import com.windowsxp.bookstore.service.BookService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> getBooks(Pageable pageable) {
+    public PageDTO<Book> getBooks(Pageable pageable) {
         return bookDao.getBooks(pageable);
     }
 
