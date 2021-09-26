@@ -1,6 +1,6 @@
 import React from 'react';
 import {DatePicker, Input, List, message} from 'antd'
-import OrderDetail from "./OrderDetail";
+import OrderDetail from "./orderDetail";
 import * as orderService from '../../services/orderService'
 
 const {Search} = Input;

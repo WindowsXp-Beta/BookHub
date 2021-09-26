@@ -1,10 +1,11 @@
 import React from 'react';
-import {OrderCountTable} from "../components/Order/OrderCountTable";
+// import '../css/data.css';
+import {BestSalesTable} from "../components/Book/bestSalesTable";
 import {BackTop, Layout} from "antd";
-import {HeaderInfo} from "../components/Layout/HeaderInfo";
-import {SideBar} from "../components/Layout/SideBar";
+import {HeaderInfo} from "../components/Layout/headerInfo";
+import {SideBar} from "../components/Layout/sideBar";
 
-const { Header, Content } = Layout;
+const { Header, Content} = Layout;
 class BestSalesView extends React.Component {
     render() {
         return (
@@ -16,7 +17,7 @@ class BestSalesView extends React.Component {
                     <SideBar />
                     <Content style={{ padding: '0 50px' }}>
                         <div className="home-content">
-                            <OrderCountTable/>
+                            <BestSalesTable/>
                         </div>
                         <BackTop />
                     </Content>

@@ -1,8 +1,8 @@
 import React from 'react';
 import {Layout} from 'antd'
-import {HeaderInfo} from "../components/Layout/HeaderInfo";
-import {SideBar} from "../components/Layout/SideBar";
-import {OrderTable} from "../components/Order/OrderTable";
+import {HeaderInfo} from "../components/Layout/headerInfo";
+import {SideBar} from "../components/Layout/sideBar";
+import {OrderTable} from "../components/Order/orderTable";
 
 const {Header, Content} = Layout;
 

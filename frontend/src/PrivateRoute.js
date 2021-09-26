@@ -12,12 +12,12 @@ export default class PrivateRoute extends React.Component{
         };
     }
 
-    checkAuth = (data) => {
-        console.log(data);
-        if (data.status >= 0) {
+    checkAuth = (response) => {
+        console.log(response);
+        if (response.status === 200) {
             this.setState({isAuthed: true, hasAuthed: true});
         } else {
-            message.error(data.msg);
+            message.error(response.data);
             localStorage.removeItem('user');
             this.setState({isAuthed: false, hasAuthed: true});
         }

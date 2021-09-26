@@ -1,13 +1,13 @@
 import React from 'react';
-import {Layout} from 'antd'
-import {HeaderInfo} from "../components/Layout/HeaderInfo";
-import {SideBar} from "../components/Layout/SideBar";
+import {Layout, message} from 'antd'
+import {HeaderInfo} from "../components/Layout/headerInfo";
+import {SideBar} from "../components/Layout/sideBar";
 import '../css/bookDetail.css'
 import {withRouter} from "react-router-dom";
 
 
-import {getBook} from "../services/bookService";
-import {BookDetail} from "../components/Book/BookDetail";
+import {getBookDetail} from "../services/bookService";
+import {BookDetail} from "../components/Book/bookDetail";
 
 const { Header, Content } = Layout;
 
@@ -16,18 +16,15 @@ class BookView extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            books: null,
+            bookDetail: null,
         };
     }
 
     componentDidMount(){
-        let user = localStorage.getItem("user");
-        this.setState({user:user});
-
         const query = this.props.location.search;
         const arr = query.split('&');
         const bookId = arr[0].substr(4);
-        getBook(bookId, (data) => {this.setState({bookInfo: data})})
+        getBookDetail(bookId, (response) => {this.setState({bookDetail: response.data})})
     }
 
     render(){
@@ -41,7 +38,7 @@ class BookView extends React.Component{
                     <SideBar />
                     <Content style={{ padding: '0 50px' }}>
                         <div className="home-content">
-                            <BookDetail info={this.state.bookInfo} />
+                            <BookDetail detail={this.state.bookDetail} />
 
                             <div className={"foot-wrapper"}>
                             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm from '../components/User/LoginForm';
+import LoginForm from '../components/User/loginForm';
 import {withRouter} from "react-router-dom";
 import '../css/login.css'
 

@@ -14,7 +14,7 @@ export class LoginRoute extends React.Component{
 
     checkAuth = (data) => {
         console.log(data);
-        if (data.status >= 0) {
+        if (data.status === 200) {
             this.setState({isAuthed: true, hasAuthed: true, userInfo:{name:"wxp"}});
         } else {
             localStorage.removeItem('user');

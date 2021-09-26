@@ -1,23 +1,24 @@
 import React from 'react';
-import { Router, Switch, Redirect} from 'react-router-dom';
+import {Router, Switch, Redirect, Route} from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute'
 import LoginRoute from  './LoginRoute'
 
-import HomeView from "./view/HomeView";
-import LoginView from './view/LoginView'
-import BookView from "./view/BookView";
-import CartView from "./view/CartView";
-import OrderView from "./view/OrderView";
-import DataView from "./view/UserManageView";
-import BookManageView from "./view/BookManageView";
-import RegisterView from "./view/RegisterView";
-import OrderManageView from "./view/OrderManageView";
-import BestSalesView from "./view/BestSalesView";
-import BestCustomerView from "./view/BestCustomerView";
-import OrderCountView from "./view/OrderCountView";
+import HomeView from "./view/homeView";
+import LoginView from './view/loginView'
+import BookView from "./view/bookView";
+import CartView from "./view/cartView";
+import OrderView from "./view/orderView";
+import DataView from "./view/userManageView";
+import BookManageView from "./view/bookManageView";
+import RegisterView from "./view/registerView";
+import OrderManageView from "./view/orderManageView";
+import BestSalesView from "./view/bestSalesView";
+import BestCustomerView from "./view/bestCustomerView";
+import OrderCountView from "./view/orderCountView";
 
 import {history} from "./utils/history";
+import ChatRoomView from "./view/chatRoomView";
 
 
 class BasicRoute extends React.Component{
@@ -47,6 +48,7 @@ class BasicRoute extends React.Component{
                     <PrivateRoute exact path={"/BestSales"} component={BestSalesView} />
                     <PrivateRoute exact path={"/BestCustomer"} component={BestCustomerView} />
                     <PrivateRoute exact path={"/OrderCountView"} component={OrderCountView} />
+                    <Route exact path={"/ChatRoom"} component={ChatRoomView} />
                     <Redirect from="/*" to="/" />
                 </Switch>
             </Router>

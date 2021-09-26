@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Menu, Layout } from 'antd';
-import "../../css/Sider.css"
+import "../../css/sider.css"
 import { ShoppingCartOutlined, SolutionOutlined, UserOutlined, ReadOutlined, SnippetsOutlined, EditOutlined, StarOutlined, AimOutlined, LineChartOutlined} from '@ant-design/icons';
 
 import {Link} from "react-router-dom";

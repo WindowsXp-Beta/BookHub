@@ -3,7 +3,7 @@ import { Row, Col } from 'antd';
 import '../../css/index.css'
 import logo from '../../assets/logo.png';
 //import logoFont from '../assets/logo-name.svg';
-import {UserAvatar} from "./UserAvatar";
+import {UserAvatar} from "./userAvatar";
 
 export class HeaderInfo extends React.Component {
 

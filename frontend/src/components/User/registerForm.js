@@ -39,15 +39,15 @@ class RegisterForm extends React.Component {
 						{
 							validator: (_, value, callback) => {
 								console.log("check Username");
-								const checkUsernamecallback = (data) => {
-        							if (data.status >= 0) {
+								const checkUsernameCallback = (response) => {
+        							if (response.data === true) {
 										callback();
         							}
         							else {
 										callback("The username has been used!");
-        							};
+        							}
     							};
-        						userService.checkUsername({username: value}, checkUsernamecallback);
+        						userService.checkUsername({username: value}, checkUsernameCallback);
     						},
 						},
                     ]}
@@ -99,7 +99,7 @@ class RegisterForm extends React.Component {
                 </Form.Item>
                 <Form.Item
                     className="register-form-button"
-                    name="Email"
+                    name="email"
                     rules={[
                         {
                             type: 'email',
@@ -113,8 +113,8 @@ class RegisterForm extends React.Component {
                 >
                     <Input
                         prefix={<MailOutlined className="site-form-item-icon"/>}
-                        type="Email"
-                        placeholder="Email"
+                        type="email"
+                        placeholder="email"
                     />
                 </Form.Item>
                 <Form.Item

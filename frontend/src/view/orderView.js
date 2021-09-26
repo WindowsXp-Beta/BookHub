@@ -1,8 +1,8 @@
 import React from 'react';
 import {Layout,BackTop} from 'antd'
-import {HeaderInfo} from "../components/Layout/HeaderInfo";
-import {SideBar} from "../components/Layout/SideBar";
-import {OrderList} from "../components/Order/OrderList";
+import {HeaderInfo} from "../components/Layout/headerInfo";
+import {SideBar} from "../components/Layout/sideBar";
+import {OrderList} from "../components/Order/orderList";
 import "../css/order.css"
 const { Header, Content} = Layout;
 class OrderView extends React.Component {

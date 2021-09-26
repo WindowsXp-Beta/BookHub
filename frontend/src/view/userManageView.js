@@ -1,6 +1,6 @@
 import React from 'react';
-import '../css/Data.css';
-import UserTable from "../components/User/UserTable";
+import '../css/data.css';
+import UserTable from "../components/User/userTable";
 
 class DataView extends React.Component {
     render() {

@@ -1,6 +1,6 @@
 import React from 'react';
-import '../css/Data.css';
-import BookTable from "../components/Book/BookTable";
+import '../css/data.css';
+import BookTable from "../components/Book/bookTable";
 
 class BookManageView extends React.Component {
     render() {

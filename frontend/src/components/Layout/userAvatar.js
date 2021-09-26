@@ -24,7 +24,7 @@ export class UserAvatar extends React.Component {
 
         return(
             <div id="avatar">
-                <span className="name">Hi, {user.userName}</span>
+                <span className="name">Hi, {user.username}</span>
                 <Dropdown overlay={menu} placement="bottomRight">
                     {/*<Avatar src={imgUrl} style={{cursor:"pointer"}}/>*/}
                     <Avatar  icon={<UserOutlined type="user" />} style={{cursor:"pointer"}}/>

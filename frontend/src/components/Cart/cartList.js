@@ -13,14 +13,12 @@ export class CartList extends React.Component {
             showCart: [],
             searchValue: '',
             selectedRowKeys: [],
+            page: 0,
+            pageSize: 10,
         }
     }
 
     componentDidMount() {
-        let user = JSON.parse(localStorage.getItem('user'));
-        if (user === null) {
-            message.error("请登录");
-        } else {
             const callback = (data) => {
                 for (let i = 0; i < data.length; ++i) {
                     data[i].key = data[i].itemId;
@@ -34,10 +32,8 @@ export class CartList extends React.Component {
                     cart: data, showCart: data
                 });
             };
-            let userId = user.userId;
-            getCart(userId, callback);
+            getCart({page: this.state.page, pageSize: this.state.pageSize}, callback);
         }
-    }
 
     sendDeletion = (id) => {
         const callback = (data) => {

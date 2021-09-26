@@ -1,12 +1,11 @@
 import React from 'react';
-import '../css/Data.css';
+import {OrderCountTable} from "../components/Order/orderCountTable";
 import {BackTop, Layout} from "antd";
-import {HeaderInfo} from "../components/Layout/HeaderInfo";
-import {SideBar} from "../components/Layout/SideBar";
-import {BestCustomerTable} from "../components/User/BestCustomerTable";
+import {HeaderInfo} from "../components/Layout/headerInfo";
+import {SideBar} from "../components/Layout/sideBar";
 
-const { Header, Content} = Layout;
-class BestCustomerView extends React.Component {
+const { Header, Content } = Layout;
+class BestSalesView extends React.Component {
     render() {
         return (
             <Layout className="layout">
@@ -17,9 +16,7 @@ class BestCustomerView extends React.Component {
                     <SideBar />
                     <Content style={{ padding: '0 50px' }}>
                         <div className="home-content">
-                            <BestCustomerTable/>
-                            <div className={"foot-wrapper"}>
-                            </div>
+                            <OrderCountTable/>
                         </div>
                         <BackTop />
                     </Content>
@@ -29,4 +26,4 @@ class BestCustomerView extends React.Component {
     }
 }
 
-export default BestCustomerView;
+export default BestSalesView;
