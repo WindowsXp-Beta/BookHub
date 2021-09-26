@@ -5,25 +5,25 @@
  * compliance with  the terms of the License at:
  * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
  */
-package websocketbot.messages;
+package com.windowsxp.bookstore.websocket.messages;
 
 import java.util.List;
 
 /* Represents the list of users currently connected to the chat */
 public class UsersMessage extends Message {
-    private List<String> userlist;
+    private final List<String> userList;
     
-    public UsersMessage(List<String> userlist) {
-        this.userlist = userlist;
+    public UsersMessage(List<String> userList) {
+        this.userList = userList;
     }
     
     public List<String> getUserList() {
-        return userlist;
+        return userList;
     }
     
     /* For logging purposes */
     @Override
     public String toString() {
-        return "[UsersMessage] " + userlist.toString();
+        return "[UsersMessage] " + userList.toString();
     }
 }

@@ -5,7 +5,7 @@
  * compliance with  the terms of the License at:
  * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
  */
-package websocketbot.messages;
+package com.windowsxp.bookstore.websocket.messages;
 
 public class Message {
     

@@ -5,13 +5,13 @@
  * compliance with  the terms of the License at:
  * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
  */
-package websocketbot.messages;
+package com.windowsxp.bookstore.websocket.messages;
 
 /* Represents an information message, like
  * an user entering or leaving the chat */
 public class InfoMessage extends Message {
     
-    private String info;
+    private final String info;
     
     public InfoMessage(String info) {
         this.info = info;

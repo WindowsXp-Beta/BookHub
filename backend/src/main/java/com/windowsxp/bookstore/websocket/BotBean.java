@@ -5,11 +5,11 @@
  * compliance with  the terms of the License at:
  * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
  */
-package websocketbot;
+package com.windowsxp.bookstore.websocket;
 
+import javax.inject.Named;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import javax.inject.Named;
 
 @Named
 public class BotBean {

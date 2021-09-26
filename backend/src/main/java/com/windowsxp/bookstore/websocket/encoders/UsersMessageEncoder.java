@@ -5,15 +5,17 @@
  * compliance with  the terms of the License at:
  * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
  */
-package websocketbot.encoders;
+package com.windowsxp.bookstore.websocket.encoders;
 
-import websocketbot.messages.UsersMessage;
-import java.io.StringWriter;
+
+import com.windowsxp.bookstore.websocket.messages.UsersMessage;
+
 import javax.json.Json;
 import javax.json.stream.JsonGenerator;
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
+import java.io.StringWriter;
 
 /* Encode a UsersMessage as JSON.
  * For example, 

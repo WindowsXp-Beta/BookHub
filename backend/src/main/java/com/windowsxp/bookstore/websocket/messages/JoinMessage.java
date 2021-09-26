@@ -5,23 +5,21 @@
  * compliance with  the terms of the License at:
  * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
  */
-package websocketbot.messages;
+package com.windowsxp.bookstore.websocket.messages;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 /* Represents a join message for the chat */
 public class JoinMessage extends Message {    
-    private String name;
-    
-    public JoinMessage(String name) {
-        this.name = name;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
+    private final String username;
+    private final Integer userId;
+
     /* For logging purposes */
     @Override
     public String toString() {
-        return "[JoinMessage] " + name;
+        return String.format("[JoinMessage] %s %s", username, userId);
     }
 }

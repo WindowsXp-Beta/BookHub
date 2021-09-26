@@ -1,12 +1,6 @@
-/**
- * Copyright (c) 2013 Oracle and/or its affiliates. All rights reserved.
- *
- * You may not modify, use, reproduce, or distribute this software except in
- * compliance with  the terms of the License at:
- * http://java.net/projects/javaeetutorial/pages/BerkeleyLicense
- */
-package websocketbot;
+package com.windowsxp.bookstore.websocket;
 
+import javax.inject.Named;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,11 +11,10 @@ import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Named;
 
 @Named
-public class BotStockBean {
-    private static final Logger logger = Logger.getLogger("BotStockBean");
+public class StockBean {
+    private static final Logger logger = Logger.getLogger("StockBean");
     
     /* Respond to a message from the chat */
     public String respond(String msg) {
@@ -80,7 +73,7 @@ public class BotStockBean {
         /* Request price info from Yahoo Finance */
         URL url = new URL("http://ichart.yahoo.com/table.csv?s="+ticker+"&a="+
                            m+"&b="+d+"&c="+y+"&g=w&ignore=.csv");
-        logger.log(Level.INFO, "[BotStockBean] Opening {0}", url.toString());
+        logger.log(Level.INFO, "[StockBean] Opening {0}", url.toString());
         URLConnection con = url.openConnection();
         /* Get today's price and the price 6 months ago from the response */
         InputStreamReader ir = new InputStreamReader(con.getInputStream());
@@ -93,10 +86,10 @@ public class BotStockBean {
          (We need the last field from the second and last lines) */
         /* First line */
         String line = reader.readLine();
-        logger.log(Level.INFO, "[BotStockBean] {0}", line);
+        logger.log(Level.INFO, "[StockBean] {0}", line);
         /* Second line */
         line = reader.readLine();
-        logger.log(Level.INFO, "[BotStockBean] {0} ...", line);
+        logger.log(Level.INFO, "[StockBean] {0} ...", line);
         String[] fields = line.split(",");
         priceNow = Float.parseFloat(fields[fields.length-1]);
         /* Last line */
