@@ -6,11 +6,8 @@ import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.repository.CartItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 
 @Repository

@@ -1,19 +1,15 @@
-import {postRequest, postRequestForm} from "../utils/ajax";
+import {getRequest, postRequest, postRequestForm} from "../utils/ajax";
 
 export const getBooks = (data, callback) => {
-    const url = `http://localhost:8080/getBooks`;
-    postRequest(url, data, callback);
+    const url = `/book`;
+    getRequest(url, data, callback);
 };
 
-export const getOnePageBooks = (data, callback) => {
-    const url = `http://localhost:8080/getOnePageBooks`;
-    postRequest(url, data, callback);
-};
 
-export const getBook = (id, callback) => {
+export const getBookDetail = (id, callback) => {
     const data = {id: id};
-    const url = `http://localhost:8080/getBook`;
-    postRequestForm(url, data, callback);
+    const url = `/book/detail`;
+    getRequest(url, data, callback);
 };
 
 export const deleteBook = (id, callback) => {

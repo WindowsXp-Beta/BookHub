@@ -1,43 +1,42 @@
 // import config from 'config';
-import {postRequest, postRequestForm} from "../utils/ajax";
+import {deleteRequest, getRequest, postRequest, postRequestForm} from "../utils/ajax";
 import {history} from '../utils/history';
 import {message} from 'antd';
 
 
 export const login = (data) => {
-    const url = `http://localhost:8080/login`;
-    const callback = (data) => {
-        if(data.status >= 0) {
-            console.log(data.data);
-            localStorage.setItem('user', JSON.stringify(data.data));
+    const url = `/login`;
+    const callback = (response) => {
+        if(response.status === 200) {
+            console.log(response.data);
+            localStorage.setItem('user', JSON.stringify(response.data));
             history.push("/");
-            message.success(data.msg);
+            message.success("登录成功");
         }
         else{
-            message.error(data.msg);
+            message.error(response.data);
         }
     };
     postRequest(url, data, callback);
 };
 
 export const logout = () => {
-    const url = `http://localhost:8080/logout`;
-
-    const callback = (data) => {
-        if(data.status >= 0) {
+    const url = '/logout';
+    const callback = (response) => {
+        if(response.status === 204) {
             localStorage.removeItem("user");
-            message.success(data.msg);
+            message.success(response.data);
         }
         else{
-            message.error(data.msg);
+            message.error(response.data);
         }
     };
-    postRequest(url, {}, callback);
+    deleteRequest(url, {}, callback);
 };
 
 export const checkSession = (callback) => {
-    const url = `http://localhost:8080/checkSession`;
-    postRequest(url, {}, callback);
+    const url = `/session`;
+    getRequest(url, {}, callback);
 };
 
 export const getUsers = (data, callback) => {
@@ -57,10 +56,9 @@ export const deleteUser = (id, callback) => {
     postRequestForm(url, data, callback);
 };
 
-export const getCart = (userId, callback) => {
-    const data = {userId: userId};
-    const url = `http://localhost:8080/getCart`;
-    postRequest(url, data, callback);
+export const getCart = (data, callback) => {
+    const url = `/cart`;
+    getRequest(url, data, callback);
 };
 
 export const delCartItem = (data, callback) => {
@@ -69,7 +67,7 @@ export const delCartItem = (data, callback) => {
 };
 
 export const addCart = (data,callback) => {
-    const url = `http://localhost:8080/addCart`;
+    const url = `/cart`;
     postRequest(url, data, callback);
 };
 
@@ -91,20 +89,20 @@ export const addOrder = (data, callback) => {
 };
 
 export const register = (data) => {
-    const url = `http://localhost:8080/register`;
-    const callback = (data) => {
-        if (data.status >= 0) {
-            localStorage.setItem('user', JSON.stringify(data.data));
+    const url = `/user`;
+    const callback = (response) => {
+        if (response.status === 201) {
+            localStorage.setItem('user', JSON.stringify(response.data));
             history.push("/");
-            message.success(data.msg);
+            message.success("注册成功");
         } else {
-            message.error(data.msg);
+            message.error(response.data);
         }
     };
     postRequest(url, data, callback);
 };
 
 export const checkUsername = (data, callback) => {
-    const url = `http://localhost:8080/checkUsername`;
-    postRequest(url, data, callback);
+    const url = `/user/name`;
+    getRequest(url, data, callback);
 }

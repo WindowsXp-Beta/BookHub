@@ -2,12 +2,10 @@ package com.windowsxp.bookstore.controller;
 
 import com.windowsxp.bookstore.constant.Constant;
 import com.windowsxp.bookstore.dto.request.NewCartItemDTO;
-import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.service.CartService;
 import com.windowsxp.bookstore.utils.LogUtil;
 import com.windowsxp.bookstore.utils.sessionutils.SessionUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

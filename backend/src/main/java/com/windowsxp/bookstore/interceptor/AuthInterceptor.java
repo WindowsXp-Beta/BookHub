@@ -1,6 +1,5 @@
 package com.windowsxp.bookstore.interceptor;
 
-import com.windowsxp.bookstore.utils.LogUtil;
 import com.windowsxp.bookstore.utils.sessionutils.SessionUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
