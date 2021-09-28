@@ -23,6 +23,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public Integer getOrderNumberByUserId(Integer userId) {
+        return orderRepository.countOrderByUserId(userId);
+    }
+
+    @Override
     public Page<Order> getAllOrders(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }

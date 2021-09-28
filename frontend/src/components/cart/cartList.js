@@ -1,6 +1,8 @@
 import React from 'react';
-import {Button, Input, InputNumber, message, Popconfirm, Table} from 'antd';
-import {addOrder, delCartItem, editCartItemNumber, getCart} from "../../services/userService";
+import {Button, Input, InputNumber, List, message, Popconfirm, Table} from 'antd';
+import {addOrder} from "../../services/orderService";
+import {delCartItem, editCartItemNumber, getCart, getCartNumber} from "../../services/cartService";
+
 import {history} from '../../utils/history';
 
 const {Search} = Input;
@@ -13,69 +15,76 @@ export class CartList extends React.Component {
             showCart: [],
             searchValue: '',
             selectedRowKeys: [],
+            page: 1,
+            pageSize: 10,
+            totalCartNumber: 0
         }
+    }
+
+    dataProcess = (content, size) => {
+        let data = [];
+        for (let i = 0; i < size; i++) {
+            let item = {};
+            item.key = content[i].id;
+            item.title = content[i].book.name;
+            item.bookId = content[i].book.id;
+            item.bookNumber = content[i].bookNumber;
+            item.bookPrice = content[i].book.price / 100;
+            item.sum = (item.bookPrice * content[i].bookNumber).toFixed(1);
+            data.push(item);
+        }
+        console.log(data);
+        return data;
+    }
+
+    fetchCarts = (page, clear = false, otherHandle = null) => {
+        if (otherHandle !== null) {
+            otherHandle();
+        }
+        const callback = (response) => {
+            console.log(response.data);
+            let content = response.data.content;
+            let size = response.data.size;
+            let data = this.dataProcess(content, size);
+            if (clear) {
+                this.setState({
+                    cart: data,
+                    showCart: data,
+                    searchValue: '',
+                    selectedRowKeys: [],
+                    selectedRows: [],
+                });
+            } else {
+                this.setState({
+                    cart: data,
+                    showCart: data,
+                });
+            }
+        }
+        this.setState({page: page});
+        getCart({page: this.state.page - 1, pageSize: this.state.pageSize}, callback);
     }
 
     componentDidMount() {
-        let user = JSON.parse(localStorage.getItem('user'));
-        if (user === null) {
-            message.error("请登录");
-        } else {
-            const callback = (data) => {
-                for (let i = 0; i < data.length; ++i) {
-                    data[i].key = data[i].itemId;
-                    data[i].title = data[i].book.name;
-                    data[i].bookNumber = data[i].bookNum;
-                    data[i].bookId = data[i].book.id;
-                    data[i].bookPrice = data[i].book.price / 100;
-                    data[i].sum = (data[i].book.price/100 * data[i].bookNum).toFixed(1);
-                }
-                this.setState({
-                    cart: data, showCart: data
-                });
-            };
-            let userId = user.userId;
-            getCart(userId, callback);
+        this.fetchCarts(this.state.page);
+        const callback = (response) => {
+            this.setState({
+                totalCartNumber: response.data
+            });
         }
+        getCartNumber(callback);
     }
 
     sendDeletion = (id) => {
-        const callback = (data) => {
-            if (!data.status) {
-                message.success(data.msg)
-
-                let user = JSON.parse(localStorage.getItem('user'));
-                let userId = user.userId;
-
-                const callback = (data) => {
-                    for (let i = 0; i < data.length; ++i) {
-                        data[i].key = data[i].itemId;
-                        data[i].title = data[i].book.name;
-                        data[i].bookNumber = data[i].bookNum;
-                        data[i].bookId = data[i].book.id;
-                        data[i].bookPrice = data[i].book.price / 100;
-                        data[i].sum = (data[i].book.price/100 * data[i].bookNum).toFixed(1);
-                    }
-                    this.setState({
-                        cart: data,
-                        showCart: data,
-                        searchValue: '',
-                        selectedRowKeys: [],
-                        selectedRows: [],
-                    });
-                };
-                getCart(userId, callback);
-            } else {
-                message.error(data.msg);
-            }
+        const callback = (response) => {
+            this.fetchCarts(this.state.page, true, message.success("删除成功"));
         };
-        let json = {itemId: id};
-        delCartItem(json, callback);
+        delCartItem(id, callback);
     };
 
     totalSum = (selectedRowKeys) => {
 
-        let total = 0 ;
+        let total = 0;
         for (let i = 0; i < selectedRowKeys.length; ++i) {
             for (let j = 0; j < this.state.cart.length; ++j) {
                 if (selectedRowKeys[i] === this.state.cart[j].key) {
@@ -98,6 +107,7 @@ export class CartList extends React.Component {
     }
 
     deleteConfirm = (key) => {
+        console.log(key);
         const data = this.state.cart;
 
         for (let i = 0; i < data.length; ++i) {
@@ -131,29 +141,30 @@ export class CartList extends React.Component {
         );
     }
 
-    handleNumberChange = (itemId, value) => {
-        console.log('changed', itemId, value);
+    handleNumberChange = (id, value) => {
+        console.log('changed', id, value);
         if (value <= 0) {
             message.error('数目必须大于0！');
             return;
         }
-        let json = {
-            itemId: itemId,
-            bookNum: value
+        let requestBody = {
+            bookNumber: value
         };
+        console.log(requestBody);
         let tmp = this.state.cart;
         for (let i = 0; i < tmp.length; ++i) {
-            if (tmp[i].key === itemId) {
+            if (tmp[i].key === id) {
                 tmp[i].bookNumber = value;
-                tmp[i].sum = (tmp[i].book.price/100 * tmp[i].bookNumber).toFixed(1);
+                tmp[i].sum = (tmp[i].bookPrice / 100 * value).toFixed(1);
             }
         }
         this.setState({cart: tmp, showCart: tmp});
-        const callback = () => {
+        const callback = (response) => {
             message.success('修改成功');
         }
-        editCartItemNumber(json, callback);
+        editCartItemNumber(id, requestBody, callback);
     }
+
     submitOrder = () => {
 
         if (this.state.selectedRowKeys.length === 0) {
@@ -161,49 +172,25 @@ export class CartList extends React.Component {
             return;
         }
 
-        let user = JSON.parse(localStorage.getItem('user'));
-        let userId = user.userId;
         let items = [];
         const data = this.state.selectedRows;
         for (let i = 0; i < data.length; i++) {
             items.push({
+                cartItemId: data[i].key,
                 bookId: data[i].bookId,
-                bookNum: data[i].bookNumber,
+                bookNumber: data[i].bookNumber,
             });
-            let json = {itemId: data[i].key};
-            delCartItem(json);
         }
         console.log(items);
-        let json = {
-            userId: userId,
-            orderItems: items
+        let requestBody = {
+            orderItemList: items
         };
 
-        const callback = (data) => {
-            if (data.status >= 0) {
-                const callback1 = (data) => {
-                    for (let i = 0; i < data.length; ++i) {
-                        data[i].key = data[i].itemId;
-                        data[i].title = data[i].book.name;
-                        data[i].bookNumber = data[i].bookNum;
-                        data[i].bookId = data[i].book.id;
-                        data[i].bookPrice = data[i].book.price / 100;
-                        data[i].sum = (data[i].book.price/100 * data[i].bookNum).toFixed(1);
-                    }
-                    this.setState({
-                        cart: data,
-                        showCart: data,
-                        searchValue: '',
-                    });
-                };
-                getCart(userId, callback1);
-                message.success(data.msg + "请至订单界面查询订单信息");
-                history.push('/order');
-            } else {
-                message.error(data.msg);
-            }
+        const callback = (response) => {
+            this.fetchCarts(this.state.page, true, message.success("请至订单界面查询订单信息"));
         }
-        addOrder(json, callback);
+        console.log(requestBody);
+        addOrder(requestBody, callback);
     };
 
     render() {
@@ -272,6 +259,13 @@ export class CartList extends React.Component {
                     rowSelection={rowSelection}
                     columns={columns}
                     dataSource={this.state.showCart}
+                    pagination={{
+                        position: "bottom",
+                        current: this.state.page,
+                        pageSize: this.state.pageSize,
+                        total: this.state.totalCartNumber,
+                        onChange: this.fetchCarts
+                    }}
                 />
                 <div style={{marginBottom: 16}}>
                     <Button type="primary" onClick={this.submitOrder} loading={loading}>

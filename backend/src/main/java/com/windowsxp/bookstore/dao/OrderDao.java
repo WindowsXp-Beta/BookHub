@@ -9,5 +9,6 @@ public interface OrderDao {
     Page<Order> getOrdersByUserId(Integer userId, Pageable pageable);
     Page<Order> getAllOrders(Pageable pageable);
     void saveOrder(Order order);
+    Integer getOrderNumberByUserId(Integer userId);
     void addOrderItem(OrderItem orderItem);
 }

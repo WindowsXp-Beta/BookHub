@@ -10,4 +10,5 @@ public interface CartService {
     void addCart(Integer userId, NewCartItemDTO newCartItemDTO);
     void deleteCart(Integer itemId);
     void editCartItemNumber(Integer itemId, Integer bookNumber);
+    Integer getCartNumber(Integer userId);
 }

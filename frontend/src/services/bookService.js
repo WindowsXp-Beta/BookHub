@@ -1,4 +1,4 @@
-import {getRequest, postRequest, postRequestForm} from "../utils/ajax";
+import {deleteRequest, getRequest, postRequest} from "../utils/ajax";
 
 export const getBooks = (data, callback) => {
     const url = `/book`;
@@ -13,18 +13,17 @@ export const getBookDetail = (id, callback) => {
 };
 
 export const deleteBook = (id, callback) => {
-    const data = {id: id};
-    const url = `http://localhost:8080/deleteBook`;
-    postRequestForm(url, data, callback);
+    const url = `/admin/book${id}`;
+    deleteRequest(url, null, callback);
 };
 
-export const addBook = (data,callback) => {
-    const url = `http://localhost:8080/addBook`;
+export const addBook = (data, callback) => {
+    const url = `/admin/book`;
     postRequest(url, data, callback);
 };
 
 export const editBook = (data,callback) =>
 {
-    const url = `http://localhost:8080/editBook`;
+    const url = `/admin/Book`;
     postRequest(url, data, callback);
 };

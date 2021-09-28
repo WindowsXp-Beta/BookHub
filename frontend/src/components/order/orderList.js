@@ -1,11 +1,12 @@
 import React from 'react';
 import {DatePicker, Input, List, message} from 'antd'
 import OrderDetail from "./orderDetail";
-import * as userService from '../../services/userService'
+import {getOrderNumber, getOrders} from "../../services/orderService";
+import {getBooks} from "../../services/bookService";
 
 const {Search} = Input;
 
-const { RangePicker } = DatePicker;
+const {RangePicker} = DatePicker;
 
 export class OrderList extends React.Component {
 
@@ -15,24 +16,40 @@ export class OrderList extends React.Component {
             orders: [],
             showOrders: [],
             searchValue: '',
+            page: 1,
+            pageSize: 10,
+            totalOrderNumber: 0
         };
+    }
+
+    fetchOrders = (page) => {
+        const callback = (response) => {
+            this.setState({
+                orders: response.data.content,
+                showOrders: response.data.content,
+            });
+        };
+        this.setState({
+            page: page
+        });
+        getBooks({page: page - 1, pageSize: this.state.pageSize}, callback);
     }
 
     componentDidMount() {
 
-        const callback = (data) => {
-            this.setState({orders: data, showOrders: data});
+        const getOrderCallback = (response) => {
+            console.log(response);
+            this.setState({
+                orders: response.data.content,
+                showOrders: response.data.content
+            });
         };
+        getOrders({page: this.state.page - 1, pageSize: this.state.pageSize}, getOrderCallback);
 
-        let user = JSON.parse(localStorage.getItem('user'));
-
-        if (user === null) {
-            message.error("请登录");
-        } else {
-            let userId = user.userId;
-            userService.getOrders(userId, callback);
+        const getOrderNumberCallback = (response) => {
+            this.setState({totalOrderNumber: response.data});
         }
-
+        getOrderNumber(getOrderNumberCallback);
     }
 
     searchChange = ({target: {value}}) => {
@@ -61,16 +78,15 @@ export class OrderList extends React.Component {
     }
 
     timeChange = (value, dateString) => {
-        if(dateString[0]===''||dateString[1]==='')
-        {
+        if (dateString[0] === '' || dateString[1] === '') {
             this.setState(
                 {showOrders: this.state.orders}
             );
             return;
         }
         console.log('Formatted Selected Time: ', dateString);
-        const startTime= new Date(Date.parse(dateString[0]));
-        const endTime=new Date(Date.parse(dateString[1]));
+        const startTime = new Date(Date.parse(dateString[0]));
+        const endTime = new Date(Date.parse(dateString[1]));
         let arr = [];
         let list = this.state.showOrders;
         for (let i = 0; i < list.length; i++) {
@@ -95,16 +111,23 @@ export class OrderList extends React.Component {
                         enterButton/>
                 <br/>
                 <br/>
-                <RangePicker onChange ={this.timeChange}/>
+                <RangePicker onChange={this.timeChange}/>
                 <br/>
                 <br/>
                 <List
-                    dataSource = {this.state.showOrders}
-                    renderItem = {item => (
-                        <List.Item >
+                    dataSource={this.state.showOrders}
+                    pagination={{
+                        position: "bottom",
+                        current: this.state.page,
+                        pageSize: this.state.pageSize,
+                        total: this.state.totalOrderNumber,
+                        onChange: this.fetchOrders
+                    }}
+                    renderItem={item => (
+                        <List.Item>
                             <List.Item.Meta
-                                title={'order ID is: ' + item.orderId}
-                                description={'order Time is: ' + item.time}
+                                title={`order ID is: ${item.id}`}
+                                description={`order Time is: ${item.time}`}
                             />
                             <OrderDetail info={item.orderItem}/>
                         </List.Item>

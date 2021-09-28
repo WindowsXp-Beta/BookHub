@@ -19,12 +19,12 @@ public class BookController {
 
     @GetMapping("/book")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
-    public ResponseEntity<PageDTO<Book>> getBooks(@RequestParam int page,
+    public ResponseEntity<?> getBooks(@RequestParam int page,
                                                   @RequestParam int pageSize) {
         try {
             return ResponseEntity.ok(bookService.getBooks(PageRequest.of(page, pageSize)));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -35,18 +35,18 @@ public class BookController {
             bookService.addBook(newBookDTO);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @DeleteMapping("/book")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
-    public ResponseEntity<String> deleteBook(@RequestParam("id") Integer id) {
+    public ResponseEntity<?> deleteBook(@RequestParam("id") Integer id) {
         try {
             bookService.deleteBook(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class BookController {
             bookService.updateBook(book);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

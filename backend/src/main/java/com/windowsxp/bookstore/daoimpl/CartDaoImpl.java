@@ -1,13 +1,17 @@
 package com.windowsxp.bookstore.daoimpl;
 
 import com.windowsxp.bookstore.dao.CartDao;
-import com.windowsxp.bookstore.dto.response.PageDTO;
 import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.repository.CartItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -22,9 +26,13 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    public PageDTO<CartItem> getCartByUserId(Integer userId, Pageable pageable) {
-        Page<CartItem> cart = cartItemRepository.getCartItemByUserId(userId, pageable);
-        return new PageDTO<>(cart.getContent(), cartItemRepository.count());
+    public Page<CartItem> getCartByUserId(Integer userId, Pageable pageable) {
+        return cartItemRepository.getCartItemByUserId(userId, pageable);
+    }
+
+    @Override
+    public Optional<CartItem> getCartByUserIdAndBookId(Integer userId, Integer bookId){
+        return cartItemRepository.findByUserIdAndBookId(userId, bookId);
     }
 
     @Override
@@ -35,5 +43,16 @@ public class CartDaoImpl implements CartDao {
     @Override
     public void deleteCart(Integer itemId) {
         cartItemRepository.deleteById(itemId);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public void deleteCartItems(List<Integer> itemList) {
+        cartItemRepository.deleteAllByIdInBatch(itemList);
+    }
+
+    @Override
+    public Integer getCartNumberByUserId(Integer userId) {
+        return cartItemRepository.countByUserId(userId);
     }
 }

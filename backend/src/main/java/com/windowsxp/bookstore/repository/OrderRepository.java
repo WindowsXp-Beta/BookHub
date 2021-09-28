@@ -9,4 +9,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     Page<Order> findAll(Pageable pageable);
     Page<Order> getOrdersByUserId(Integer userId, Pageable pageable);
+    Integer countOrderByUserId(Integer userId);
 }

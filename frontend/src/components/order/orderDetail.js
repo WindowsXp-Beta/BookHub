@@ -13,9 +13,8 @@ class OrderDetail extends React.Component {
 
         for (let i = 0; i < info.length; ++i) {
             info[i].title = info[i].book.name;
-            info[i].bookNumber = info[i].bookNum;
-            info[i].bookPrice = info[i].book.price/100;
-            info[i].sum = (info[i].bookNum * info[i].book.price/100).toFixed(1);
+            info[i].bookPrice = info[i].book.price / 100;
+            info[i].sum = (info[i].bookNumber * info[i].book.price/100).toFixed(1);
         }
 
         const columns = [

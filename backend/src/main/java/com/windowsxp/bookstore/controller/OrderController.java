@@ -2,6 +2,7 @@ package com.windowsxp.bookstore.controller;
 
 import com.windowsxp.bookstore.constant.Constant;
 import com.windowsxp.bookstore.dto.request.NewOrderDTO;
+import com.windowsxp.bookstore.dto.response.PageDTO;
 import com.windowsxp.bookstore.entity.Order;
 import com.windowsxp.bookstore.service.OrderService;
 import com.windowsxp.bookstore.utils.LogUtil;
@@ -15,6 +16,8 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Objects;
+
 @RestController
 @AllArgsConstructor
 public class OrderController {
@@ -24,12 +27,22 @@ public class OrderController {
 
     @GetMapping("/order")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
-    public ResponseEntity<Page<Order>> getOrdersByUser(@RequestParam int page,
-                                                       @RequestParam int pageSize) {
+    public ResponseEntity<?> getOrdersByUser(@RequestParam int page,
+                                             @RequestParam int pageSize) {
         try {
-            return ResponseEntity.ok(orderService.getOrders(SessionUtil.getAuth().getInteger(Constant.USER_ID), PageRequest.of(page, pageSize)));
+            return ResponseEntity.ok(new PageDTO<>(orderService.getOrders(Objects.requireNonNull(SessionUtil.getAuth()).getInteger(Constant.USER_ID), PageRequest.of(page, pageSize))));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/order/number")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
+    public ResponseEntity<?> getOrderNumber(){
+        try{
+            return ResponseEntity.ok(orderService.getOrderNumber(Objects.requireNonNull(SessionUtil.getAuth()).getInteger(Constant.USER_ID)));
+        } catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -45,14 +58,14 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
     public ResponseEntity<?> addOrder(@RequestBody NewOrderDTO newOrderDTO) {
         try {
-            LogUtil.debug(newOrderDTO.toString());
+            newOrderDTO.setUserId(Objects.requireNonNull(SessionUtil.getAuth()).getInteger(Constant.USER_ID));
             JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
             jmsTemplate.convertAndSend("OrderMessageBox", newOrderDTO);
             return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

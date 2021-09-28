@@ -5,6 +5,7 @@ import com.windowsxp.bookstore.constant.Constant;
 import com.windowsxp.bookstore.dto.request.LoginDTO;
 import com.windowsxp.bookstore.dto.request.RegisterDTO;
 import com.windowsxp.bookstore.dto.request.UserTypeEditDTO;
+import com.windowsxp.bookstore.dto.response.PageDTO;
 import com.windowsxp.bookstore.dto.response.UserInfoDTO;
 import com.windowsxp.bookstore.entity.User;
 import com.windowsxp.bookstore.service.UserService;
@@ -42,18 +43,18 @@ public class UserController {
 
     @DeleteMapping("/logout")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
-    public ResponseEntity<String> logout() {
+    public ResponseEntity<?> logout() {
         Boolean status = SessionUtil.removeSession();
 
         if (status) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("登出成功");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("登出失败，请勿重复操作");
     }
 
     @GetMapping("/session")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
-    public ResponseEntity<String> checkSession() {
+    public ResponseEntity<?> checkSession() {
         JSONObject auth = SessionUtil.getAuth();
         LogUtil.debug("check session");
         if (auth == null) {
@@ -65,44 +66,44 @@ public class UserController {
 
     @GetMapping("/admin/user")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
-    public ResponseEntity<Page<User>> getUsers(@RequestParam int page,
-                                               @RequestParam int pageSize) {
+    public ResponseEntity<?> getUsers(@RequestParam int page,
+                                                  @RequestParam int pageSize) {
         try {
-            return ResponseEntity.ok(userService.findAllUsers(PageRequest.of(page, pageSize)));
+            return ResponseEntity.ok(new PageDTO<>(userService.findAllUsers(PageRequest.of(page, pageSize))));
         } catch (RuntimeException e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @DeleteMapping("/admin/user/{id}")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
-    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
         try {
             userService.deleteUser(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("删除用户成功");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("删除用户失败");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @PostMapping("/admin/user")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
-    public ResponseEntity<String> editUser(@RequestBody UserTypeEditDTO userTypeEditDTO) {
+    public ResponseEntity<?> editUser(@RequestBody UserTypeEditDTO userTypeEditDTO) {
         try {
             userService.editUser(userTypeEditDTO.getUserId(), userTypeEditDTO.getUserType());
-            return ResponseEntity.status(HttpStatus.CREATED).body("用户信息修改成功");
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("用户信息修改失败");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping("/user/name")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
-    public ResponseEntity<Boolean> checkDuplicateUsername(@RequestParam String username) {
+    public ResponseEntity<?> checkDuplicateUsername(@RequestParam String username) {
         try {
             return ResponseEntity.ok().body(userService.checkDuplicateUsername(username));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -119,7 +120,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body(userInfoDTO);
         } catch (RuntimeException e) {
             LogUtil.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("server error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

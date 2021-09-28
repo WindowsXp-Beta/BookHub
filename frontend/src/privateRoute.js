@@ -12,20 +12,19 @@ export default class PrivateRoute extends React.Component{
         };
     }
 
-    checkAuth = (data) => {
-        console.log(data);
-        if (data.status >= 0) {
-            this.setState({isAuthed: true, hasAuthed: true});
-        } else {
-            message.error(data.msg);
-            localStorage.removeItem('user');
-            this.setState({isAuthed: false, hasAuthed: true});
-        }
-    };
+    checkAuthSucceed = (response) => {
+        this.setState({isAuthed: true, hasAuthed: true});
+    }
+
+    checkAuthFail = (response) => {
+        message.error("登录失效");
+        localStorage.removeItem('user');
+        this.setState({isAuthed: false, hasAuthed: true});
+    }
 
 
     componentDidMount() {
-        userService.checkSession(this.checkAuth);
+        userService.checkSession(this.checkAuthSucceed, this.checkAuthFail);
     }
 
 

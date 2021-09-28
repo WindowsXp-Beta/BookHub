@@ -1,6 +1,7 @@
 import React from 'react';
 import {Redirect, Route} from 'react-router-dom'
 import * as userService from "./services/userService"
+import {message} from "antd";
 
 export class LoginRoute extends React.Component{
     constructor(props) {
@@ -12,18 +13,19 @@ export class LoginRoute extends React.Component{
         };
     }
 
-    checkAuth = (data) => {
-        console.log(data);
-        if (data.status >= 0) {
-            this.setState({isAuthed: true, hasAuthed: true, userInfo:{name:"wxp"}});
-        } else {
-            localStorage.removeItem('user');
-            this.setState({isAuthed: false, hasAuthed: true});
-        }
-    };
+    checkAuthSucceed = (response) => {
+        this.setState({isAuthed: true, hasAuthed: true});
+    }
+
+    checkAuthFail = (response) => {
+        message.error("登录失效");
+        localStorage.removeItem('user');
+        this.setState({isAuthed: false, hasAuthed: true});
+    }
+
 
     componentDidMount() {
-        userService.checkSession(this.checkAuth);
+        userService.checkSession(this.checkAuthSucceed, this.checkAuthFail);
     }
 
     render() {

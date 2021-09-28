@@ -9,12 +9,17 @@ public class NewOrderDTO {
 
     @Getter
     public static class OrderItem{
+        Integer cartItemId;
         Integer bookId;
         Integer bookNumber;
     }
 
     private Integer userId;
     private List<OrderItem> orderItemList;
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public String toString() {
         StringBuilder ret = new StringBuilder(String.format("user id: %d\t", userId));
