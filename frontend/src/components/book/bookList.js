@@ -15,7 +15,7 @@ export class BookList extends React.Component {
             searchValue: '',
             page: 1,
             pageSize: 12,
-            totalBookNumber: 0
+            totalBookNumber: 0,
         };
     }
 
@@ -26,6 +26,7 @@ export class BookList extends React.Component {
                 showBooks: response.data.content,
                 totalBookNumber: response.data.size
             });
+            this.props.updatePageView(response.data.pageView)
         };
         getBooks({page: this.state.page - 1, pageSize: this.state.pageSize}, callback);
     }
@@ -36,6 +37,8 @@ export class BookList extends React.Component {
                 books: response.data.content,
                 showBooks: response.data.content,
             });
+            console.log(response.data.pageView);
+            this.props.updatePageView(response.data.pageView)
         };
         this.setState({
             page: page

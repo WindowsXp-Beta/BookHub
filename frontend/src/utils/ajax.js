@@ -39,6 +39,7 @@ export function getRequest(url, queryParams, callback, failureCallback = null) {
         if (failureCallback !== null) {
             failureCallback(error.response);
         } else {
+            console.log(error);
             handleError(error.response);
         }
     });

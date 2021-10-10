@@ -15,13 +15,13 @@ class HomeView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            current: 1,
             user: {},
-            key: ''
+            key: '',
+            pageView: 0
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let user = localStorage.getItem("user");
         console.log(user);
         this.setState({
@@ -29,17 +29,23 @@ class HomeView extends React.Component {
         });
     }
 
+    setPageView = (pageView) => {
+        this.setState({
+            pageView: pageView
+        });
+    }
+
     render() {
         return (
             <Layout className="layout">
                 <Header>
-                    <HeaderInfo/>
+                    <HeaderInfo pageView={this.state.pageView}/>
                 </Header>
                 <Layout>
                     <SideBar key='1'/>
                     <div className="home-content">
                         <BookCarousel/>
-                        <BookList/>
+                        <BookList updatePageView={this.setPageView}/>
                     </div>
                     <BackTop/>
                 </Layout>

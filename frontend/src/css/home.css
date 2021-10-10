@@ -100,3 +100,20 @@
 .ant-pagination-item a {
     color: #e8e8e8;
 }
+
+#avatar {
+    float: right;
+}
+
+#avatar .name {
+    margin-right: 10px;
+    font-weight:bold;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: #e8e8e8;
+}
+.pageView {
+    margin-right: 10px;
+    font-weight:bold;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    color: #e8e8e8;
+}
