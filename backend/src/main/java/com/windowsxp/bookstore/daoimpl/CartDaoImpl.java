@@ -46,7 +46,7 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteCartItems(List<Integer> itemList) {
         cartItemRepository.deleteAllByIdInBatch(itemList);
     }

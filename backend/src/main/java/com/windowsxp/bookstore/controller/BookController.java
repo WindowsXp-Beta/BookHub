@@ -1,9 +1,12 @@
 package com.windowsxp.bookstore.controller;
 
 import com.windowsxp.bookstore.dto.request.NewBookDTO;
+import com.windowsxp.bookstore.dto.response.BookDTO;
+import com.windowsxp.bookstore.dto.response.HomeDTO;
 import com.windowsxp.bookstore.dto.response.PageDTO;
 import com.windowsxp.bookstore.entity.Book;
 import com.windowsxp.bookstore.service.BookService;
+import com.windowsxp.bookstore.utils.LogUtil;
 import com.windowsxp.bookstore.utils.sessionutils.SessionUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -11,18 +14,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @RestController
 @AllArgsConstructor
 public class BookController {
 
     final private BookService bookService;
-
+    final private AtomicInteger pageView = new AtomicInteger();
+//    private Long pageView;
     @GetMapping("/book")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
     public ResponseEntity<?> getBooks(@RequestParam int page,
-                                                  @RequestParam int pageSize) {
+                                      @RequestParam int pageSize) {
         try {
-            return ResponseEntity.ok(bookService.getBooks(PageRequest.of(page, pageSize)));
+            LogUtil.debug(String.format("PV is %d", pageView.getAndIncrement()));
+            PageDTO<BookDTO> books = bookService.getBooks(PageRequest.of(page, pageSize));
+            return ResponseEntity.ok(new HomeDTO(books.getContent(), books.getSize(), pageView.get()));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

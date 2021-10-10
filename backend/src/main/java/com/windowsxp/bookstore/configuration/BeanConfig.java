@@ -16,4 +16,9 @@ public class BeanConfig {
     public BCryptPasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public Long getLong(){
+        return 0L;
+    }
 }

@@ -21,6 +21,5 @@ public class OrderItem {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @Column(columnDefinition = "integer CHECK (book_number < 2)")
     private Integer bookNumber;
 }

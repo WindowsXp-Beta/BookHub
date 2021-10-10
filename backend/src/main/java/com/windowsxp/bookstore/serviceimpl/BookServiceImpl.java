@@ -2,6 +2,7 @@ package com.windowsxp.bookstore.serviceimpl;
 
 import com.windowsxp.bookstore.dao.BookDao;
 import com.windowsxp.bookstore.dto.request.NewBookDTO;
+import com.windowsxp.bookstore.dto.response.BookDTO;
 import com.windowsxp.bookstore.dto.response.PageDTO;
 import com.windowsxp.bookstore.entity.Book;
 import com.windowsxp.bookstore.exception.BookException;
@@ -30,7 +31,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public PageDTO<Book> getBooks(Pageable pageable) {
+    public PageDTO<BookDTO> getBooks(Pageable pageable) {
         return bookDao.getBooks(pageable);
     }
 
