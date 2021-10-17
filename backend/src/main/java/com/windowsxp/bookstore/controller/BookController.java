@@ -47,28 +47,28 @@ public class BookController {
         }
     }
 
-    @DeleteMapping("/book")
+    @DeleteMapping("/book/{bookId}")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
-    public ResponseEntity<?> deleteBook(@RequestParam("id") Integer id) {
+    public ResponseEntity<?> deleteBook(@PathVariable Integer bookId) {
         try {
-            bookService.deleteBook(id);
+            bookService.deleteBook(bookId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    @GetMapping("/book/detail")
+    @GetMapping("/book/{bookId}")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
-    public ResponseEntity<?> getBookDetail(@RequestParam Integer id) {
+    public ResponseEntity<?> getBookDetail(@PathVariable Integer bookId) {
         try {
-            return ResponseEntity.ok(bookService.getBookDetail(id));
+            return ResponseEntity.ok(bookService.getBookDetail(bookId));
         } catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    @PostMapping("/book/detail")
+    @PutMapping("/book")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
     public ResponseEntity<?> editBook(@RequestBody Book book) {
         try {

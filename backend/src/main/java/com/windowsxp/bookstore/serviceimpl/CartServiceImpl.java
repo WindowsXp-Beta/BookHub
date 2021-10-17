@@ -7,6 +7,7 @@ import com.windowsxp.bookstore.entity.Book;
 import com.windowsxp.bookstore.entity.CartItem;
 import com.windowsxp.bookstore.service.CartService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public PageDTO<CartItem> getCartByUserId(Integer userId, Pageable pageable) {
-          return new PageDTO<>(cartDao.getCartByUserId(userId, pageable));
+        Page<CartItem> cartItems = cartDao.getCartByUserId(userId, pageable);
+        return new PageDTO<>(cartItems.getContent(), cartItems.getTotalElements());
     }
 
     @Override

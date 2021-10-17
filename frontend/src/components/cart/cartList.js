@@ -45,7 +45,8 @@ export class CartList extends React.Component {
             console.log(response.data);
             let content = response.data.content;
             let size = response.data.size;
-            let data = this.dataProcess(content, size);
+            console.log(content.length);
+            let data = this.dataProcess(content, content.length);
             if (clear) {
                 this.setState({
                     cart: data,
@@ -53,11 +54,13 @@ export class CartList extends React.Component {
                     searchValue: '',
                     selectedRowKeys: [],
                     selectedRows: [],
+                    totalCartNumber: size
                 });
             } else {
                 this.setState({
                     cart: data,
                     showCart: data,
+                    totalCartNumber: size
                 });
             }
         }
@@ -67,12 +70,6 @@ export class CartList extends React.Component {
 
     componentDidMount() {
         this.fetchCarts(this.state.page);
-        const callback = (response) => {
-            this.setState({
-                totalCartNumber: response.data
-            });
-        }
-        getCartNumber(callback);
     }
 
     sendDeletion = (id) => {

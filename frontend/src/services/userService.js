@@ -1,5 +1,5 @@
 // import config from 'config';
-import {deleteRequest, getRequest, postRequest} from "../utils/ajax";
+import {deleteRequest, getRequest, postRequest, putRequest} from "../utils/ajax";
 import {history} from '../utils/history';
 import {message} from 'antd';
 
@@ -36,7 +36,7 @@ export const getUsers = (data, callback) => {
 
 export const editUser = (data, callback) => {
     const url = `/admin/user`;
-    postRequest(url, data, callback);
+    putRequest(url, data, callback);
 };
 
 export const deleteUser = (id, callback) => {

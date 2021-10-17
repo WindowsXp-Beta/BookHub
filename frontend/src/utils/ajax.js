@@ -60,6 +60,21 @@ export function postRequest(url, requestBody, callback, requestParam = null, fai
     });
 }
 
+export function putRequest(url, requestBody, callback, requestParam = null, failureCallback = null) {
+    axios.put(
+        url, requestBody, {
+            withCredentials: true,
+        }).then((response) => {
+        callback(response);
+    }).catch((error) => {
+        if(failureCallback !== null) {
+            failureCallback(error.response);
+        } else {
+            handleError(error.response);
+        }
+    });
+}
+
 export function deleteRequest(url, queryParams, callback, failureCallback = null) {
     axios.delete(
         url, {

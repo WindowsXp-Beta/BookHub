@@ -24,18 +24,9 @@ public class CartController {
     public ResponseEntity<?> getCartByUserId(@RequestParam int page,
                                              @RequestParam int pageSize) {
         try {
-            return ResponseEntity.ok(cartService.getCartByUserId(SessionUtil.getAuth().getInteger(Constant.USER_ID), PageRequest.of(page, pageSize)));
+            return ResponseEntity.ok(cartService.getCartByUserId(Objects.requireNonNull(SessionUtil.getAuth()).getInteger(Constant.USER_ID), PageRequest.of(page, pageSize)));
         } catch (RuntimeException e) {
             LogUtil.error(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-    @GetMapping("/cart/number")
-    @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
-    public ResponseEntity<?> getCartNumber(){
-        try{
-            return ResponseEntity.ok(cartService.getCartNumber(Objects.requireNonNull(SessionUtil.getAuth()).getInteger("userId")));
-        } catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
@@ -44,7 +35,7 @@ public class CartController {
     @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
     public ResponseEntity<?> addCart(@RequestBody NewCartItemDTO newCartItemDTO) {
         try {
-            cartService.addCart(SessionUtil.getAuth().getInteger(Constant.USER_ID), newCartItemDTO);
+            cartService.addCart(Objects.requireNonNull(SessionUtil.getAuth()).getInteger(Constant.USER_ID), newCartItemDTO);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -62,7 +53,7 @@ public class CartController {
         }
     }
 
-    @PostMapping("/cart/{itemId}")
+    @PutMapping("/cart/{itemId}")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.USER)
     public ResponseEntity<?> editCartItemNumber(@PathVariable Integer itemId,
                                                 @RequestBody EditCartItemDTO editCartItemDTO) {

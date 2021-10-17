@@ -1,4 +1,4 @@
-import {deleteRequest, getRequest, postRequest} from "../utils/ajax";
+import {deleteRequest, getRequest, postRequest, putRequest} from "../utils/ajax";
 
 export const getCart = (data, callback) => {
     const url = `/cart`;
@@ -17,10 +17,5 @@ export const addCart = (data, callback) => {
 
 export const editCartItemNumber = (id, data, callback) => {
     const url = `/cart/${id}`;
-    postRequest(url, data, callback);
+    putRequest(url, data, callback);
 };
-
-export const getCartNumber = (callback) => {
-    const url = `/cart/number`;
-    getRequest(url, null, callback);
-}

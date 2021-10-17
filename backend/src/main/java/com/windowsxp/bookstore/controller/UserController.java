@@ -86,7 +86,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/admin/user")
+    @PutMapping("/admin/user")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
     public ResponseEntity<?> editUser(@RequestBody UserTypeEditDTO userTypeEditDTO) {
         try {

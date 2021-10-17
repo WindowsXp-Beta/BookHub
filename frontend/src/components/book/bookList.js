@@ -1,7 +1,7 @@
 import React from 'react';
 import {List, Input} from 'antd';
 import {Book} from './book';
-import {getBooks} from "../../services/bookService";
+import {getBooks, searchBooks} from "../../services/bookService";
 
 const {Search} = Input;
 
@@ -12,7 +12,7 @@ export class BookList extends React.Component {
         this.state = {
             books: [],
             showBooks: [],
-            searchValue: '',
+            query: '',
             page: 1,
             pageSize: 12,
             totalBookNumber: 0,
@@ -48,21 +48,20 @@ export class BookList extends React.Component {
 
     searchChange = ({target: {value}}) => {
 
-        this.setState({searchValue: value})
-        let arr = [];
-        let list = this.state.books;
-        let search = value.toLowerCase();
-
-        for (let i = 0; i < list.length; i++) {
-            if (
-                list[i].name.toLowerCase().indexOf(search) >= 0
-            ) {
-                arr.push(list[i]);
-            }
+        console.log(value);
+        this.setState({query: value})
+        let data = {
+            query: value,
+            page: 0,
+            pageSize: this.state.pageSize
         }
-        this.setState(
-            {showBooks: arr}
-        );
+        const callback = (response) => {
+            this.setState({
+                books: response.data,
+                showBooks: response.data,
+            });
+        }
+        if(value !== '')searchBooks(data, callback);
     }
 
     render() {
