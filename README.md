@@ -37,3 +37,5 @@ Database: MySQL
 
   1. Using JMS as a message queue to clip the flow.
   2. A chat room based on webSocket.
+  3. Redis cache
+  4. Spring cloud micro services
