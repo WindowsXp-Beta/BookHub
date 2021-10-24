@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: booksearch
+  datasource:
+    url: jdbc:mysql://localhost:3306/bookstore
+    username: root
+    password: iloveyou0118
+    tomcat:
+      max-active: 20
+  jpa:
+    show-sql: true
+    database: mysql
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+server:
+  port: 11130
