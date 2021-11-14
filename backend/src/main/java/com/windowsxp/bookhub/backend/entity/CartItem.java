@@ -17,11 +17,13 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false, columnDefinition = "MEDIUMINT")
     private Integer userId;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
 
+    @Column(nullable = false, columnDefinition = "MEDIUMINT")
     private Integer bookNumber;
 }

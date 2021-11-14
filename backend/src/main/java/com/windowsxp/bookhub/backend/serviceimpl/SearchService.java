@@ -105,8 +105,8 @@ public class SearchService {
         int end = Math.min(numTotalHits, pageSize * (page + 1));
         for(int i = start; i < end; i++){
             Document doc = indexSearcher.doc(hits[i].doc);
-            Optional<Book> optionalBook = bookDao.findBookById(Integer.valueOf(doc.get("bookId")));
-            optionalBook.ifPresent(bookList::add);
+            Book book = bookDao.findBookById(Integer.valueOf(doc.get("bookId")));
+            bookList.add(book);
         }
         return new PageImpl<>(bookList, PageRequest.of(page, pageSize), numTotalHits);
     }

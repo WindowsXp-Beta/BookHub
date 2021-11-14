@@ -66,7 +66,7 @@ public class UserController {
     @GetMapping("/admin/user")
     @SessionUtil.Auth(authType = SessionUtil.AuthType.ADMIN)
     public ResponseEntity<?> getUsers(@RequestParam int page,
-                                                  @RequestParam int pageSize) {
+                                      @RequestParam int pageSize) {
         try {
             return ResponseEntity.ok(new PageDTO<>(userService.findAllUsers(PageRequest.of(page, pageSize))));
         } catch (RuntimeException e){

@@ -17,10 +17,13 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, columnDefinition = "MEDIUMINT")
     private Integer id;
 
+    @Column(nullable = false, columnDefinition = "MEDIUMINT")
     private Integer userId;
 
+    @Column(nullable = false)
     private Timestamp time;
 
     @OneToMany(cascade = CascadeType.PERSIST)

@@ -16,11 +16,13 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, columnDefinition = "MEDIUMINT")
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
+    @Column(nullable = false, columnDefinition = "MEDIUMINT")
     private Integer bookNumber;
 }

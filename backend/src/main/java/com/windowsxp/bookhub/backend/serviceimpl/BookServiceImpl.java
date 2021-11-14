@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,13 +20,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBookDetail(Integer id){
-        Optional<Book> optionalBook = bookDao.findBookById(id);
-        if(optionalBook.isEmpty()) throw new BookException(BookException.BookExceptionType.BOOK_NOT_EXIST);
-        else {
-            Book book = optionalBook.get();
-            if(book.getInventory() < 0) throw new BookException(BookException.BookExceptionType.BOOK_DELETED);
-            else return book;
-        }
+        return bookDao.findBookById(id);
     }
 
     @Override

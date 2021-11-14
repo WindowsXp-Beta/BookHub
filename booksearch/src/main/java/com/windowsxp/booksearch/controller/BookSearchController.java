@@ -16,7 +16,7 @@ public class BookSearchController {
     @GetMapping("/book-service")
     public ResponseEntity<?> searchBookByAuthor(@RequestParam String name){
         try{
-            return ResponseEntity.ok(bookSearchService.findAuthByBookName(name));
+            return ResponseEntity.ok(bookSearchService.findAuthorByBookName(name));
         } catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

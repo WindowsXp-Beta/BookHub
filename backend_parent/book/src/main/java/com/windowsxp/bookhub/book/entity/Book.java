@@ -12,6 +12,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(columnDefinition = "MEDIUMINT")
     private Integer id;
 
     @Column(nullable = false)
@@ -26,14 +27,15 @@ public class Book {
     @Column(nullable = false)
     private String author;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "MEDIUMINT")
     private Integer price;
 
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "MEDIUMINT")
     private Integer inventory;
 
-    private String image;
+    @Transient
+    private String bookImage;
 }

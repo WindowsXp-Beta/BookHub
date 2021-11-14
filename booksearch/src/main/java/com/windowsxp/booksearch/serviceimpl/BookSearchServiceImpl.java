@@ -12,7 +12,7 @@ public class BookSearchServiceImpl implements BookSearchService {
     final private BookDao bookDao;
 
     @Override
-    public String findAuthByBookName(String name) {
+    public String findAuthorByBookName(String name) {
         return bookDao.findAuthorByBookName(name);
     }
 }

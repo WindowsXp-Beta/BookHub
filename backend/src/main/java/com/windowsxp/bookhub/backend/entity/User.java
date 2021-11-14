@@ -17,17 +17,23 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "MEDIUMINT")
     private Integer userId;
 
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false, columnDefinition = "MEDIUMINT")
     private UserType userType;
 
+    @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String address;
 
     public interface Username{
