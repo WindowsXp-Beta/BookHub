@@ -1,15 +1,15 @@
--- CREATE TABLE `book` (
---   `id` int(11) NOT NULL AUTO_INCREMENT,
---   `isbn` varchar(255) DEFAULT NULL,
---   `name` varchar(255) DEFAULT NULL,
---   `type` varchar(255) DEFAULT NULL,
---   `author` varchar(255) DEFAULT NULL,
---   `price` int(11) DEFAULT NULL,
---   `description` varchar(2000) DEFAULT NULL,
---   `inventory` int(11) DEFAULT NULL,
---   `image` varchar(255) DEFAULT NULL,
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `book` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `isbn` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `author` varchar(255) NOT NULL,
+  `price` int(11) NOT NULL,
+  `description` varchar(2000) NOT NULL,
+  `inventory` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `book` VALUES ('1', '1', 'Java核心技术卷II', '编程', '凯S.霍斯特曼', '9520', '本书是Java领域有影响力和价值的著作之一，由拥有20多年教学与研究经验的Java技术专家撰写（获Jolt大奖），与《Java编程思想》齐名，10余年全球畅销不衰，广受好评。第10版根据JavaSE8全面更新，同时修正了第9版中的不足，系统全面讲解了Java语言的核心概念、语法、重要特性和开发方法，包含大量案例，实践性强。', '1000', 'http://img3m9.ddimg.cn/12/36/1546133799-1_w_1.jpg');
 INSERT INTO `book` VALUES ('2', '2', '深入理解计算机系统', '编程', '兰德尔·E·布莱恩特', '13690', '程序员必读经典著作！理解计算机系统*书目，10万程序员共同选择。第二版销售突破100000册，第三版重磅上市！', '1200', 'http://img3m7.ddimg.cn/48/0/24106647-1_w_6.jpg');

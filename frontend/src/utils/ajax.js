@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {message} from "antd";
 
-axios.defaults.baseURL = 'https://localhost:8443';
+axios.defaults.baseURL = 'http://localhost:8080';
 
 function handleError(response) {
     let errorMessage;

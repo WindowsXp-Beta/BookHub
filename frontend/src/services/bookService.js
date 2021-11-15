@@ -25,8 +25,12 @@ export const addBook = (data, callback) => {
     postRequest(url, data, callback);
 };
 
-export const editBook = (data, callback) =>
-{
+export const editBook = (data, callback) => {
     const url = `/admin/Book`;
     putRequest(url, data, callback);
+};
+
+export const searchTag = (data, callback) => {
+    const url = `/tag/${data}`;
+    getRequest(url, null, callback);
 };

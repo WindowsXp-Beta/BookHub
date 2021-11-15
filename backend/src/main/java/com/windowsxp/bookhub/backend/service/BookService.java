@@ -13,4 +13,5 @@ public interface BookService {
     void addBook(NewBookDTO newBookDTO);
     void updateBook(Book book);
     void deleteBook(Integer id);
+    PageDTO<BookDTO> getBooksByTag(String content);
 }

@@ -1,10 +1,12 @@
 package com.windowsxp.bookhub.backend.controller;
 
 import com.windowsxp.bookhub.backend.dto.request.NewBookDTO;
+import com.windowsxp.bookhub.backend.dto.request.TagDTO;
 import com.windowsxp.bookhub.backend.dto.response.BookDTO;
 import com.windowsxp.bookhub.backend.dto.response.HomeDTO;
 import com.windowsxp.bookhub.backend.dto.response.PageDTO;
 import com.windowsxp.bookhub.backend.service.BookService;
+import com.windowsxp.bookhub.backend.service.TagService;
 import com.windowsxp.bookhub.backend.utils.LogUtil;
 import com.windowsxp.bookhub.backend.utils.sessionutils.SessionUtil;
 import com.windowsxp.bookhub.book.entity.Book;
@@ -21,6 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BookController {
 
     final private BookService bookService;
+    final private TagService tagService;
     final private AtomicInteger pageView = new AtomicInteger();
 //    private Long pageView;
     @GetMapping("/book")
@@ -75,6 +78,27 @@ public class BookController {
             bookService.updateBook(book);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/tag")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
+    public ResponseEntity<?> addTags(@RequestBody TagDTO tagDTO){
+//        try {
+            tagService.addNewTag(tagDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+//        } catch (RuntimeException e){
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+//        }
+    }
+
+    @GetMapping("/tag/{content}")
+    @SessionUtil.Auth(authType = SessionUtil.AuthType.PASS)
+    public ResponseEntity<?> findBooksByTag(@PathVariable String content){
+        try {
+            return ResponseEntity.ok(bookService.getBooksByTag(content));
+        } catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }

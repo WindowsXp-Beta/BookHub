@@ -17,7 +17,7 @@ export class Book extends React.Component{
                 <Card
                     hoverable
                     style={{width: 181}}
-                    cover={<img alt={info.name} src={info.image} className={"bookImg"} style={{height: 192,width: 150}}/>}
+                    cover={<img alt={info.name} src={`data:image/jpg;base64,${info.bookImage}`} className={"bookImg"} style={{height: 192,width: 150}}/>}
                 >
                     <Meta title={info.name} description={ "¥ "+ info.price / 100 }/>
                 </Card>
