@@ -21,13 +21,14 @@ export class BookDetail extends React.Component {
 
     render() {
         const {detail} = this.props;
+        console.log(detail);
         if (detail == null) {
             return null;
         }
         return (
             <div className={"content"}>
                 <div className={"book-detail"}>
-                    <div className={"book-image"}><img alt="image" src={detail.image}
+                    <div className={"book-image"}><img alt="image" src={`data:image/jpg;base64,${detail.bookImage}`}
                                                        style={{width: "250px", height: "350px"}}/></div>
                     <div className={"descriptions"}>
                         <Descriptions>

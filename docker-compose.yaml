@@ -1,0 +1,45 @@
+version: '3.7'
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: bookstore-mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=iloveyou0118
+      - MYSQL_DATABASE=bookstore
+    volumes:
+      - ./db/mysql:/var/lib/mysql
+
+  redis:
+    image: redis
+    container_name: bookstore-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./db/redis:/data
+
+  mongodb:
+    image: mongo
+    container_name: bookstore-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./db/mongodb:/data/db
+
+  nginx:
+    image: nginx:1.21.4
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+
+  bookhub-1:
+    image: backend:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+
+  bookhub-2:
+    image: backend:0.0.1-SNAPSHOT
+    ports:
+      - "8090:8080"
