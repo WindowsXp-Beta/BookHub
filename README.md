@@ -1,21 +1,28 @@
 # BookHub——An E-Book store
-> SJTU SE128 Design and development of Internet products & SE3353 Architecture of Applications
->
-> HW and Project
+> Hw and projects of SE128 Design and development of Internet products and SE3353 Architecture of Applications
 
 ## Technology stack
 
-Front end: React
+Frontend: [React](https://reactjs.org/)
 
-<img src="doc_assets/react.jpg" style="zoom:70%;" />
+Backend: [SpringBoot](https://spring.io/projects/spring-boot)
 
-Back end: SpringBoot
+Database: [MySQL](https://www.mysql.com/)
 
-<img src="doc_assets/springboot.png" style="zoom:70%;" />
+Micro Services: [Eureka](https://spring.io/projects/spring-cloud-netflix)
 
-Database: MySQL
+Cache: [Redis](https://redis.io/)
 
-<img src="doc_assets/mysql.jpg" style="zoom:70%;" />
+Containerize: [docker](https://www.docker.com)
+
+Full text search: [Lucene](https://lucene.apache.org/)
+
+MR text analysis: [Hadoop](https://hadoop.apache.org/)
+
+Load balancing: [Nginx](https://www.nginx.com/)
+
+## Getting Started
+I strongly recommend you use docker to deploy this App and you may refer to this [report](doc_assets/Clustering%20&%20Docker.md) for a detailed guide.
 
 ## Change Log
 
@@ -37,5 +44,8 @@ Database: MySQL
 
   1. Using JMS as a message queue to clip the flow.
   2. A chat room based on webSocket.
-  3. Redis cache
-  4. Spring cloud micro services
+  3. Full-text search using Lucene.
+  4. Using Redis to cache book-getting requirements.
+  5. Spring cloud micro services.
+  6. Dockerize.
+  7. load banlancing using nginx.
